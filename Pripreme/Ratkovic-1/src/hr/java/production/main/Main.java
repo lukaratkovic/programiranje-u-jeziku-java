@@ -1,17 +1,17 @@
 package hr.java.production.main;
 
-import hr.java.production.model.Category;
-import hr.java.production.model.Item;
+import hr.java.production.model.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     private static final int AMOUNT_OF_CATEGORIES = 3;
     private static final int AMOUNT_OF_ITEMS = 5;
+    private static final int AMOUNT_OF_FACTORIES = 2;
+    private static final int AMOUNT_OF_FACTORY_ITEMS = 2;
+    private static final int AMOUNT_OF_STORES = 2;
+    public static final int AMOUNT_OF_STORE_ITEMS = 2;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -25,8 +25,19 @@ public class Main {
         /*Item input*/
         Item[] items = new Item[AMOUNT_OF_ITEMS];
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            items[i] = createItem(scanner, categories);
-            System.out.println(items[i].getCategory().getName());
+            items[i] = createItem(scanner, categories, i);
+        }
+
+        /*Factory input*/
+        Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
+        for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
+            factories[i] = createFactory(scanner, items, i);
+        }
+
+        /*Store input*/
+        Store[] stores = new Store[AMOUNT_OF_STORES];
+        for (int i = 0; i < AMOUNT_OF_STORES; i++) {
+            stores[i] = createStore(scanner, items, i);
         }
     }
 
@@ -43,9 +54,9 @@ public class Main {
         return new Category(name, description);
     }
 
-    public static Item createItem(Scanner scanner, Category[] categories) {
+    public static Item createItem(Scanner scanner, Category[] categories, int n) {
         /*Input Name*/
-        System.out.print("Enter item name: ");
+        System.out.print("Enter " + (n + 1) + ". item name: ");
         String name = scanner.nextLine();
 
         /*Select Category*/
@@ -84,6 +95,87 @@ public class Main {
         System.out.print("Enter selling price: ");
         BigDecimal sellingPrice = scanner.nextBigDecimal();
 
+        scanner.nextLine();
+
         return new Item(name, category, width, height, length, productionCost, sellingPrice);
+    }
+
+    public static Factory createFactory(Scanner scanner, Item[] items, int n) {
+        /*Input name*/
+        System.out.print("Enter " + (n + 1) + ". factory name: ");
+        String name = scanner.nextLine();
+
+        /*Input Address*/
+        Address address = createAddress(scanner);
+
+        /*Select items*/
+        Item[] factoryItems = new Item[AMOUNT_OF_FACTORY_ITEMS];
+        for (int i = 0; i < AMOUNT_OF_FACTORY_ITEMS; i++) {
+            System.out.println("Select " + (i + 1) + ". item: ");
+            for (int j = 0; j < AMOUNT_OF_ITEMS; j++) {
+                System.out.println((j + 1) + " " + items[j].getName());
+            }
+            int selectedItem;
+            do {
+                System.out.print("Item: ");
+                selectedItem = scanner.nextInt();
+                scanner.nextLine();
+                if (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS)
+                    System.out.println("That item does not exist.");
+            } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
+            factoryItems[i] = items[selectedItem - 1];
+        }
+
+        return new Factory(name, address, factoryItems);
+    }
+
+    public static Address createAddress(Scanner scanner) {
+        /*Input street*/
+        System.out.print("Enter street: ");
+        String street = scanner.nextLine();
+
+        /*input house number*/
+        System.out.print("Enter house number: ");
+        String houseNumber = scanner.nextLine();
+
+        /*input city*/
+        System.out.print("Enter city: ");
+        String city = scanner.nextLine();
+
+        /*Input postal code*/
+        System.out.print("Enter postal code: ");
+        String postalCode = scanner.nextLine();
+
+        return new Address(street, houseNumber, city, postalCode);
+    }
+
+    public static Store createStore(Scanner scanner, Item[] items, int n) {
+        /*Input name*/
+        System.out.print("Enter " + (n + 1) + ". store name: ");
+        String name = scanner.nextLine();
+
+        /*Input web address*/
+        System.out.print("Enter web address: ");
+        String webAddress = scanner.nextLine();
+
+        /*Select items*/
+        Item[] storeItems = new Item[AMOUNT_OF_STORE_ITEMS];
+        for (int i = 0; i < AMOUNT_OF_STORE_ITEMS; i++) {
+            System.out.println("Select " + (i + 1) + ". item: ");
+            for (int j = 0; j < AMOUNT_OF_ITEMS; j++) {
+                System.out.println((j + 1) + " " + items[j].getName());
+            }
+            int selectedItem;
+            do {
+                System.out.print("Item: ");
+                selectedItem = scanner.nextInt();
+                scanner.nextLine();
+                if (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS)
+                    System.out.println("That item does not exist.");
+            } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
+            storeItems[i] = items[selectedItem - 1];
+        }
+
+        return new Store(name, webAddress, storeItems);
     }
 }
