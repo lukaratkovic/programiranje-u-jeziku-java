@@ -40,7 +40,11 @@ public class Main {
             stores[i] = createStore(scanner, items, i);
         }
 
-        //////Find factory that sells item with largest volume//////
+        /*Find factory that sells item with largest volume*/
+        largestVolumeFactory(factories);
+    }
+
+    private static void largestVolumeFactory(Factory[] factories) {
         /*Set first factory as one with largest volume*/
         Factory largestVolumeFactory = factories[0];
         /*Find largest volume item of FIRST factory*/
