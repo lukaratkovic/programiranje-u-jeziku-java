@@ -39,6 +39,36 @@ public class Main {
         for (int i = 0; i < AMOUNT_OF_STORES; i++) {
             stores[i] = createStore(scanner, items, i);
         }
+
+        //////Find factory that sells item with largest volume//////
+        /*Set first factory as one with largest volume*/
+        Factory largestVolumeFactory = factories[0];
+        /*Find largest volume item of FIRST factory*/
+        Item largestVolumeItem = largestVolumeFactory.getItems()[0];
+        BigDecimal largestVolume = largestVolumeItem.getVolume();
+        for (int i = 1; i < AMOUNT_OF_FACTORY_ITEMS; i++) {
+            if (largestVolumeFactory.getItems()[i].getVolume().compareTo(largestVolume) > 0) {
+                largestVolumeItem = largestVolumeFactory.getItems()[i];
+                largestVolume = largestVolumeItem.getVolume();
+            }
+        }
+        /*Continue comparison*/
+        /*Each factory*/
+        for (int i = 1; i < AMOUNT_OF_FACTORIES; i++) {
+            /*Each item*/
+            for (int j = 0; j < AMOUNT_OF_FACTORY_ITEMS; j++) {
+                /*If item [j] in factory [i] has volume larger than largestVolume*/
+                if (factories[i].getItems()[j].getVolume().compareTo(largestVolume) > 0) {
+                    largestVolumeFactory = factories[i];
+                    largestVolumeItem = largestVolumeFactory.getItems()[j];
+                    largestVolume = largestVolumeItem.getVolume();
+                }
+            }
+        }
+        /*Output*/
+        System.out.println("Factory with largest volume item is " + largestVolumeFactory.getName());
+        System.out.println("The item with largest volume is " + largestVolumeItem.getName() +
+                " (Volume = " + largestVolumeItem.getVolume() + ")");
     }
 
     public static Category createCategory(Scanner scanner, int n) {

@@ -72,4 +72,8 @@ public class Item {
     public void setSellingPrice(BigDecimal sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
+
+    public BigDecimal getVolume() {
+        return this.width.multiply(this.height.multiply(this.length));
+    }
 }
