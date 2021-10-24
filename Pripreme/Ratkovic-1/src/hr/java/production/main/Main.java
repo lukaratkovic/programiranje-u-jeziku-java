@@ -40,8 +40,11 @@ public class Main {
             stores[i] = createStore(scanner, items, i);
         }
 
-        /*Find factory that sells item with largest volume*/
+        /*Find factory that manufactures item with the largest volume*/
         largestVolumeFactory(factories);
+
+        /*Find store that sells the cheapest item*/
+        cheapestArticleStore(stores);
     }
 
     private static void largestVolumeFactory(Factory[] factories) {
@@ -73,6 +76,37 @@ public class Main {
         System.out.println("Factory with largest volume item is " + largestVolumeFactory.getName());
         System.out.println("The item with largest volume is " + largestVolumeItem.getName() +
                 " (Volume = " + largestVolumeItem.getVolume() + ")");
+    }
+
+    public static void cheapestArticleStore(Store[] stores) {
+        /*Set first store as the one with cheapest item*/
+        Store cheapestArticleStore = stores[0];
+        /*Find cheapest item of FIRST store*/
+        Item cheapestArticle = cheapestArticleStore.getItems()[0];
+        BigDecimal cheapestArticlePrice = cheapestArticle.getSellingPrice();
+        for (int i = 0; i < AMOUNT_OF_STORE_ITEMS; i++) {
+            if (cheapestArticleStore.getItems()[i].getSellingPrice().compareTo(cheapestArticlePrice) > 0) {
+                cheapestArticle = cheapestArticleStore.getItems()[i];
+                cheapestArticlePrice = cheapestArticle.getSellingPrice();
+            }
+        }
+        /*Continue comparison*/
+        /*Each store*/
+        for (int i = 0; i < AMOUNT_OF_STORES; i++) {
+            /*Each item*/
+            for (int j = 0; j < AMOUNT_OF_STORE_ITEMS; j++) {
+                /*If item [j] in store [i] has price lower than cheapestArticlePrice*/
+                if (stores[i].getItems()[j].getSellingPrice().compareTo(cheapestArticlePrice) < 0) {
+                    cheapestArticleStore = stores[i];
+                    cheapestArticle = cheapestArticleStore.getItems()[j];
+                    cheapestArticlePrice = cheapestArticle.getSellingPrice();
+                }
+            }
+        }
+        /*Output*/
+        System.out.println("Store with cheapest article is " + cheapestArticleStore.getName());
+        System.out.println("The item with lowest price is " + cheapestArticle.getName() +
+                " (Price = " + cheapestArticle.getSellingPrice() + ")");
     }
 
     public static Category createCategory(Scanner scanner, int n) {
