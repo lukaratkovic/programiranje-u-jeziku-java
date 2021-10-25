@@ -6,6 +6,7 @@ public class Item {
     String name;
     Category category;
     BigDecimal width, height, length, productionCost, sellingPrice;
+    Double poreznaStopa;
 
     public Item(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice) {
         this.name = name;

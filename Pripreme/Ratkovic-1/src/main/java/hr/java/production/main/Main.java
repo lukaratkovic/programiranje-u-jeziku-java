@@ -115,8 +115,11 @@ public class Main {
         String name = scanner.nextLine();
 
         /*Input Description*/
-        System.out.print("Enter " + (n + 1) + ". category description: ");
-        String description = scanner.nextLine();
+        String description;
+        do {
+            System.out.print("Enter " + (n + 1) + ". category description: ");
+            description = scanner.nextLine();
+        } while (description.trim().length() < 1);
 
         /*Return object*/
         return new Category(name, description);
