@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     private static final int AMOUNT_OF_CATEGORIES = 3;
-    private static final int AMOUNT_OF_ITEMS = 5;
+    private static final int AMOUNT_OF_ITEMS = 2;
     private static final int AMOUNT_OF_FACTORIES = 2;
     private static final int AMOUNT_OF_FACTORY_ITEMS = 2;
     private static final int AMOUNT_OF_STORES = 2;
@@ -106,7 +106,7 @@ public class Main {
         /*Output*/
         System.out.println("Store with cheapest article is " + cheapestArticleStore.getName());
         System.out.println("The item with lowest price is " + cheapestArticle.getName() +
-                " (Price = " + cheapestArticle.getSellingPrice() + ")");
+                " (Price = " + CurrencyUtils.format(cheapestArticle.getSellingPrice(), cheapestArticle.getValuta()) + ")");
     }
 
     public static Category createCategory(Scanner scanner, int n) {
@@ -173,7 +173,15 @@ public class Main {
         Double tax = scanner.nextDouble();
         scanner.nextLine();
 
-        return new Item(name, category, width, height, length, productionCost, sellingPrice, tax);
+
+        /*Input valuta*/
+        String currency;
+        do {
+            System.out.print("Enter currency: ");
+            currency = scanner.nextLine();
+        } while (!currency.equals("kn") && !currency.equals("€"));
+
+        return new Item(name, category, width, height, length, productionCost, sellingPrice, tax, currency);
     }
 
     public static Factory createFactory(Scanner scanner, Item[] items, int n) {
