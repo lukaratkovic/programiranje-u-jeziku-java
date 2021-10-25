@@ -168,7 +168,12 @@ public class Main {
 
         scanner.nextLine();
 
-        return new Item(name, category, width, height, length, productionCost, sellingPrice);
+        /*Input porezna stopa*/
+        System.out.print("Enter tax: ");
+        Double tax = scanner.nextDouble();
+        scanner.nextLine();
+
+        return new Item(name, category, width, height, length, productionCost, sellingPrice, tax);
     }
 
     public static Factory createFactory(Scanner scanner, Item[] items, int n) {

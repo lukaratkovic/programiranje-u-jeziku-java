@@ -8,7 +8,7 @@ public class Item {
     BigDecimal width, height, length, productionCost, sellingPrice;
     Double poreznaStopa;
 
-    public Item(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice) {
+    public Item(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Double poreznaStopa) {
         this.name = name;
         this.category = category;
         this.width = width;
@@ -16,6 +16,7 @@ public class Item {
         this.length = length;
         this.productionCost = productionCost;
         this.sellingPrice = sellingPrice;
+        this.poreznaStopa = poreznaStopa;
     }
 
     public String getName() {
@@ -67,11 +68,19 @@ public class Item {
     }
 
     public BigDecimal getSellingPrice() {
-        return sellingPrice;
+        return new BigDecimal(poreznaStopa).multiply(sellingPrice);
     }
 
     public void setSellingPrice(BigDecimal sellingPrice) {
         this.sellingPrice = sellingPrice;
+    }
+
+    public Double getPoreznaStopa() {
+        return poreznaStopa;
+    }
+
+    public void setPoreznaStopa(Double poreznaStopa) {
+        this.poreznaStopa = poreznaStopa;
     }
 
     public BigDecimal getVolume() {
