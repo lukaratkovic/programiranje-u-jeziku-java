@@ -1,21 +1,11 @@
 package hr.java.production.model;
 
-public class Category {
-    String name;
+public class Category extends NamedEntity {
     String description;
 
     public Category(String name, String description) {
-        this.setName(name);
+        super(name);
         this.setDescription(description);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if(name == "") name="Default Category";
-        this.name = name;
     }
 
     public String getDescription() {

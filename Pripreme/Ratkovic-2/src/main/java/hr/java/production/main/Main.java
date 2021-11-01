@@ -20,6 +20,7 @@ public class Main {
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
         for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
             categories[i] = createCategory(scanner, i);
+            categories[i].getName();
         }
 
         /*Item input*/

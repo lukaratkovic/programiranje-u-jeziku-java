@@ -1,22 +1,13 @@
 package hr.java.production.model;
 
-public class Store {
-    String name, webAddress;
+public class Store extends NamedEntity {
+    String webAddress;
     Item[] items;
 
     public Store(String name, String webAddress, Item[] items) {
-        setName(name);
+        super(name);
         this.webAddress = webAddress;
         this.items = items;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if(name=="") name="Default Store";
-        this.name = name;
     }
 
     public String getWebAddress() {
