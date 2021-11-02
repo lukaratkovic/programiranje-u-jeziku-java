@@ -49,8 +49,12 @@ public class Main {
 
         /*Find item with most kcal*/
         mostKCAL(items);
+
+        /*Find laptop with shortest warranty*/
+        shortestWarrantyLaptop(items);
     }
 
+    /*Comparison methods*/
     private static void largestVolumeFactory(Factory[] factories) {
         /*Set first factory as one with largest volume*/
         Factory largestVolumeFactory = factories[0];
@@ -142,6 +146,28 @@ public class Main {
         else System.out.println("Edible item with most kcal is: " + mostKcalItem.getName() + " (" + mostKcal + ")");
     }
 
+    public static void shortestWarrantyLaptop(Item[] items) {
+        boolean foundLaptop = false;
+        Laptop shortestWarrantyLaptop = null;
+        int shortestWarranty = 0;
+        for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
+            if (items[i] instanceof Laptop laptop) {
+                if (!foundLaptop) {
+                    shortestWarrantyLaptop = (Laptop) items[i];
+                    shortestWarranty = shortestWarrantyLaptop.getWarranty();
+                    foundLaptop = true;
+                } else if (((Laptop) items[i]).getWarranty() < shortestWarranty) {
+                    shortestWarrantyLaptop = (Laptop) items[i];
+                    shortestWarranty = shortestWarrantyLaptop.getWarranty();
+                }
+            }
+        }
+
+        System.out.println("Laptop with shortest warranty is " + shortestWarrantyLaptop.getName() +
+                " (" + shortestWarrantyLaptop.getWarranty() + " months)");
+    }
+
+    /*Input methods*/
     public static Category createCategory(Scanner scanner, int n) {
         /*Input Name*/
         System.out.print("Enter " + (n + 1) + ". category name: ");
