@@ -139,7 +139,7 @@ public class Main {
             }
         }
         if (mostKcalItem == null) System.out.println("No edible items were inputed.");
-        else System.out.println("Edible item with most kcal is: " + mostKcalItem.getName() + "(" + mostKcal + ")");
+        else System.out.println("Edible item with most kcal is: " + mostKcalItem.getName() + " (" + mostKcal + ")");
     }
 
     public static Category createCategory(Scanner scanner, int n) {
@@ -195,7 +195,11 @@ public class Main {
         /*Input selling price*/
         System.out.print("Enter selling price: ");
         BigDecimal sellingPrice = scanner.nextBigDecimal();
+        scanner.nextLine();
 
+        /*Input discount*/
+        System.out.print("Enter discount percentage: ");
+        BigDecimal discount = scanner.nextBigDecimal();
         scanner.nextLine();
 
         /*Check if edible*/
@@ -226,19 +230,19 @@ public class Main {
             /*Create object of proper type*/
             Item returnItem;
             if (foodSelection == 1) {
-                returnItem = new Fries(name, category, width, height, length, productionCost, sellingPrice, weight);
+                returnItem = new Fries(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight);
                 /*Total kcal, price*/
                 System.out.println("Total kcal: " + ((Fries) returnItem).totalKCAL());
-                System.out.println("Total price: " + ((Fries) returnItem).totalPrice());
+                System.out.println("Total price: " + ((Fries) returnItem).calculatePrice());
             } else {
-                returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, weight);
+                returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight);
                 /*Total kcal, price*/
                 System.out.println("Total kcal: " + ((GummyBears) returnItem).totalKCAL());
-                System.out.println("Total price: " + ((GummyBears) returnItem).totalPrice());
+                System.out.println("Total price: " + ((GummyBears) returnItem).calculatePrice());
             }
             return returnItem;
         } else {
-            return new Item(name, category, width, height, length, productionCost, sellingPrice);
+            return new Item(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount));
         }
     }
 

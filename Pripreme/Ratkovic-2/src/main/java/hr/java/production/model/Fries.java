@@ -6,8 +6,8 @@ public class Fries extends Item implements Edible {
     BigDecimal weight;
     public static final int CALORIES_PER_KILOGRAM = 2740;
 
-    public Fries(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, BigDecimal weight) {
-        super(name, category, width, height, length, productionCost, sellingPrice);
+    public Fries(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
+        super(name, category, width, height, length, productionCost, sellingPrice, discount);
         this.weight = weight;
     }
 
@@ -18,7 +18,9 @@ public class Fries extends Item implements Edible {
 
     @Override
     public BigDecimal calculatePrice() {
-        return getSellingPrice().multiply(weight);
+        if (weight != null && sellingPrice != null && discount.discountAmount() != null)
+            return weight.multiply(sellingPrice).multiply(new BigDecimal(1).subtract(discount.discountAmount()));
+        else return new BigDecimal(0);
     }
 
     public BigDecimal getWeight() {
@@ -31,12 +33,6 @@ public class Fries extends Item implements Edible {
 
     public BigDecimal totalKCAL() {
         if (weight != null) return weight.multiply(new BigDecimal(kcal()));
-        else return new BigDecimal(0);
-    }
-
-    public BigDecimal totalPrice() {
-        if (weight != null && sellingPrice != null)
-            return weight.multiply(sellingPrice);
         else return new BigDecimal(0);
     }
 }

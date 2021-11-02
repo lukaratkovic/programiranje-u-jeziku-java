@@ -7,8 +7,8 @@ public class GummyBears extends Item implements Edible {
     BigDecimal weight;
     public static final int CALORIES_PER_KILOGRAM = 3960;
 
-    public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, BigDecimal weight) {
-        super(name, category, width, height, length, productionCost, sellingPrice);
+    public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
+        super(name, category, width, height, length, productionCost, sellingPrice, discount);
         this.weight = weight;
     }
 
@@ -19,7 +19,9 @@ public class GummyBears extends Item implements Edible {
 
     @Override
     public BigDecimal calculatePrice() {
-        return getSellingPrice().multiply(weight);
+        if (weight != null && sellingPrice != null)
+            return weight.multiply(sellingPrice).multiply(new BigDecimal(1).subtract(discount.discountAmount()));
+        else return new BigDecimal(0);
     }
 
     public BigDecimal getWeight() {
