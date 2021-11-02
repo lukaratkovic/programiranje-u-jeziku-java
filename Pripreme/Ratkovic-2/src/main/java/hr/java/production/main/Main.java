@@ -203,15 +203,22 @@ public class Main {
         scanner.nextLine();
 
         /*Check if edible*/
-        String selection;
+        System.out.println("Select item type: ");
+        System.out.println("1 Edible");
+        System.out.println("2 Laptop");
+        System.out.println("3 Other");
+        int selection;
         do {
-            System.out.print("Is the item edible? (Y/N): ");
-            selection = scanner.nextLine();
-            if (!selection.equals("Y") && !selection.equals("N")) System.out.println("That is not a valid input.");
-        } while (!selection.equals("Y") && !selection.equals("N"));
+            System.out.print("Item type: ");
+            selection = scanner.nextInt();
+            scanner.nextLine();
+            if (selection < 1 || selection > 3) {
+                System.out.println("Invalid Input.");
+            }
+        } while (selection < 1 || selection > 3);
 
         /*Select edible item*/
-        if (selection.equals("Y")) {
+        if (selection == 1) {
             System.out.println("Select item: ");
             System.out.println("1 Fries");
             System.out.println("2 Gummy Bears");
@@ -241,6 +248,13 @@ public class Main {
                 System.out.println("Total price: " + ((GummyBears) returnItem).calculatePrice());
             }
             return returnItem;
+        }
+        /*Laptop selected*/
+        else if (selection == 2) {
+            System.out.print("Enter laptop warranty: ");
+            int warranty = scanner.nextInt();
+            scanner.nextLine();
+            return new Laptop(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), warranty);
         } else {
             return new Item(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount));
         }
