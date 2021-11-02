@@ -30,10 +30,10 @@ public class Main {
         }
 
         /*Factory input*/
-        /*Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
+        Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
         for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
             factories[i] = createFactory(scanner, items, i);
-        }*/
+        }
 
         /*Store input*/
         /*Store[] stores = new Store[AMOUNT_OF_STORES];
@@ -332,7 +332,12 @@ public class Main {
         System.out.print("Enter postal code: ");
         String postalCode = scanner.nextLine();
 
-        return new Address(street, houseNumber, city, postalCode);
+        return new Address.Builder()
+                .withStreet(street)
+                .withHouseNumber(houseNumber)
+                .withCity(city)
+                .withPostalCode(postalCode)
+                .build();
     }
 
     public static Store createStore(Scanner scanner, Item[] items, int n) {
