@@ -4,5 +4,5 @@ import java.math.BigDecimal;
 
 public interface Edible {
     int kcal();
-    BigDecimal price();
+    BigDecimal calculatePrice();
 }

@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     private static final int AMOUNT_OF_CATEGORIES = 3;
-    private static final int AMOUNT_OF_ITEMS = 5;
+    private static final int AMOUNT_OF_ITEMS = 2;
     private static final int AMOUNT_OF_FACTORIES = 2;
     private static final int AMOUNT_OF_FACTORY_ITEMS = 2;
     private static final int AMOUNT_OF_STORES = 2;
@@ -30,22 +30,25 @@ public class Main {
         }
 
         /*Factory input*/
-        Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
+        /*Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
         for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
             factories[i] = createFactory(scanner, items, i);
-        }
+        }*/
 
         /*Store input*/
-        Store[] stores = new Store[AMOUNT_OF_STORES];
+        /*Store[] stores = new Store[AMOUNT_OF_STORES];
         for (int i = 0; i < AMOUNT_OF_STORES; i++) {
             stores[i] = createStore(scanner, items, i);
-        }
+        }*/
 
         /*Find factory that manufactures item with the largest volume*/
-        largestVolumeFactory(factories);
+        //largestVolumeFactory(factories);
 
         /*Find store that sells the cheapest item*/
-        cheapestArticleStore(stores);
+        //cheapestArticleStore(stores);
+
+        /*Find item with most kcal*/
+        mostKCAL(items);
     }
 
     private static void largestVolumeFactory(Factory[] factories) {
@@ -110,6 +113,35 @@ public class Main {
                 " (Price = " + cheapestArticle.getSellingPrice() + ")");
     }
 
+    public static void mostKCAL(Item[] items) {
+        boolean foundOne = false;
+        Item mostKcalItem = null;
+        BigDecimal mostKcal = new BigDecimal(0);
+        for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
+            if (items[i] instanceof Fries fries) {
+                if (!foundOne) {
+                    mostKcalItem = fries;
+                    mostKcal = fries.totalKCAL();
+                    foundOne = true;
+                } else if (fries.totalKCAL().compareTo(mostKcal) > 0) {
+                    mostKcalItem = fries;
+                    mostKcal = fries.totalKCAL();
+                }
+            } else if (items[i] instanceof GummyBears gummy) {
+                if (!foundOne) {
+                    mostKcalItem = gummy;
+                    mostKcal = gummy.totalKCAL();
+                    foundOne = true;
+                } else if (gummy.totalKCAL().compareTo(mostKcal) > 0) {
+                    mostKcalItem = gummy;
+                    mostKcal = gummy.totalKCAL();
+                }
+            }
+        }
+        if (mostKcalItem == null) System.out.println("No edible items were inputed.");
+        else System.out.println("Edible item with most kcal is: " + mostKcalItem.getName() + "(" + mostKcal + ")");
+    }
+
     public static Category createCategory(Scanner scanner, int n) {
         /*Input Name*/
         System.out.print("Enter " + (n + 1) + ". category name: ");
@@ -166,7 +198,48 @@ public class Main {
 
         scanner.nextLine();
 
-        return new Item(name, category, width, height, length, productionCost, sellingPrice);
+        /*Check if edible*/
+        String selection;
+        do {
+            System.out.print("Is the item edible? (Y/N): ");
+            selection = scanner.nextLine();
+            if (!selection.equals("Y") && !selection.equals("N")) System.out.println("That is not a valid input.");
+        } while (!selection.equals("Y") && !selection.equals("N"));
+
+        /*Select edible item*/
+        if (selection.equals("Y")) {
+            System.out.println("Select item: ");
+            System.out.println("1 Fries");
+            System.out.println("2 Gummy Bears");
+            /*Repeat selection until valid*/
+            int foodSelection;
+            do {
+                System.out.print("Food: ");
+                foodSelection = scanner.nextInt();
+                scanner.nextLine();
+                if (foodSelection < 1 || foodSelection > 2) System.out.println("That is not a valid input.");
+            } while (foodSelection < 1 || foodSelection > 2);
+            /*Input weight*/
+            System.out.print("Input weight (kg): ");
+            BigDecimal weight = scanner.nextBigDecimal();
+            scanner.nextLine();
+            /*Create object of proper type*/
+            Item returnItem;
+            if (foodSelection == 1) {
+                returnItem = new Fries(name, category, width, height, length, productionCost, sellingPrice, weight);
+                /*Total kcal, price*/
+                System.out.println("Total kcal: " + ((Fries) returnItem).totalKCAL());
+                System.out.println("Total price: " + ((Fries) returnItem).totalPrice());
+            } else {
+                returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, weight);
+                /*Total kcal, price*/
+                System.out.println("Total kcal: " + ((GummyBears) returnItem).totalKCAL());
+                System.out.println("Total price: " + ((GummyBears) returnItem).totalPrice());
+            }
+            return returnItem;
+        } else {
+            return new Item(name, category, width, height, length, productionCost, sellingPrice);
+        }
     }
 
     public static Factory createFactory(Scanner scanner, Item[] items, int n) {
