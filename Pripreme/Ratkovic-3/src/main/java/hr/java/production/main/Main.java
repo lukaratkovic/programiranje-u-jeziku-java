@@ -1,10 +1,8 @@
 package hr.java.production.main;
 
 import hr.java.production.model.*;
-import hr.java.production.model.Package;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +12,6 @@ public class Main {
     private static final int AMOUNT_OF_FACTORY_ITEMS = 2;
     private static final int AMOUNT_OF_STORES = 2;
     public static final int AMOUNT_OF_STORE_ITEMS = 2;
-    public static final int AMOUNT_OF_JUICE_ITEMS = 2;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -31,28 +28,6 @@ public class Main {
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
             items[i] = createItem(scanner, categories, i);
         }
-
-        /*Juice*/
-        System.out.print("Input juice name: ");
-        String name = scanner.nextLine();
-        Item[] juiceItems = new Item[AMOUNT_OF_JUICE_ITEMS];
-        System.out.println("Select item: ");
-        for (int i=0; i<AMOUNT_OF_JUICE_ITEMS; i++){
-            for (int j=0; j<AMOUNT_OF_ITEMS; j++){
-                System.out.println((j+1)+" "+items[j].getName());
-            }
-            int selectedItem = 0;
-            do{
-                System.out.print("Select item: ");
-                selectedItem = scanner.nextInt();
-                scanner.nextLine();
-            } while(selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-        }
-        Juice juice = new Juice(name, LocalDateTime.now(), juiceItems);
-
-        System.out.println("Juice info: ");
-        System.out.println("Name: "+juice.getName());
-        System.out.println("Squeeze amount: "+juice.getSqueeze());
 
         /*Factory input*/
         Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
@@ -73,10 +48,10 @@ public class Main {
         //cheapestArticleStore(stores);
 
         /*Find item with most kcal*/
-        /*mostKCAL(items);*/
+        mostKCAL(items);
 
         /*Find laptop with shortest warranty*/
-        /*shortestWarrantyLaptop(items);*/
+        shortestWarrantyLaptop(items);
     }
 
     /*Comparison methods*/
@@ -293,12 +268,7 @@ public class Main {
                 System.out.println("Total kcal: " + ((Fries) returnItem).totalKCAL());
                 System.out.println("Total price: " + ((Fries) returnItem).calculatePrice());
             } else {
-                System.out.print("Enter Package: ");
-                String packName = scanner.nextLine();
-                Package pack = new Package(packName);
                 returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight);
-                returnItem = ((GummyBears) returnItem).setPack(pack);
-                System.out.println("The entered package is "+((GummyBears) returnItem).getPack());
                 /*Total kcal, price*/
                 System.out.println("Total kcal: " + ((GummyBears) returnItem).totalKCAL());
                 System.out.println("Total price: " + ((GummyBears) returnItem).calculatePrice());

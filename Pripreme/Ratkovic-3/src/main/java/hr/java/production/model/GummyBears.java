@@ -6,7 +6,6 @@ public class GummyBears extends Item implements Edible {
 
     BigDecimal weight;
     public static final int CALORIES_PER_KILOGRAM = 3960;
-    Package pack;
 
     public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
         super(name, category, width, height, length, productionCost, sellingPrice, discount);
@@ -42,15 +41,5 @@ public class GummyBears extends Item implements Edible {
         if (weight != null && sellingPrice != null)
             return weight.multiply(sellingPrice);
         else return new BigDecimal(0);
-    }
-
-    public String getPack() {
-        return pack.name();
-    }
-
-    public GummyBears setPack(Package pack) {
-        this.pack = pack;
-
-        return this;
     }
 }

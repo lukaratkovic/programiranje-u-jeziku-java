@@ -2,13 +2,11 @@ package hr.java.production.model;
 
 import java.math.BigDecimal;
 
-public class GummyBears extends Item implements Edible {
-
+public class Fries extends Item implements Edible {
     BigDecimal weight;
-    public static final int CALORIES_PER_KILOGRAM = 3960;
-    Package pack;
+    public static final int CALORIES_PER_KILOGRAM = 2740;
 
-    public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
+    public Fries(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
         super(name, category, width, height, length, productionCost, sellingPrice, discount);
         this.weight = weight;
     }
@@ -20,7 +18,7 @@ public class GummyBears extends Item implements Edible {
 
     @Override
     public BigDecimal calculatePrice() {
-        if (weight != null && sellingPrice != null)
+        if (weight != null && sellingPrice != null && discount.discountAmount() != null)
             return weight.multiply(sellingPrice).multiply(new BigDecimal(1).subtract(discount.discountAmount()));
         else return new BigDecimal(0);
     }
@@ -36,21 +34,5 @@ public class GummyBears extends Item implements Edible {
     public BigDecimal totalKCAL() {
         if (weight != null) return weight.multiply(new BigDecimal(kcal()));
         else return new BigDecimal(0);
-    }
-
-    public BigDecimal totalPrice() {
-        if (weight != null && sellingPrice != null)
-            return weight.multiply(sellingPrice);
-        else return new BigDecimal(0);
-    }
-
-    public String getPack() {
-        return pack.name();
-    }
-
-    public GummyBears setPack(Package pack) {
-        this.pack = pack;
-
-        return this;
     }
 }
