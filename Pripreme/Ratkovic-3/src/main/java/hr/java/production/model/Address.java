@@ -1,20 +1,16 @@
 package hr.java.production.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a physical location
  */
 public class Address {
     String street, houseNumber, city, postalCode;
-    private static final Logger logger = LoggerFactory.getLogger(Address.class);
 
     /**
      * Empty constructor for Address class, should be used in conjunction with Build Pattern
      */
     public Address() {
-        logger.info("Object of class Address was created.");
     }
 
     /**
@@ -26,7 +22,6 @@ public class Address {
      * @param postalCode  Postal code of city
      */
     public Address(String street, String houseNumber, String city, String postalCode) {
-        logger.info("Object of class Address was created.");
         if (street == "") street = "Vrbik";
         if (houseNumber == "") houseNumber = "8";
         if (city == "") city = "Zagreb";

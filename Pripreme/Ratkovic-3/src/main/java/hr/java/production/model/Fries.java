@@ -2,8 +2,6 @@ package hr.java.production.model;
 
 import java.math.BigDecimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents an edible article (Fries)
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
 public class Fries extends Item implements Edible {
     BigDecimal weight;
     public static final int CALORIES_PER_KILOGRAM = 2740;
-    private static final Logger logger = LoggerFactory.getLogger(Fries.class);
 
     /**
      * Constructor for Fries
@@ -29,7 +26,6 @@ public class Fries extends Item implements Edible {
     public Fries(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
         super(name, category, width, height, length, productionCost, sellingPrice, discount);
         this.weight = weight;
-        logger.info("Object of class Fries was created");
     }
 
     /**

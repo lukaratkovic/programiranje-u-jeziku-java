@@ -1,7 +1,5 @@
 package hr.java.production.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a factory with a physical address and list of articles
@@ -9,7 +7,6 @@ import org.slf4j.LoggerFactory;
 public class Factory extends NamedEntity {
     Address address;
     Item[] items;
-    private static final Logger logger = LoggerFactory.getLogger(Factory.class);
 
     /**
      * Constructor for Factory
@@ -22,7 +19,6 @@ public class Factory extends NamedEntity {
         super(name);
         this.address = address;
         this.items = items;
-        logger.info("Object of class Factory was created");
     }
 
     public Address getAddress() {

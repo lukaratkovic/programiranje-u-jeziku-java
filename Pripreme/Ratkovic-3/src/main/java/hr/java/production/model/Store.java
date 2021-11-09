@@ -1,7 +1,5 @@
 package hr.java.production.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a store with a physical address and a list of articles
@@ -9,7 +7,6 @@ import org.slf4j.LoggerFactory;
 public class Store extends NamedEntity {
     String webAddress;
     Item[] items;
-    private static final Logger logger = LoggerFactory.getLogger(Category.class);
 
     /**
      * Constructor for Store
@@ -22,7 +19,6 @@ public class Store extends NamedEntity {
         super(name);
         this.webAddress = webAddress;
         this.items = items;
-        logger.info("Object of class Store was created");
     }
 
     public String getWebAddress() {
