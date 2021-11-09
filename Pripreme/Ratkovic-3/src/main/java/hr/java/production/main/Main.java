@@ -213,9 +213,9 @@ public class Main {
                 }
             }
         }
-
-        System.out.println("Laptop with shortest warranty is " + shortestWarrantyLaptop.getName() +
-                " (" + shortestWarrantyLaptop.getWarranty() + " months)");
+        if (shortestWarrantyLaptop != null)
+            System.out.println("Laptop with shortest warranty is " + shortestWarrantyLaptop.getName() +
+                    " (" + shortestWarrantyLaptop.getWarranty() + " months)");
     }
 
     /**
