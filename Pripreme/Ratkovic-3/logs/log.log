@@ -1,125 +1,23 @@
-2021-11-09 23:01:38,603 INFO [main] h.j.p.m.Main [Main.java:24] The program has been started.
-2021-11-09 23:01:50,694 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
-2021-11-09 23:01:57,403 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
-2021-11-09 23:02:04,348 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
-2021-11-09 23:02:25,217 INFO [main] h.j.p.m.Category [Item.java:23] Object of class Item was created
-2021-11-09 23:02:25,217 INFO [main] h.j.p.m.Fries [Fries.java:16] Object of class Fries was created
-2021-11-09 23:03:12,305 INFO [main] h.j.p.m.Main [Main.java:24] The program has been started.
-2021-11-09 23:03:13,516 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
-2021-11-09 23:03:13,892 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
-2021-11-10 00:12:41,337 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
-2021-11-10 00:12:43,520 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:12:43,793 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:13:31,228 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
-2021-11-10 00:13:33,824 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:13:34,097 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:13:34,098 ERROR [main] h.j.p.m.Main [Main.java:49] An error has occurred
+2021-11-10 00:22:41,118 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-10 00:22:42,816 ERROR [main] h.j.p.m.Main [Main.java:49] An error has occurred
 hr.java.production.exception.DuplicateCategoryException: This category already exists!
 	at hr.java.production.main.Main.main(Main.java:45)
-2021-11-10 00:15:21,287 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
-2021-11-10 00:15:25,318 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:15:25,967 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:15:26,615 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:15:32,064 INFO [main] h.j.p.m.Category [Item.java:38] Object of class Item was created
-2021-11-10 00:15:32,065 INFO [main] h.j.p.m.Fries [Fries.java:32] Object of class Fries was created
-2021-11-10 00:15:36,317 INFO [main] h.j.p.m.Category [Item.java:38] Object of class Item was created
-2021-11-10 00:15:36,318 INFO [main] h.j.p.m.Fries [Fries.java:32] Object of class Fries was created
-2021-11-10 00:15:46,621 INFO [main] h.j.p.m.Address [Address.java:17] Object of class Address was created.
-2021-11-10 00:15:48,653 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:410)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:15:49,661 INFO [main] h.j.p.m.Factory [Factory.java:25] Object of class Factory was created
-2021-11-10 00:15:54,099 INFO [main] h.j.p.m.Address [Address.java:17] Object of class Address was created.
-2021-11-10 00:15:56,304 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:410)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:15:56,996 INFO [main] h.j.p.m.Factory [Factory.java:25] Object of class Factory was created
-2021-11-10 00:16:16,075 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in store.
-	at hr.java.production.main.Main.createStore(Main.java:487)
-	at hr.java.production.main.Main.main(Main.java:71)
-2021-11-10 00:16:16,753 INFO [main] h.j.p.m.Category [Store.java:25] Object of class Store was created
-2021-11-10 00:16:22,561 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in store.
-	at hr.java.production.main.Main.createStore(Main.java:487)
-	at hr.java.production.main.Main.main(Main.java:71)
-2021-11-10 00:16:23,167 INFO [main] h.j.p.m.Category [Store.java:25] Object of class Store was created
-2021-11-10 00:17:13,005 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
-2021-11-10 00:17:15,032 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:17:15,579 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:17:15,580 ERROR [main] h.j.p.m.Main [Main.java:49] An error has occurred
+2021-11-10 00:22:45,596 ERROR [main] h.j.p.m.Main [Main.java:49] An error has occurred
 hr.java.production.exception.DuplicateCategoryException: This category already exists!
 	at hr.java.production.main.Main.main(Main.java:45)
-2021-11-10 00:17:16,977 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:17:18,621 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:17:23,190 INFO [main] h.j.p.m.Category [Item.java:38] Object of class Item was created
-2021-11-10 00:17:23,190 INFO [main] h.j.p.m.Fries [Fries.java:32] Object of class Fries was created
-2021-11-10 00:17:27,183 INFO [main] h.j.p.m.Category [Item.java:38] Object of class Item was created
-2021-11-10 00:17:27,184 INFO [main] h.j.p.m.Fries [Fries.java:32] Object of class Fries was created
-2021-11-10 00:17:31,248 INFO [main] h.j.p.m.Address [Address.java:17] Object of class Address was created.
-2021-11-10 00:17:32,329 ERROR [main] h.j.p.m.Main [Main.java:414] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:411)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:17:32,631 ERROR [main] h.j.p.m.Main [Main.java:414] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:411)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:17:34,448 INFO [main] h.j.p.m.Factory [Factory.java:25] Object of class Factory was created
-2021-11-10 00:17:38,584 INFO [main] h.j.p.m.Address [Address.java:17] Object of class Address was created.
-2021-11-10 00:17:40,688 INFO [main] h.j.p.m.Factory [Factory.java:25] Object of class Factory was created
-2021-11-10 00:17:56,468 INFO [main] h.j.p.m.Category [Store.java:25] Object of class Store was created
-2021-11-10 00:18:00,837 INFO [main] h.j.p.m.Category [Store.java:25] Object of class Store was created
-2021-11-10 00:19:35,852 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
-2021-11-10 00:19:38,419 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:19:39,484 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:19:39,486 ERROR [main] h.j.p.m.Main [Main.java:49] An error has occurred
-hr.java.production.exception.DuplicateCategoryException: This category already exists!
-	at hr.java.production.main.Main.main(Main.java:45)
-2021-11-10 00:19:40,955 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:19:42,166 INFO [main] h.j.p.m.Category [Category.java:22] Object of class Category was created
-2021-11-10 00:19:53,121 INFO [main] h.j.p.m.Category [Item.java:38] Object of class Item was created
-2021-11-10 00:19:53,121 INFO [main] h.j.p.m.Category [Laptop.java:32] Object of class Laptop was created
-2021-11-10 00:19:55,938 INFO [main] h.j.p.m.Category [Item.java:38] Object of class Item was created
-2021-11-10 00:19:55,938 INFO [main] h.j.p.m.Fries [Fries.java:32] Object of class Fries was created
-2021-11-10 00:19:57,174 INFO [main] h.j.p.m.Address [Address.java:17] Object of class Address was created.
-2021-11-10 00:19:57,923 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
+2021-11-10 00:22:59,581 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
 hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
 	at hr.java.production.main.Main.createFactory(Main.java:410)
 	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:19:58,211 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:410)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:19:58,443 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:410)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:19:58,897 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:410)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:19:59,466 INFO [main] h.j.p.m.Factory [Factory.java:25] Object of class Factory was created
-2021-11-10 00:20:01,588 INFO [main] h.j.p.m.Address [Address.java:17] Object of class Address was created.
-2021-11-10 00:20:02,033 ERROR [main] h.j.p.m.Main [Main.java:413] An error has occurred
-hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
-	at hr.java.production.main.Main.createFactory(Main.java:410)
-	at hr.java.production.main.Main.main(Main.java:65)
-2021-11-10 00:20:02,579 INFO [main] h.j.p.m.Factory [Factory.java:25] Object of class Factory was created
-2021-11-10 00:20:04,511 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
+2021-11-10 00:23:07,580 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
 hr.java.production.exception.DuplicateArticleException: This item already exists in store.
 	at hr.java.production.main.Main.createStore(Main.java:487)
 	at hr.java.production.main.Main.main(Main.java:71)
-2021-11-10 00:20:04,923 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
+2021-11-10 00:23:07,849 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
 hr.java.production.exception.DuplicateArticleException: This item already exists in store.
 	at hr.java.production.main.Main.createStore(Main.java:487)
 	at hr.java.production.main.Main.main(Main.java:71)
-2021-11-10 00:20:05,640 INFO [main] h.j.p.m.Category [Store.java:25] Object of class Store was created
-2021-11-10 00:20:08,547 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
+2021-11-10 00:23:08,028 ERROR [main] h.j.p.m.Main [Main.java:490] An error has occurred
 hr.java.production.exception.DuplicateArticleException: This item already exists in store.
 	at hr.java.production.main.Main.createStore(Main.java:487)
 	at hr.java.production.main.Main.main(Main.java:71)
-2021-11-10 00:20:09,477 INFO [main] h.j.p.m.Category [Store.java:25] Object of class Store was created
-2021-11-10 00:20:09,481 INFO [main] h.j.p.m.Main [Main.java:86] The program has finished to completion
