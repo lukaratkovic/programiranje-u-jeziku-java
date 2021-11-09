@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Runs the program
+ */
 public class Main {
     private static final int AMOUNT_OF_CATEGORIES = 3;
     private static final int AMOUNT_OF_ITEMS = 2;
@@ -20,6 +23,11 @@ public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
+    /**
+     * Method called when program is run
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         logger.info("The program has been started.");
         Scanner scanner = new Scanner(System.in);
@@ -38,7 +46,7 @@ public class Main {
                     }
                     isValid = true;
                 } catch (DuplicateCategoryException ex) {
-                    logger.error("An error has occured", ex);
+                    logger.error("An error has occurred", ex);
                     System.out.println(ex.getMessage());
                 }
             } while (!isValid);
@@ -78,7 +86,11 @@ public class Main {
         logger.info("The program has finished to completion");
     }
 
-    /*Comparison methods*/
+    /**
+     * Outputs the name of Factory with largest volume Item
+     *
+     * @param factories List of factories to be checked
+     */
     private static void largestVolumeFactory(Factory[] factories) {
         /*Set first factory as one with largest volume*/
         Factory largestVolumeFactory = factories[0];
@@ -110,6 +122,11 @@ public class Main {
                 " (Volume = " + largestVolumeItem.getVolume() + ")");
     }
 
+    /**
+     * Outputs the name of Store with cheapest Item
+     *
+     * @param stores List of stores to be checked
+     */
     public static void cheapestArticleStore(Store[] stores) {
         /*Set first store as the one with cheapest item*/
         Store cheapestArticleStore = stores[0];
@@ -141,6 +158,11 @@ public class Main {
                 " (Price = " + cheapestArticle.getSellingPrice() + ")");
     }
 
+    /**
+     * Outputs the name of Edible with highest kilocalorie count
+     *
+     * @param items List of items to be checked
+     */
     public static void mostKCAL(Item[] items) {
         boolean foundOne = false;
         Item mostKcalItem = null;
@@ -170,6 +192,11 @@ public class Main {
         else System.out.println("Edible item with most kcal is: " + mostKcalItem.getName() + " (" + mostKcal + ")");
     }
 
+    /**
+     * Outputs the name of Laptop with lowest warranty
+     *
+     * @param items List of items to be checked
+     */
     public static void shortestWarrantyLaptop(Item[] items) {
         boolean foundLaptop = false;
         Laptop shortestWarrantyLaptop = null;
@@ -191,13 +218,18 @@ public class Main {
                 " (" + shortestWarrantyLaptop.getWarranty() + " months)");
     }
 
-    /*Input methods*/
+    /**
+     * Inputs an integer from System.in with handling of InputMismatchException
+     *
+     * @param scanner Allows input from System.in
+     * @return int
+     */
     public static int inputInt(Scanner scanner) {
         int input = 0;
         try {
             input = scanner.nextInt();
         } catch (InputMismatchException ex) {
-            logger.error("An error has occured", ex);
+            logger.error("An error has occurred", ex);
             System.out.println("Exception: " + ex);
         } finally {
             scanner.nextLine();
@@ -205,12 +237,18 @@ public class Main {
         return input;
     }
 
+    /**
+     * Inputs a BigDecimal from System.in with handling of InputMismatchException
+     *
+     * @param scanner Allows input from System.in
+     * @return BigDecimal
+     */
     public static BigDecimal inputBigDecimal(Scanner scanner) {
         BigDecimal input = new BigDecimal(0);
         try {
             input = scanner.nextBigDecimal();
         } catch (InputMismatchException ex) {
-            logger.error("An error has occured", ex);
+            logger.error("An error has occurred", ex);
             System.out.println("Exception: " + ex);
             System.out.println("Value defaulted to 0.");
         } finally {
@@ -219,6 +257,13 @@ public class Main {
         return input;
     }
 
+    /**
+     * Requests input of parameters for Category
+     *
+     * @param scanner Allows input from System.in
+     * @param n       Index of category that is being created
+     * @return Object of Category class
+     */
     public static Category createCategory(Scanner scanner, int n) {
         /*Input Name*/
         System.out.print("Enter " + (n + 1) + ". category name: ");
@@ -232,6 +277,14 @@ public class Main {
         return new Category(name, description);
     }
 
+    /**
+     * Requests input of parameters for Item
+     *
+     * @param scanner    Allows input from System.in
+     * @param categories Category[], list of categories that can be selected
+     * @param n          Index of item that is being created
+     * @return Object of Item class
+     */
     public static Item createItem(Scanner scanner, Category[] categories, int n) {
         /*Input Name*/
         System.out.print("Enter " + (n + 1) + ". item name: ");
@@ -324,6 +377,14 @@ public class Main {
         }
     }
 
+    /**
+     * Requests input of parameters for Factory
+     *
+     * @param scanner Allows input from System.in
+     * @param items   Item[] list of articles that can be added to Factory
+     * @param n       Index of factory that is being created
+     * @return Object of Factory class
+     */
     public static Factory createFactory(Scanner scanner, Item[] items, int n) {
         /*Input name*/
         System.out.print("Enter " + (n + 1) + ". factory name: ");
@@ -349,7 +410,7 @@ public class Main {
                             throw new DuplicateArticleException("This item already exists in factory.");
                     }
                 } catch (DuplicateArticleException ex) {
-                    logger.error("An error has occured", ex);
+                    logger.error("An error has occurred", ex);
                     System.out.println(ex.getMessage());
                     selectedItem = 0;
                 }
@@ -360,6 +421,12 @@ public class Main {
         return new Factory(name, address, factoryItems);
     }
 
+    /**
+     * Requests input of parameters for Address
+     *
+     * @param scanner Allows input from System.in
+     * @return Object of Address class
+     */
     public static Address createAddress(Scanner scanner) {
         /*Input street*/
         System.out.print("Enter street: ");
@@ -385,6 +452,14 @@ public class Main {
                 .build();
     }
 
+    /**
+     * Requests input of parameters for Store
+     *
+     * @param scanner Allows input from System.in
+     * @param items   Item[] list of articles that can be added to Store
+     * @param n       Index of store that is being created
+     * @return Object of Store class
+     */
     public static Store createStore(Scanner scanner, Item[] items, int n) {
         /*Input name*/
         System.out.print("Enter " + (n + 1) + ". store name: ");
@@ -412,7 +487,7 @@ public class Main {
                             throw new DuplicateArticleException("This item already exists in store.");
                     }
                 } catch (DuplicateArticleException ex) {
-                    logger.error("An error has occured", ex);
+                    logger.error("An error has occurred", ex);
                     System.out.println(ex.getMessage());
                     selectedItem = 0;
                 }

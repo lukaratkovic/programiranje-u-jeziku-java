@@ -5,23 +5,49 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Represents an edible article (Gummy Bears)
+ */
 public class GummyBears extends Item implements Edible {
 
     BigDecimal weight;
     public static final int CALORIES_PER_KILOGRAM = 3960;
     private static final Logger logger = LoggerFactory.getLogger(GummyBears.class);
 
+    /**
+     * Constructor for GummyBears
+     *
+     * @param name           Gummy bears name
+     * @param category       Gummy bears category
+     * @param width          Gummy bears width
+     * @param height         Gummy bears height
+     * @param length         Gummy bears length
+     * @param productionCost Gummy bears production cost
+     * @param sellingPrice   Gummy bears selling price
+     * @param discount       Gummy bears discount percentage (0-1)
+     * @param weight         Gummy bears weight
+     */
     public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
         super(name, category, width, height, length, productionCost, sellingPrice, discount);
         this.weight = weight;
         logger.info("Object of class GummyBears was created");
     }
 
+    /**
+     * Retrieves number of kilocalories
+     *
+     * @return kilocalories
+     */
     @Override
     public int kcal() {
         return CALORIES_PER_KILOGRAM;
     }
 
+    /**
+     * Retrieves total calculated price
+     *
+     * @return calculated price
+     */
     @Override
     public BigDecimal calculatePrice() {
         if (weight != null && sellingPrice != null)
@@ -37,14 +63,13 @@ public class GummyBears extends Item implements Edible {
         this.weight = weight;
     }
 
+    /**
+     * Calculates total amount of kilocalories based on weight
+     *
+     * @return total kilocalories
+     */
     public BigDecimal totalKCAL() {
         if (weight != null) return weight.multiply(new BigDecimal(kcal()));
-        else return new BigDecimal(0);
-    }
-
-    public BigDecimal totalPrice() {
-        if (weight != null && sellingPrice != null)
-            return weight.multiply(sellingPrice);
         else return new BigDecimal(0);
     }
 }

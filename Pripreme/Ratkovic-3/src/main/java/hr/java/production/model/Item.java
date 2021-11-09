@@ -5,12 +5,27 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Represents an article
+ */
 public class Item extends NamedEntity {
     Category category;
     BigDecimal width, height, length, productionCost, sellingPrice;
     Discount discount;
     private static final Logger logger = LoggerFactory.getLogger(Category.class);
 
+    /**
+     * Constructor for Item
+     *
+     * @param name           Item name
+     * @param category       Item category
+     * @param width          Item width
+     * @param height         Item height
+     * @param length         Item length
+     * @param productionCost Item production cost
+     * @param sellingPrice   Item selling price
+     * @param discount       Item discount
+     */
     public Item(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount) {
         super(name);
         this.category = category;
@@ -71,6 +86,11 @@ public class Item extends NamedEntity {
         this.sellingPrice = sellingPrice;
     }
 
+    /**
+     * Calculates article volume (width×height×length)
+     *
+     * @return
+     */
     public BigDecimal getVolume() {
         return this.width.multiply(this.height.multiply(this.length));
     }
