@@ -1,5 +1,6 @@
 package hr.java.production.main;
 
+import hr.java.production.exception.DuplicateArticleException;
 import hr.java.production.model.*;
 
 import java.math.BigDecimal;
@@ -21,7 +22,6 @@ public class Main {
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
         for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
             categories[i] = createCategory(scanner, i);
-            categories[i].getName();
         }
 
         /*Item input*/
@@ -37,16 +37,16 @@ public class Main {
         }
 
         /*Store input*/
-        /*Store[] stores = new Store[AMOUNT_OF_STORES];
+        Store[] stores = new Store[AMOUNT_OF_STORES];
         for (int i = 0; i < AMOUNT_OF_STORES; i++) {
             stores[i] = createStore(scanner, items, i);
-        }*/
+        }
 
         /*Find factory that manufactures item with the largest volume*/
-        //largestVolumeFactory(factories);
+        largestVolumeFactory(factories);
 
         /*Find store that sells the cheapest item*/
-        //cheapestArticleStore(stores);
+        cheapestArticleStore(stores);
 
         /*Find item with most kcal*/
         mostKCAL(items);
@@ -217,7 +217,7 @@ public class Main {
         for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
             System.out.println((i + 1) + " " + categories[i].getName());
         }
-        int selectedCategory = 0;
+        int selectedCategory;
         /*Repeat input until a correct option is selected*/
         do {
             System.out.print("Category: ");
@@ -244,12 +244,10 @@ public class Main {
         /*Input selling price*/
         System.out.print("Enter selling price: ");
         BigDecimal sellingPrice = inputBigDecimal(scanner);
-        scanner.nextLine();
 
         /*Input discount*/
         System.out.print("Enter discount percentage: ");
         BigDecimal discount = inputBigDecimal(scanner);
-        scanner.nextLine();
 
         /*Check if edible*/
         System.out.println("Select item type: ");
@@ -276,7 +274,6 @@ public class Main {
             /*Input weight*/
             System.out.print("Input weight (kg): ");
             BigDecimal weight = inputBigDecimal(scanner);
-            scanner.nextLine();
             /*Create object of proper type*/
             Item returnItem;
             if (foodSelection == 1) {
@@ -320,7 +317,18 @@ public class Main {
             int selectedItem;
             do {
                 System.out.print("Item: ");
-                selectedItem = inputInt(scanner);
+                try {
+                    selectedItem = inputInt(scanner);
+                    if (i > 0) {
+                        for (int j = 0; j < i; j++) {
+                            if (factoryItems[j].equals(items[selectedItem - 1]))
+                                throw new DuplicateArticleException("This item already exists in factory.");
+                        }
+                    }
+                } catch (DuplicateArticleException ex) {
+                    System.out.println(ex.getMessage());
+                    selectedItem = 0;
+                }
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
             factoryItems[i] = items[selectedItem - 1];
         }
@@ -372,9 +380,29 @@ public class Main {
             int selectedItem;
             do {
                 System.out.print("Item: ");
-                selectedItem = inputInt(scanner);
+                try {
+                    selectedItem = inputInt(scanner);
+                    if (i > 0) {
+                        /*Compare item [selectedItem-1] with all previous entries*/
+                        for (int j = 0; j < i; j++) {
+                            if (storeItems[j].equals(items[selectedItem - 1]))
+                                throw new DuplicateArticleException("This item already exists in store.");
+                        }
+                    }
+                } catch (DuplicateArticleException ex) {
+                    System.out.println(ex.getMessage());
+                    selectedItem = 0;
+                }
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
             storeItems[i] = items[selectedItem - 1];
+            /*Go through all previous items and check if already exists*/
+            if (i > 0) {
+                for (int j = 0; j < i; j++) {
+                    if (storeItems[i].equals(storeItems[j])) {
+                        break;
+                    }
+                }
+            }
         }
 
         return new Store(name, webAddress, storeItems);

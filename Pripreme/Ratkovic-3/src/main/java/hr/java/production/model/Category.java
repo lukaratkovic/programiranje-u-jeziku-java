@@ -15,4 +15,8 @@ public class Category extends NamedEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean equals(Category compareCategory) {
+        return this.name.equals(compareCategory.name) && this.description.equals(compareCategory.description);
+    }
 }
