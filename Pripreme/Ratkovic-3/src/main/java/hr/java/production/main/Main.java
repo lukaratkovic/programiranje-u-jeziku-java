@@ -3,6 +3,7 @@ package hr.java.production.main;
 import hr.java.production.model.*;
 
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -168,6 +169,31 @@ public class Main {
     }
 
     /*Input methods*/
+    public static int inputInt(Scanner scanner) {
+        int input = 0;
+        try {
+            input = scanner.nextInt();
+        } catch (InputMismatchException ex) {
+            System.out.println("Exception: " + ex);
+        } finally {
+            scanner.nextLine();
+        }
+        return input;
+    }
+
+    public static BigDecimal inputBigDecimal(Scanner scanner) {
+        BigDecimal input = new BigDecimal(0);
+        try {
+            input = scanner.nextBigDecimal();
+        } catch (InputMismatchException ex) {
+            System.out.println("Exception: " + ex);
+            System.out.println("Value defaulted to 0.");
+        } finally {
+            scanner.nextLine();
+        }
+        return input;
+    }
+
     public static Category createCategory(Scanner scanner, int n) {
         /*Input Name*/
         System.out.print("Enter " + (n + 1) + ". category name: ");
@@ -191,41 +217,38 @@ public class Main {
         for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
             System.out.println((i + 1) + " " + categories[i].getName());
         }
-        int selectedCategory;
+        int selectedCategory = 0;
         /*Repeat input until a correct option is selected*/
         do {
             System.out.print("Category: ");
-            selectedCategory = scanner.nextInt();
-            if (selectedCategory < 1 || selectedCategory > AMOUNT_OF_CATEGORIES)
-                System.out.println("That category does not exist.");
+            selectedCategory = inputInt(scanner);
         } while (selectedCategory < 1 || selectedCategory > AMOUNT_OF_CATEGORIES);
-        scanner.nextLine();
         Category category = categories[selectedCategory - 1];
 
         /*Input width*/
         System.out.print("Enter width: ");
-        BigDecimal width = scanner.nextBigDecimal();
+        BigDecimal width = inputBigDecimal(scanner);
 
         /*Input height*/
         System.out.print("Enter height: ");
-        BigDecimal height = scanner.nextBigDecimal();
+        BigDecimal height = inputBigDecimal(scanner);
 
         /*Input length*/
         System.out.print("Enter length: ");
-        BigDecimal length = scanner.nextBigDecimal();
+        BigDecimal length = inputBigDecimal(scanner);
 
         /*Input production cost*/
         System.out.print("Enter production cost: ");
-        BigDecimal productionCost = scanner.nextBigDecimal();
+        BigDecimal productionCost = inputBigDecimal(scanner);
 
         /*Input selling price*/
         System.out.print("Enter selling price: ");
-        BigDecimal sellingPrice = scanner.nextBigDecimal();
+        BigDecimal sellingPrice = inputBigDecimal(scanner);
         scanner.nextLine();
 
         /*Input discount*/
         System.out.print("Enter discount percentage: ");
-        BigDecimal discount = scanner.nextBigDecimal();
+        BigDecimal discount = inputBigDecimal(scanner);
         scanner.nextLine();
 
         /*Check if edible*/
@@ -236,11 +259,7 @@ public class Main {
         int selection;
         do {
             System.out.print("Item type: ");
-            selection = scanner.nextInt();
-            scanner.nextLine();
-            if (selection < 1 || selection > 3) {
-                System.out.println("Invalid Input.");
-            }
+            selection = inputInt(scanner);
         } while (selection < 1 || selection > 3);
 
         /*Select edible item*/
@@ -252,13 +271,11 @@ public class Main {
             int foodSelection;
             do {
                 System.out.print("Food: ");
-                foodSelection = scanner.nextInt();
-                scanner.nextLine();
-                if (foodSelection < 1 || foodSelection > 2) System.out.println("That is not a valid input.");
+                foodSelection = inputInt(scanner);
             } while (foodSelection < 1 || foodSelection > 2);
             /*Input weight*/
             System.out.print("Input weight (kg): ");
-            BigDecimal weight = scanner.nextBigDecimal();
+            BigDecimal weight = inputBigDecimal(scanner);
             scanner.nextLine();
             /*Create object of proper type*/
             Item returnItem;
@@ -278,8 +295,7 @@ public class Main {
         /*Laptop selected*/
         else if (selection == 2) {
             System.out.print("Enter laptop warranty: ");
-            int warranty = scanner.nextInt();
-            scanner.nextLine();
+            int warranty = inputInt(scanner);
             return new Laptop(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), warranty);
         } else {
             return new Item(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount));
@@ -304,10 +320,7 @@ public class Main {
             int selectedItem;
             do {
                 System.out.print("Item: ");
-                selectedItem = scanner.nextInt();
-                scanner.nextLine();
-                if (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS)
-                    System.out.println("That item does not exist.");
+                selectedItem = inputInt(scanner);
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
             factoryItems[i] = items[selectedItem - 1];
         }
@@ -359,10 +372,7 @@ public class Main {
             int selectedItem;
             do {
                 System.out.print("Item: ");
-                selectedItem = scanner.nextInt();
-                scanner.nextLine();
-                if (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS)
-                    System.out.println("That item does not exist.");
+                selectedItem = inputInt(scanner);
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
             storeItems[i] = items[selectedItem - 1];
         }
