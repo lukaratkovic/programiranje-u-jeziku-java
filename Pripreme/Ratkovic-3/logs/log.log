@@ -1,0 +1,9 @@
+2021-11-09 23:01:38,603 INFO [main] h.j.p.m.Main [Main.java:24] The program has been started.
+2021-11-09 23:01:50,694 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
+2021-11-09 23:01:57,403 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
+2021-11-09 23:02:04,348 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
+2021-11-09 23:02:25,217 INFO [main] h.j.p.m.Category [Item.java:23] Object of class Item was created
+2021-11-09 23:02:25,217 INFO [main] h.j.p.m.Fries [Fries.java:16] Object of class Fries was created
+2021-11-09 23:03:12,305 INFO [main] h.j.p.m.Main [Main.java:24] The program has been started.
+2021-11-09 23:03:13,516 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created
+2021-11-09 23:03:13,892 INFO [main] h.j.p.m.Category [Category.java:13] Object of class Category was created

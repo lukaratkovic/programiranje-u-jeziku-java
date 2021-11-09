@@ -2,10 +2,14 @@ package hr.java.production.model;
 
 import java.math.BigDecimal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Item extends NamedEntity {
     Category category;
     BigDecimal width, height, length, productionCost, sellingPrice;
     Discount discount;
+    private static final Logger logger = LoggerFactory.getLogger(Category.class);
 
     public Item(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount) {
         super(name);
@@ -16,6 +20,7 @@ public class Item extends NamedEntity {
         this.productionCost = productionCost;
         this.sellingPrice = sellingPrice;
         this.discount = discount;
+        logger.info("Object of class Item was created");
     }
 
     public Category getCategory() {

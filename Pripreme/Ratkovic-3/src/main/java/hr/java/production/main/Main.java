@@ -3,6 +3,8 @@ package hr.java.production.main;
 import hr.java.production.exception.DuplicateArticleException;
 import hr.java.production.exception.DuplicateCategoryException;
 import hr.java.production.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
@@ -16,7 +18,10 @@ public class Main {
     private static final int AMOUNT_OF_STORES = 2;
     public static final int AMOUNT_OF_STORE_ITEMS = 2;
 
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
+        logger.info("The program has been started.");
         Scanner scanner = new Scanner(System.in);
 
         /*Category input*/
@@ -33,6 +38,7 @@ public class Main {
                     }
                     isValid = true;
                 } catch (DuplicateCategoryException ex) {
+                    logger.error("An error has occured", ex);
                     System.out.println(ex.getMessage());
                 }
             } while (!isValid);
@@ -68,6 +74,8 @@ public class Main {
 
         /*Find laptop with shortest warranty*/
         shortestWarrantyLaptop(items);
+
+        logger.info("The program has finished to completion");
     }
 
     /*Comparison methods*/
@@ -189,6 +197,7 @@ public class Main {
         try {
             input = scanner.nextInt();
         } catch (InputMismatchException ex) {
+            logger.error("An error has occured", ex);
             System.out.println("Exception: " + ex);
         } finally {
             scanner.nextLine();
@@ -201,6 +210,7 @@ public class Main {
         try {
             input = scanner.nextBigDecimal();
         } catch (InputMismatchException ex) {
+            logger.error("An error has occured", ex);
             System.out.println("Exception: " + ex);
             System.out.println("Value defaulted to 0.");
         } finally {
@@ -339,6 +349,7 @@ public class Main {
                             throw new DuplicateArticleException("This item already exists in factory.");
                     }
                 } catch (DuplicateArticleException ex) {
+                    logger.error("An error has occured", ex);
                     System.out.println(ex.getMessage());
                     selectedItem = 0;
                 }
@@ -401,6 +412,7 @@ public class Main {
                             throw new DuplicateArticleException("This item already exists in store.");
                     }
                 } catch (DuplicateArticleException ex) {
+                    logger.error("An error has occured", ex);
                     System.out.println(ex.getMessage());
                     selectedItem = 0;
                 }
