@@ -1,6 +1,7 @@
 package hr.java.production.main;
 
 import hr.java.production.exception.DuplicateArticleException;
+import hr.java.production.exception.DuplicateCategoryException;
 import hr.java.production.model.*;
 
 import java.math.BigDecimal;
@@ -21,7 +22,21 @@ public class Main {
         /*Category input*/
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
         for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
-            categories[i] = createCategory(scanner, i);
+            Category created;
+            boolean isValid = false;
+            do {
+                created = createCategory(scanner, i);
+                try {
+                    for (int j = 0; j < i; j++) {
+                        if (categories[j].equals(created))
+                            throw new DuplicateCategoryException("This category already exists!");
+                    }
+                    isValid = true;
+                } catch (DuplicateCategoryException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            } while (!isValid);
+            categories[i] = created;
         }
 
         /*Item input*/
@@ -319,11 +334,9 @@ public class Main {
                 System.out.print("Item: ");
                 try {
                     selectedItem = inputInt(scanner);
-                    if (i > 0) {
-                        for (int j = 0; j < i; j++) {
-                            if (factoryItems[j].equals(items[selectedItem - 1]))
-                                throw new DuplicateArticleException("This item already exists in factory.");
-                        }
+                    for (int j = 0; j < i; j++) {
+                        if (factoryItems[j].equals(items[selectedItem - 1]))
+                            throw new DuplicateArticleException("This item already exists in factory.");
                     }
                 } catch (DuplicateArticleException ex) {
                     System.out.println(ex.getMessage());
@@ -382,12 +395,10 @@ public class Main {
                 System.out.print("Item: ");
                 try {
                     selectedItem = inputInt(scanner);
-                    if (i > 0) {
-                        /*Compare item [selectedItem-1] with all previous entries*/
-                        for (int j = 0; j < i; j++) {
-                            if (storeItems[j].equals(items[selectedItem - 1]))
-                                throw new DuplicateArticleException("This item already exists in store.");
-                        }
+                    /*Compare item [selectedItem-1] with all previous entries*/
+                    for (int j = 0; j < i; j++) {
+                        if (storeItems[j].equals(items[selectedItem - 1]))
+                            throw new DuplicateArticleException("This item already exists in store.");
                     }
                 } catch (DuplicateArticleException ex) {
                     System.out.println(ex.getMessage());
