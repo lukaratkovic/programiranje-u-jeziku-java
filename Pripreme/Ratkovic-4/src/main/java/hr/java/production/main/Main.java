@@ -4,6 +4,7 @@ import hr.java.production.enums.City;
 import hr.java.production.exception.DuplicateArticleException;
 import hr.java.production.exception.DuplicateCategoryException;
 import hr.java.production.model.*;
+import hr.java.production.sort.ProductionSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +59,19 @@ public class Main {
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
             items.add(createItem(scanner, categories, i));
+        }
+
+        System.out.println("Items sorted in ascending order: ");
+        Comparator<Item> compare = new ProductionSorter();
+        Collections.sort(items, compare);
+        for (Item item : items) {
+            System.out.println(item.getName() + " " + item.getSellingPrice());
+        }
+        System.out.println("Items sorted in descending order: ");
+        compare = new ProductionSorter(false);
+        Collections.sort(items, compare);
+        for (Item item : items) {
+            System.out.println(item.getName() + " " + item.getSellingPrice());
         }
 
         /*Factory input*/
