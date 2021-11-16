@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class Main {
     private static final int AMOUNT_OF_CATEGORIES = 3;
-    private static final int AMOUNT_OF_ITEMS = 2;
+    private static final int AMOUNT_OF_ITEMS = 5;
     private static final int AMOUNT_OF_FACTORIES = 2;
     private static final int AMOUNT_OF_FACTORY_ITEMS = 2;
     private static final int AMOUNT_OF_STORES = 2;
@@ -32,6 +32,8 @@ public class Main {
     public static void main(String[] args) {
         logger.info("The program has been started.");
         Scanner scanner = new Scanner(System.in);
+
+        Map<Category, List<Item>> categoryItemMap = new HashMap<>();
 
         /*Category input*/
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
@@ -58,20 +60,17 @@ public class Main {
         //Item[] items = new Item[AMOUNT_OF_ITEMS];
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            items.add(createItem(scanner, categories, i));
-        }
-
-        System.out.println("Items sorted in ascending order: ");
-        Comparator<Item> compare = new ProductionSorter();
-        Collections.sort(items, compare);
-        for (Item item : items) {
-            System.out.println(item.getName() + " " + item.getSellingPrice());
-        }
-        System.out.println("Items sorted in descending order: ");
-        compare = new ProductionSorter(false);
-        Collections.sort(items, compare);
-        for (Item item : items) {
-            System.out.println(item.getName() + " " + item.getSellingPrice());
+            Item created = createItem(scanner, categories, i);
+            items.add(created);
+            if (categoryItemMap.containsKey(created.getCategory())) {
+                List<Item> currentItems = categoryItemMap.get(created.getCategory());
+                currentItems.add(created);
+                categoryItemMap.put(created.getCategory(), currentItems);
+            } else {
+                List<Item> currentItems = new ArrayList<>();
+                currentItems.add(created);
+                categoryItemMap.put(created.getCategory(), currentItems);
+            }
         }
 
         /*Factory input*/
@@ -98,7 +97,37 @@ public class Main {
         /*Find laptop with shortest warranty*/
         shortestWarrantyLaptop(items);
 
+        /*Find cheapest and most expensive items for each category*/
+        categoryMinMax(categoryItemMap);
+
         logger.info("The program has finished to completion");
+    }
+
+    private static void categoryMinMax(Map<Category, List<Item>> categoryItemMap) {
+        Comparator<Item> compare = new ProductionSorter();
+        for (var entry : categoryItemMap.entrySet()) {
+            System.out.println("Category " + entry.getKey().getName());
+            Collections.sort(entry.getValue(), compare);
+            /*Empty category*/
+            if (entry.getValue().size() == 0)
+                System.out.println("This category has no items.");
+                /*Category with only 1 item*/
+            else if (entry.getValue().size() == 1) {
+                System.out.println("The only item in this category is " + entry.getValue().get(0).getName() +
+                        "(" + entry.getValue().get(0).getSellingPrice() + ")");
+            }
+            /*Category with 2 or more items*/
+            else {
+                Item cheapest = entry.getValue().get(0);
+                Item mostExpensive = entry.getValue().get(entry.getValue().size() - 1);
+                System.out.println("Cheapest item: ");
+                System.out.println(cheapest.getName() +
+                        "(" + cheapest.getSellingPrice() + ")");
+                System.out.println("Most expensive item: ");
+                System.out.println(mostExpensive.getName() +
+                        "(" + mostExpensive.getSellingPrice() + ")");
+            }
+        }
     }
 
     /**
