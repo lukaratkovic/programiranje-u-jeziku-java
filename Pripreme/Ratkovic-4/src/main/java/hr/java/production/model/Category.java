@@ -1,6 +1,8 @@
 package hr.java.production.model;
 
 
+import java.util.Objects;
+
 /**
  * Represents a category of items
  */
@@ -34,5 +36,19 @@ public class Category extends NamedEntity {
      */
     public boolean equals(Category compareCategory) {
         return this.name.equals(compareCategory.name) && this.description.equals(compareCategory.description);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+        if (!super.equals(o)) return false;
+        Category category = (Category) o;
+        return Objects.equals(description, category.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), description);
     }
 }

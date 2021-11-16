@@ -1,6 +1,7 @@
 package hr.java.production.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 /**
@@ -36,5 +37,19 @@ public non-sealed class Laptop extends Item implements Technical {
     @Override
     public int getWarranty() {
         return warranty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Laptop)) return false;
+        if (!super.equals(o)) return false;
+        Laptop laptop = (Laptop) o;
+        return warranty == laptop.warranty;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), warranty);
     }
 }

@@ -1,6 +1,7 @@
 package hr.java.production.model;
 
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,5 +38,19 @@ public class Store extends NamedEntity {
 
     public void setItems(Set<Item> items) {
         this.items = items;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Store)) return false;
+        if (!super.equals(o)) return false;
+        Store store = (Store) o;
+        return Objects.equals(webAddress, store.webAddress) && Objects.equals(items, store.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), webAddress, items);
     }
 }

@@ -22,3 +22,7 @@ hr.java.production.exception.DuplicateArticleException: This item already exists
 	at hr.java.production.main.Main.createStore(Main.java:487)
 	at hr.java.production.main.Main.main(Main.java:71)
 2021-11-16 10:58:38,403 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 18:17:46,333 INFO [main] h.j.p.m.Main [Main.java:31] The program has been started.
+2021-11-16 18:17:49,615 ERROR [main] h.j.p.m.Main [Main.java:48] An error has occurred
+hr.java.production.exception.DuplicateCategoryException: This category already exists!
+	at hr.java.production.main.Main.main(Main.java:44)

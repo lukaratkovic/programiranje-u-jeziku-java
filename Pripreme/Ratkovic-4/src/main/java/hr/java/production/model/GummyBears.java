@@ -1,6 +1,7 @@
 package hr.java.production.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 /**
@@ -67,5 +68,19 @@ public class GummyBears extends Item implements Edible {
     public BigDecimal totalKCAL() {
         if (weight != null) return weight.multiply(new BigDecimal(kcal()));
         else return new BigDecimal(0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GummyBears)) return false;
+        if (!super.equals(o)) return false;
+        GummyBears that = (GummyBears) o;
+        return Objects.equals(weight, that.weight);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), weight);
     }
 }
