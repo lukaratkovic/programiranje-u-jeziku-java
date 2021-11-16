@@ -1,12 +1,14 @@
 package hr.java.production.model;
 
 
+import java.util.Set;
+
 /**
  * Represents a store with a physical address and a list of articles
  */
 public class Store extends NamedEntity {
     String webAddress;
-    Item[] items;
+    Set<Item> items;
 
     /**
      * Constructor for Store
@@ -15,7 +17,7 @@ public class Store extends NamedEntity {
      * @param webAddress Store web address (domain)
      * @param items      Item[] list
      */
-    public Store(String name, String webAddress, Item[] items) {
+    public Store(String name, String webAddress, Set<Item> items) {
         super(name);
         this.webAddress = webAddress;
         this.items = items;
@@ -29,11 +31,11 @@ public class Store extends NamedEntity {
         this.webAddress = webAddress;
     }
 
-    public Item[] getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
-    public void setItems(Item[] items) {
+    public void setItems(Set<Item> items) {
         this.items = items;
     }
 }

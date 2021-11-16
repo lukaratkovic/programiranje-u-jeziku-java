@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Runs the program
@@ -98,23 +95,15 @@ public class Main {
         /*Set first factory as one with largest volume*/
         Factory largestVolumeFactory = factories[0];
         /*Find largest volume item of FIRST factory*/
-        Item largestVolumeItem = largestVolumeFactory.getItems()[0];
+        Item largestVolumeItem = largestVolumeFactory.getItems().stream().toList().get(0);
         BigDecimal largestVolume = largestVolumeItem.getVolume();
-        for (int i = 1; i < AMOUNT_OF_FACTORY_ITEMS; i++) {
-            if (largestVolumeFactory.getItems()[i].getVolume().compareTo(largestVolume) > 0) {
-                largestVolumeItem = largestVolumeFactory.getItems()[i];
-                largestVolume = largestVolumeItem.getVolume();
-            }
-        }
-        /*Continue comparison*/
         /*Each factory*/
-        for (int i = 1; i < AMOUNT_OF_FACTORIES; i++) {
+        for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
             /*Each item*/
-            for (int j = 0; j < AMOUNT_OF_FACTORY_ITEMS; j++) {
-                /*If item [j] in factory [i] has volume larger than largestVolume*/
-                if (factories[i].getItems()[j].getVolume().compareTo(largestVolume) > 0) {
+            for (Item item : factories[i].getItems()) {
+                if (item.getVolume().compareTo(largestVolume) > 0) {
                     largestVolumeFactory = factories[i];
-                    largestVolumeItem = largestVolumeFactory.getItems()[j];
+                    largestVolumeItem = item;
                     largestVolume = largestVolumeItem.getVolume();
                 }
             }
@@ -134,23 +123,15 @@ public class Main {
         /*Set first store as the one with cheapest item*/
         Store cheapestArticleStore = stores[0];
         /*Find cheapest item of FIRST store*/
-        Item cheapestArticle = cheapestArticleStore.getItems()[0];
+        Item cheapestArticle = cheapestArticleStore.getItems().stream().toList().get(0);
         BigDecimal cheapestArticlePrice = cheapestArticle.getSellingPrice();
-        for (int i = 0; i < AMOUNT_OF_STORE_ITEMS; i++) {
-            if (cheapestArticleStore.getItems()[i].getSellingPrice().compareTo(cheapestArticlePrice) > 0) {
-                cheapestArticle = cheapestArticleStore.getItems()[i];
-                cheapestArticlePrice = cheapestArticle.getSellingPrice();
-            }
-        }
-        /*Continue comparison*/
         /*Each store*/
         for (int i = 0; i < AMOUNT_OF_STORES; i++) {
             /*Each item*/
-            for (int j = 0; j < AMOUNT_OF_STORE_ITEMS; j++) {
-                /*If item [j] in store [i] has price lower than cheapestArticlePrice*/
-                if (stores[i].getItems()[j].getSellingPrice().compareTo(cheapestArticlePrice) < 0) {
+            for (Item item : stores[i].getItems()) {
+                if (item.getSellingPrice().compareTo(cheapestArticlePrice) < 0) {
                     cheapestArticleStore = stores[i];
-                    cheapestArticle = cheapestArticleStore.getItems()[j];
+                    cheapestArticle = item;
                     cheapestArticlePrice = cheapestArticle.getSellingPrice();
                 }
             }
@@ -397,7 +378,7 @@ public class Main {
         Address address = createAddress(scanner);
 
         /*Select items*/
-        Item[] factoryItems = new Item[AMOUNT_OF_FACTORY_ITEMS];
+        Set<Item> factoryItems = new HashSet<>();
         for (int i = 0; i < AMOUNT_OF_FACTORY_ITEMS; i++) {
             System.out.println("Select " + (i + 1) + ". item: ");
             for (Item item : items) {
@@ -408,8 +389,8 @@ public class Main {
                 System.out.print("Item: ");
                 try {
                     selectedItem = inputInt(scanner);
-                    for (int j = 0; j < i; j++) {
-                        if (factoryItems[j].equals(items.get(selectedItem - 1)))
+                    for (Item factoryItem : factoryItems) {
+                        if (factoryItem.equals(items.get(selectedItem - 1)))
                             throw new DuplicateArticleException("This item already exists in factory.");
                     }
                 } catch (DuplicateArticleException ex) {
@@ -418,7 +399,7 @@ public class Main {
                     selectedItem = 0;
                 }
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-            factoryItems[i] = items.get(selectedItem - 1);
+            factoryItems.add(items.get(selectedItem - 1));
         }
 
         return new Factory(name, address, factoryItems);
@@ -473,7 +454,7 @@ public class Main {
         String webAddress = scanner.nextLine();
 
         /*Select items*/
-        Item[] storeItems = new Item[AMOUNT_OF_STORE_ITEMS];
+        Set<Item> storeItems = new HashSet<>();
         for (int i = 0; i < AMOUNT_OF_STORE_ITEMS; i++) {
             System.out.println("Select " + (i + 1) + ". item: ");
             for (int j = 0; j < AMOUNT_OF_ITEMS; j++) {
@@ -485,8 +466,8 @@ public class Main {
                 try {
                     selectedItem = inputInt(scanner);
                     /*Compare item [selectedItem-1] with all previous entries*/
-                    for (int j = 0; j < i; j++) {
-                        if (storeItems[j].equals(items.get(selectedItem - 1)))
+                    for (Item item : storeItems) {
+                        if (item.equals(items.get(selectedItem - 1)))
                             throw new DuplicateArticleException("This item already exists in store.");
                     }
                 } catch (DuplicateArticleException ex) {
@@ -495,15 +476,7 @@ public class Main {
                     selectedItem = 0;
                 }
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-            storeItems[i] = items.get(selectedItem - 1);
-            /*Go through all previous items and check if already exists*/
-            if (i > 0) {
-                for (int j = 0; j < i; j++) {
-                    if (storeItems[i].equals(storeItems[j])) {
-                        break;
-                    }
-                }
-            }
+            storeItems.add(items.get(selectedItem - 1));
         }
 
         return new Store(name, webAddress, storeItems);
