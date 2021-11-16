@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -54,9 +56,10 @@ public class Main {
         }
 
         /*Item input*/
-        Item[] items = new Item[AMOUNT_OF_ITEMS];
+        //Item[] items = new Item[AMOUNT_OF_ITEMS];
+        List<Item> items = new ArrayList<>();
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            items[i] = createItem(scanner, categories, i);
+            items.add(createItem(scanner, categories, i));
         }
 
         /*Factory input*/
@@ -163,12 +166,12 @@ public class Main {
      *
      * @param items List of items to be checked
      */
-    public static void mostKCAL(Item[] items) {
+    public static void mostKCAL(List<Item> items) {
         boolean foundOne = false;
         Item mostKcalItem = null;
         BigDecimal mostKcal = new BigDecimal(0);
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            if (items[i] instanceof Fries fries) {
+            if (items.get(i) instanceof Fries fries) {
                 if (!foundOne) {
                     mostKcalItem = fries;
                     mostKcal = fries.totalKCAL();
@@ -177,7 +180,7 @@ public class Main {
                     mostKcalItem = fries;
                     mostKcal = fries.totalKCAL();
                 }
-            } else if (items[i] instanceof GummyBears gummy) {
+            } else if (items.get(i) instanceof GummyBears gummy) {
                 if (!foundOne) {
                     mostKcalItem = gummy;
                     mostKcal = gummy.totalKCAL();
@@ -197,18 +200,18 @@ public class Main {
      *
      * @param items List of items to be checked
      */
-    public static void shortestWarrantyLaptop(Item[] items) {
+    public static void shortestWarrantyLaptop(List<Item> items) {
         boolean foundLaptop = false;
         Laptop shortestWarrantyLaptop = null;
         int shortestWarranty = 0;
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            if (items[i] instanceof Laptop laptop) {
+            if (items.get(i) instanceof Laptop laptop) {
                 if (!foundLaptop) {
-                    shortestWarrantyLaptop = (Laptop) items[i];
+                    shortestWarrantyLaptop = (Laptop) items.get(i);
                     shortestWarranty = shortestWarrantyLaptop.getWarranty();
                     foundLaptop = true;
-                } else if (((Laptop) items[i]).getWarranty() < shortestWarranty) {
-                    shortestWarrantyLaptop = (Laptop) items[i];
+                } else if (((Laptop) items.get(i)).getWarranty() < shortestWarranty) {
+                    shortestWarrantyLaptop = (Laptop) items.get(i);
                     shortestWarranty = shortestWarrantyLaptop.getWarranty();
                 }
             }
@@ -385,7 +388,7 @@ public class Main {
      * @param n       Index of factory that is being created
      * @return Object of Factory class
      */
-    public static Factory createFactory(Scanner scanner, Item[] items, int n) {
+    public static Factory createFactory(Scanner scanner, List<Item> items, int n) {
         /*Input name*/
         System.out.print("Enter " + (n + 1) + ". factory name: ");
         String name = scanner.nextLine();
@@ -397,8 +400,8 @@ public class Main {
         Item[] factoryItems = new Item[AMOUNT_OF_FACTORY_ITEMS];
         for (int i = 0; i < AMOUNT_OF_FACTORY_ITEMS; i++) {
             System.out.println("Select " + (i + 1) + ". item: ");
-            for (int j = 0; j < AMOUNT_OF_ITEMS; j++) {
-                System.out.println((j + 1) + " " + items[j].getName());
+            for (Item item : items) {
+                System.out.println(item.getName());
             }
             int selectedItem;
             do {
@@ -406,7 +409,7 @@ public class Main {
                 try {
                     selectedItem = inputInt(scanner);
                     for (int j = 0; j < i; j++) {
-                        if (factoryItems[j].equals(items[selectedItem - 1]))
+                        if (factoryItems[j].equals(items.get(selectedItem - 1)))
                             throw new DuplicateArticleException("This item already exists in factory.");
                     }
                 } catch (DuplicateArticleException ex) {
@@ -415,7 +418,7 @@ public class Main {
                     selectedItem = 0;
                 }
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-            factoryItems[i] = items[selectedItem - 1];
+            factoryItems[i] = items.get(selectedItem - 1);
         }
 
         return new Factory(name, address, factoryItems);
@@ -460,7 +463,7 @@ public class Main {
      * @param n       Index of store that is being created
      * @return Object of Store class
      */
-    public static Store createStore(Scanner scanner, Item[] items, int n) {
+    public static Store createStore(Scanner scanner, List<Item> items, int n) {
         /*Input name*/
         System.out.print("Enter " + (n + 1) + ". store name: ");
         String name = scanner.nextLine();
@@ -474,7 +477,7 @@ public class Main {
         for (int i = 0; i < AMOUNT_OF_STORE_ITEMS; i++) {
             System.out.println("Select " + (i + 1) + ". item: ");
             for (int j = 0; j < AMOUNT_OF_ITEMS; j++) {
-                System.out.println((j + 1) + " " + items[j].getName());
+                System.out.println((j + 1) + " " + items.get(j).getName());
             }
             int selectedItem;
             do {
@@ -483,7 +486,7 @@ public class Main {
                     selectedItem = inputInt(scanner);
                     /*Compare item [selectedItem-1] with all previous entries*/
                     for (int j = 0; j < i; j++) {
-                        if (storeItems[j].equals(items[selectedItem - 1]))
+                        if (storeItems[j].equals(items.get(selectedItem - 1)))
                             throw new DuplicateArticleException("This item already exists in store.");
                     }
                 } catch (DuplicateArticleException ex) {
@@ -492,7 +495,7 @@ public class Main {
                     selectedItem = 0;
                 }
             } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-            storeItems[i] = items[selectedItem - 1];
+            storeItems[i] = items.get(selectedItem - 1);
             /*Go through all previous items and check if already exists*/
             if (i > 0) {
                 for (int j = 0; j < i; j++) {
