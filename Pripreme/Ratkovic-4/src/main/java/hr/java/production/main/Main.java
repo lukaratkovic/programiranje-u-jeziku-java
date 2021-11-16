@@ -1,5 +1,6 @@
 package hr.java.production.main;
 
+import hr.java.production.enums.City;
 import hr.java.production.exception.DuplicateArticleException;
 import hr.java.production.exception.DuplicateCategoryException;
 import hr.java.production.model.*;
@@ -420,19 +421,24 @@ public class Main {
         System.out.print("Enter house number: ");
         String houseNumber = scanner.nextLine();
 
-        /*input city*/
-        System.out.print("Enter city: ");
-        String city = scanner.nextLine();
-
-        /*Input postal code*/
-        System.out.print("Enter postal code: ");
-        String postalCode = scanner.nextLine();
+        /*Select city*/
+        //TODO Output city options from enum
+        boolean validInput = false;
+        City selected = null;
+        do {
+            System.out.print("Select city " + Arrays.asList(City.values()) + ": ");
+            try {
+                selected = City.valueOf(scanner.nextLine().toUpperCase(Locale.ROOT));
+                validInput = true;
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Invalid input!");
+            }
+        } while (!validInput);
 
         return new Address.Builder()
                 .withStreet(street)
                 .withHouseNumber(houseNumber)
-                .withCity(city)
-                .withPostalCode(postalCode)
+                .withCity(selected)
                 .build();
     }
 

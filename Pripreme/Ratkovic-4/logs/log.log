@@ -26,3 +26,31 @@ hr.java.production.exception.DuplicateArticleException: This item already exists
 2021-11-16 18:17:49,615 ERROR [main] h.j.p.m.Main [Main.java:48] An error has occurred
 hr.java.production.exception.DuplicateCategoryException: This category already exists!
 	at hr.java.production.main.Main.main(Main.java:44)
+2021-11-16 19:14:53,548 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:16:03,839 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:17:29,812 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:17:41,561 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:33:43,668 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:37:11,078 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:40:01,813 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:41:32,529 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:49:04,136 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:51:54,590 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:52:40,931 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:53:08,930 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:53:22,083 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 19:54:06,469 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:02:18,446 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:02:30,899 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:03:49,197 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:04:05,427 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:08:16,368 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:08:45,291 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:09:29,366 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:09:36,186 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:10:36,589 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:10:42,037 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:11:07,454 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:11:13,872 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:11:35,248 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.
+2021-11-16 20:13:45,869 INFO [main] h.j.p.m.Main [Main.java:32] The program has been started.

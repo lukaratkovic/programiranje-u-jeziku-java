@@ -1,13 +1,16 @@
 package hr.java.production.model;
 
 
+import hr.java.production.enums.City;
+
 import java.util.Objects;
 
 /**
  * Represents a physical location
  */
 public class Address {
-    String street, houseNumber, city, postalCode;
+    String street, houseNumber;
+    City city;
 
     /**
      * Empty constructor for Address class, should be used in conjunction with Build Pattern
@@ -20,18 +23,14 @@ public class Address {
      *
      * @param street      Name of street
      * @param houseNumber House number
-     * @param city        Name of city
-     * @param postalCode  Postal code of city
+     * @param city        enum of city
      */
-    public Address(String street, String houseNumber, String city, String postalCode) {
+    public Address(String street, String houseNumber, City city) {
         if (street == "") street = "Vrbik";
         if (houseNumber == "") houseNumber = "8";
-        if (city == "") city = "Zagreb";
-        if (postalCode == "") postalCode = "10000";
         this.street = street;
         this.houseNumber = houseNumber;
         this.city = city;
-        this.postalCode = postalCode;
     }
 
     public String getStreet() {
@@ -50,20 +49,12 @@ public class Address {
         this.houseNumber = houseNumber;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
     }
 
     @Override
@@ -71,19 +62,20 @@ public class Address {
         if (this == o) return true;
         if (!(o instanceof Address)) return false;
         Address address = (Address) o;
-        return Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber) && Objects.equals(city, address.city) && Objects.equals(postalCode, address.postalCode);
+        return Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber) && city == address.city;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, houseNumber, city, postalCode);
+        return Objects.hash(street, houseNumber, city);
     }
 
     /**
      * Build pattern for Address class
      */
     public static class Builder {
-        private String street, houseNumber, city, postalCode;
+        private String street, houseNumber;
+        City city;
 
         /**
          * Constructor for Builder class (Address), should be used in conjunction with .build()
@@ -119,19 +111,8 @@ public class Address {
          * @param city Name of city
          * @return Builder
          */
-        public Builder withCity(String city) {
+        public Builder withCity(City city) {
             this.city = city;
-            return this;
-        }
-
-        /**
-         * Build pattern argument for Address Build Pattern
-         *
-         * @param postalCode Postal code of city
-         * @return Builder
-         */
-        public Builder withPostalCode(String postalCode) {
-            this.postalCode = postalCode;
             return this;
         }
 
@@ -145,7 +126,6 @@ public class Address {
             address.street = this.street;
             address.houseNumber = this.houseNumber;
             address.city = this.city;
-            address.postalCode = this.postalCode;
 
             return address;
         }
