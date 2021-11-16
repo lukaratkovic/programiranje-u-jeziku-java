@@ -73,3 +73,8 @@ hr.java.production.exception.DuplicateCategoryException: This category already e
 2021-11-16 21:58:02,003 INFO [main] h.j.p.m.Main [Main.java:33] The program has been started.
 2021-11-16 22:07:06,546 INFO [main] h.j.p.m.Main [Main.java:33] The program has been started.
 2021-11-16 22:13:49,385 INFO [main] h.j.p.m.Main [Main.java:33] The program has been started.
+2021-11-16 22:30:19,910 INFO [main] h.j.p.m.Main [Main.java:33] The program has been started.
+2021-11-16 22:37:14,528 INFO [main] h.j.p.m.Main [Main.java:33] The program has been started.
+2021-11-16 22:37:16,377 ERROR [main] h.j.p.m.Main [Main.java:52] An error has occurred
+hr.java.production.exception.DuplicateCategoryException: This category already exists!
+	at hr.java.production.main.Main.main(Main.java:48)

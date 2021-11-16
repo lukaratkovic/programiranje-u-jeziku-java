@@ -1,5 +1,8 @@
 package hr.java.production.enums;
 
+/**
+ * Contains information about cities
+ */
 public enum City {
     ZAGREB("Zagreb", "10000"),
     DUGO_SELO("Dugo Selo", "10370"),
@@ -8,6 +11,12 @@ public enum City {
     private String postalCode;
     private String name;
 
+    /**
+     * Constructor for City
+     *
+     * @param name       city name
+     * @param postalCode city postal code
+     */
     City(String name, String postalCode) {
         this.name = name;
         this.postalCode = postalCode;

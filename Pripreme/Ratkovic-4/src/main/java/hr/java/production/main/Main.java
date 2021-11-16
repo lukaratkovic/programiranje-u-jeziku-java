@@ -100,9 +100,44 @@ public class Main {
         /*Find cheapest and most expensive items for each category*/
         categoryMinMax(categoryItemMap);
 
+        /*Find cheapest and most expensive items from objects that implement Edible and Technical interface*/
+        EdibleTechnicalMinMax(items);
+
         logger.info("The program has finished to completion");
     }
 
+    /**
+     * Finds cheapest and most expensive items of Edible and Technical interfaces
+     *
+     * @param items list of items
+     */
+    private static void EdibleTechnicalMinMax(List<Item> items) {
+        List<Item> edibles = new ArrayList<>();
+        List<Item> technicals = new ArrayList<>();
+        for (Item item : items) {
+            if (item instanceof Edible)
+                edibles.add(item);
+            else if (item instanceof Technical)
+                technicals.add(item);
+        }
+        Comparator<Item> compare = new ProductionSorter();
+        Collections.sort(edibles, compare);
+        Collections.sort(technicals, compare);
+        System.out.println("Cheapest edible: " + edibles.get(0).getName() +
+                " (" + edibles.get(0).getSellingPrice() + ")");
+        System.out.println("Most expensive edible: " + edibles.get(edibles.size() - 1).getName() +
+                " (" + edibles.get(edibles.size() - 1).getSellingPrice() + ")");
+        System.out.println("Cheapest technical: " + technicals.get(0).getName() +
+                " (" + technicals.get(0).getSellingPrice() + ")");
+        System.out.println("Cheapest technical: " + technicals.get(technicals.size() - 1).getName() +
+                " (" + technicals.get(technicals.size() - 1).getSellingPrice() + ")");
+    }
+
+    /**
+     * Finds cheapest and most expensive item for each category
+     *
+     * @param categoryItemMap Map (Category key, Item list value)
+     */
     private static void categoryMinMax(Map<Category, List<Item>> categoryItemMap) {
         Comparator<Item> compare = new ProductionSorter();
         for (var entry : categoryItemMap.entrySet()) {
@@ -114,7 +149,7 @@ public class Main {
                 /*Category with only 1 item*/
             else if (entry.getValue().size() == 1) {
                 System.out.println("The only item in this category is " + entry.getValue().get(0).getName() +
-                        "(" + entry.getValue().get(0).getSellingPrice() + ")");
+                        " (" + entry.getValue().get(0).getSellingPrice() + ")");
             }
             /*Category with 2 or more items*/
             else {
@@ -122,10 +157,10 @@ public class Main {
                 Item mostExpensive = entry.getValue().get(entry.getValue().size() - 1);
                 System.out.println("Cheapest item: ");
                 System.out.println(cheapest.getName() +
-                        "(" + cheapest.getSellingPrice() + ")");
+                        " (" + cheapest.getSellingPrice() + ")");
                 System.out.println("Most expensive item: ");
                 System.out.println(mostExpensive.getName() +
-                        "(" + mostExpensive.getSellingPrice() + ")");
+                        " (" + mostExpensive.getSellingPrice() + ")");
             }
         }
     }
