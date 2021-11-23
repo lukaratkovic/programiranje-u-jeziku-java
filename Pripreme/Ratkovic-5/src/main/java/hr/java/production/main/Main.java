@@ -36,24 +36,32 @@ public class Main {
         Map<Category, List<Item>> categoryItemMap = new HashMap<>();
 
         /*Category input*/
+        System.out.print("Skip category input? (Default categories will be created): ");
+        String input = scanner.nextLine();
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
-        for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
-            Category created;
-            boolean isValid = false;
-            do {
-                created = createCategory(scanner, i);
-                try {
-                    for (int j = 0; j < i; j++) {
-                        if (categories[j].equals(created))
-                            throw new DuplicateCategoryException("This category already exists!");
+        if (input.equals("Y")) {
+            for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
+                categories[i] = new Category("Category" + (i + 1), "");
+            }
+        } else {
+            for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
+                Category created;
+                boolean isValid = false;
+                do {
+                    created = createCategory(scanner, i);
+                    try {
+                        for (int j = 0; j < i; j++) {
+                            if (categories[j].equals(created))
+                                throw new DuplicateCategoryException("This category already exists!");
+                        }
+                        isValid = true;
+                    } catch (DuplicateCategoryException ex) {
+                        logger.error("An error has occurred", ex);
+                        System.out.println(ex.getMessage());
                     }
-                    isValid = true;
-                } catch (DuplicateCategoryException ex) {
-                    logger.error("An error has occurred", ex);
-                    System.out.println(ex.getMessage());
-                }
-            } while (!isValid);
-            categories[i] = created;
+                } while (!isValid);
+                categories[i] = created;
+            }
         }
 
         /*Item input*/
