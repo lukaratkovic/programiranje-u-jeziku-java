@@ -3,6 +3,8 @@ package hr.java.production.main;
 import hr.java.production.enums.City;
 import hr.java.production.exception.DuplicateArticleException;
 import hr.java.production.exception.DuplicateCategoryException;
+import hr.java.production.genericsi.FoodStore;
+import hr.java.production.genericsi.TechnicalStore;
 import hr.java.production.model.*;
 import hr.java.production.sort.ProductionSorter;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Runs the program
@@ -39,7 +42,7 @@ public class Main {
         System.out.print("Skip category input? (Default categories will be created): ");
         String input = scanner.nextLine();
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
-        if (input.equals("Y")) {
+        if (input.toUpperCase(Locale.ROOT).equals("Y")) {
             for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
                 categories[i] = new Category("Category" + (i + 1), "");
             }
@@ -65,7 +68,6 @@ public class Main {
         }
 
         /*Item input*/
-        //Item[] items = new Item[AMOUNT_OF_ITEMS];
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
             Item created = createItem(scanner, categories, i);
@@ -80,6 +82,31 @@ public class Main {
                 categoryItemMap.put(created.getCategory(), currentItems);
             }
         }
+
+
+        BigDecimal average = items.stream()
+                .map(i -> i.getVolume())
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(new BigDecimal(items.stream().count()));
+        List<Item> itemsAboveAverage = items.stream()
+                .filter(i -> i.getVolume().compareTo(average) == 1)
+                .collect(Collectors.toList());
+        BigDecimal averagePriceOfItemsAboveAverage = itemsAboveAverage.stream()
+                .map(i -> i.getSellingPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(new BigDecimal(itemsAboveAverage.stream().count()));
+
+        System.out.println("Average price of all items whose volume is above average is " + averagePriceOfItemsAboveAverage);
+
+        /**
+         * Technical Store input
+         */
+        TechnicalStore technicalStore = createTechnicalStore(scanner, items);
+
+        /**
+         * Food Store input
+         */
+        FoodStore foodStore = createFoodStore(scanner, items);
 
         /*Factory input*/
         Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
@@ -572,5 +599,35 @@ public class Main {
         }
 
         return new Store(name, webAddress, storeItems);
+    }
+
+    /**
+     * Requests input of parameters for TechnicalStore
+     */
+    public static TechnicalStore createTechnicalStore(Scanner scanner, List<Item> items) {
+        System.out.print("Technical store name: ");
+        String name = scanner.nextLine();
+        System.out.println("Web address: ");
+        String webAddress = scanner.nextLine();
+        List<Technical> technicalItems = new ArrayList<>();
+        for (Item i : items) {
+            if (i instanceof Technical) technicalItems.add((Technical) i);
+        }
+        return new TechnicalStore(name, webAddress, new HashSet<>(), technicalItems);
+    }
+
+    /**
+     * Requests input of parameters for FoodStore
+     */
+    public static FoodStore createFoodStore(Scanner scanner, List<Item> items) {
+        System.out.print("Food store name: ");
+        String name = scanner.nextLine();
+        System.out.println("Web address: ");
+        String webAddress = scanner.nextLine();
+        List<Edible> technicalItems = new ArrayList<>();
+        for (Item i : items) {
+            if (i instanceof Technical) technicalItems.add((Edible) i);
+        }
+        return new FoodStore(name, webAddress, new HashSet<>(), technicalItems);
     }
 }
