@@ -92,6 +92,14 @@ public class Item extends NamedEntity {
         return this.width.multiply(this.height.multiply(this.length));
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

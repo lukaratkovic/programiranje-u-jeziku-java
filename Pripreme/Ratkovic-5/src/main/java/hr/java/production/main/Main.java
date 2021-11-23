@@ -88,6 +88,10 @@ public class Main {
 
         aboveAveragePrice(items);
 
+        List<Item> sortedList = items.stream().filter(i -> i.getDiscount().discountAmount().compareTo(new BigDecimal(0)) > 0)
+                .collect(Collectors.toList());
+        Optional<List<Item>> test = (sortedList.size() == 0) ? Optional.empty() : Optional.of(sortedList);
+
         /**
          * Technical Store input
          */

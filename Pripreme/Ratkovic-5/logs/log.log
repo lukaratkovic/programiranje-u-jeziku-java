@@ -147,3 +147,5 @@ hr.java.production.exception.DuplicateArticleException: This item already exists
 hr.java.production.exception.DuplicateArticleException: This item already exists in store.
 	at hr.java.production.main.Main.createStore(Main.java:663)
 	at hr.java.production.main.Main.main(Main.java:158)
+2021-11-24 00:09:53,327 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
+2021-11-24 00:10:47,589 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
