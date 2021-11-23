@@ -82,21 +82,8 @@ public class Main {
                 categoryItemMap.put(created.getCategory(), currentItems);
             }
         }
-
-
-        BigDecimal average = items.stream()
-                .map(i -> i.getVolume())
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .divide(new BigDecimal(items.stream().count()));
-        List<Item> itemsAboveAverage = items.stream()
-                .filter(i -> i.getVolume().compareTo(average) == 1)
-                .collect(Collectors.toList());
-        BigDecimal averagePriceOfItemsAboveAverage = itemsAboveAverage.stream()
-                .map(i -> i.getSellingPrice())
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .divide(new BigDecimal(itemsAboveAverage.stream().count()));
-
-        System.out.println("Average price of all items whose volume is above average is " + averagePriceOfItemsAboveAverage);
+        
+        aboveAveragePrice(items);
 
         /**
          * Technical Store input
@@ -139,6 +126,27 @@ public class Main {
         EdibleTechnicalMinMax(items);
 
         logger.info("The program has finished to completion");
+    }
+
+    /**
+     * Prints out the average price of items with above-average volume
+     *
+     * @param items Item list
+     */
+    private static void aboveAveragePrice(List<Item> items) {
+        BigDecimal average = items.stream()
+                .map(i -> i.getVolume())
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(new BigDecimal(items.stream().count()));
+        List<Item> itemsAboveAverage = items.stream()
+                .filter(i -> i.getVolume().compareTo(average) == 1)
+                .collect(Collectors.toList());
+        BigDecimal averagePriceOfItemsAboveAverage = itemsAboveAverage.stream()
+                .map(i -> i.getSellingPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(new BigDecimal(itemsAboveAverage.stream().count()));
+
+        System.out.println("Average price of all items whose volume is above average is " + averagePriceOfItemsAboveAverage);
     }
 
     /**
