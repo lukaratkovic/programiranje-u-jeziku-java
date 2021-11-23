@@ -82,18 +82,46 @@ public class Main {
                 categoryItemMap.put(created.getCategory(), currentItems);
             }
         }
-        
+
         aboveAveragePrice(items);
 
         /**
          * Technical Store input
          */
-        TechnicalStore technicalStore = createTechnicalStore(scanner, items);
+        TechnicalStore<Laptop> technicalStore = createTechnicalStore(scanner, items);
+        List<Technical> sortedTechnicals = technicalStore.getItemList().stream()
+                .sorted((i1, i2) -> {
+                    if (i1.getVolume().compareTo(i2.getVolume()) > 0) {
+                        return 1;
+                    } else if (i1.getVolume().compareTo(i2.getVolume()) < 0) {
+                        return -1;
+                    } else return 0;
+                })
+                .collect(Collectors.toList());
+
+        System.out.println("Technical store items, sorted by volume: ");
+        sortedTechnicals.stream()
+                .forEach(i -> System.out.println(((Item) i).getName() + " (" + ((Item) i).getVolume() + ")"));
+
 
         /**
          * Food Store input
          */
-        FoodStore foodStore = createFoodStore(scanner, items);
+        FoodStore<Edible> foodStore = createFoodStore(scanner, items);
+        List<Edible> sortedEdibles = foodStore.getItemsList().stream()
+                .sorted((i1, i2) -> {
+                    if (((Item) i1).getVolume().compareTo(((Item) i2).getVolume()) > 0) {
+                        return 1;
+                    } else if (((Item) i1).getVolume().compareTo(((Item) i2).getVolume()) > 0) {
+                        return -1;
+                    } else return 0;
+                })
+                .collect(Collectors.toList());
+
+        System.out.println("Food store items, sorted by volume: ");
+        sortedEdibles.stream()
+                .forEach(i -> System.out.println(((Item) i).getName() + "(" + (((Item) i).getVolume()) + ")"));
+
 
         /*Factory input*/
         Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
@@ -621,7 +649,7 @@ public class Main {
         for (Item i : items) {
             if (i instanceof Technical) technicalItems.add((Technical) i);
         }
-        return new TechnicalStore(name, webAddress, new HashSet<>(), technicalItems);
+        return new TechnicalStore<>(name, webAddress, technicalItems);
     }
 
     /**
@@ -634,8 +662,8 @@ public class Main {
         String webAddress = scanner.nextLine();
         List<Edible> technicalItems = new ArrayList<>();
         for (Item i : items) {
-            if (i instanceof Technical) technicalItems.add((Edible) i);
+            if (i instanceof Edible) technicalItems.add((Edible) i);
         }
-        return new FoodStore(name, webAddress, new HashSet<>(), technicalItems);
+        return new FoodStore(name, webAddress, technicalItems);
     }
 }

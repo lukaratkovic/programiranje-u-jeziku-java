@@ -108,3 +108,8 @@ hr.java.production.exception.DuplicateCategoryException: This category already e
 2021-11-23 21:18:34,603 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
 2021-11-23 21:25:18,021 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
 2021-11-23 21:31:19,044 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
+2021-11-23 22:23:27,392 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
+2021-11-23 22:26:09,815 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
+2021-11-23 22:40:49,577 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
+2021-11-23 22:44:14,273 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
+2021-11-23 22:44:48,208 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
