@@ -5,7 +5,7 @@ import hr.java.production.model.Item;
 import java.util.Comparator;
 
 /**
- * Comparator for objects of Item type
+ * Comparator for objects of Item type by price
  */
 public class ProductionSorter implements Comparator<Item> {
     boolean ascending = true;
@@ -26,7 +26,7 @@ public class ProductionSorter implements Comparator<Item> {
     }
 
     /**
-     * Compare two objects of type Item
+     * Compare two objects of type Item by price
      *
      * @param o1 First item object
      * @param o2 Second item object

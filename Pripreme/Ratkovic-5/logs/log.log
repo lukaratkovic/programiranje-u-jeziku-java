@@ -113,3 +113,37 @@ hr.java.production.exception.DuplicateCategoryException: This category already e
 2021-11-23 22:40:49,577 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
 2021-11-23 22:44:14,273 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
 2021-11-23 22:44:48,208 INFO [main] h.j.p.m.Main [Main.java:36] The program has been started.
+2021-11-24 00:01:46,973 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
+2021-11-24 00:04:34,901 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
+2021-11-24 00:04:37,468 ERROR [main] h.j.p.m.Main [Main.java:65] An error has occurred
+hr.java.production.exception.DuplicateCategoryException: This category already exists!
+	at hr.java.production.main.Main.main(Main.java:61)
+2021-11-24 00:04:39,127 ERROR [main] h.j.p.m.Main [Main.java:403] An error has occurred
+java.util.InputMismatchException: null
+	at java.base/java.util.Scanner.throwFor(Scanner.java:939)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at hr.java.production.main.Main.inputInt(Main.java:401)
+	at hr.java.production.main.Main.createItem(Main.java:473)
+	at hr.java.production.main.Main.main(Main.java:76)
+2021-11-24 00:05:00,421 ERROR [main] h.j.p.m.Main [Main.java:584] An error has occurred
+hr.java.production.exception.DuplicateArticleException: This item already exists in factory.
+	at hr.java.production.main.Main.createFactory(Main.java:581)
+	at hr.java.production.main.Main.main(Main.java:152)
+2021-11-24 00:05:14,104 ERROR [main] h.j.p.m.Main [Main.java:666] An error has occurred
+hr.java.production.exception.DuplicateArticleException: This item already exists in store.
+	at hr.java.production.main.Main.createStore(Main.java:663)
+	at hr.java.production.main.Main.main(Main.java:158)
+2021-11-24 00:05:14,278 ERROR [main] h.j.p.m.Main [Main.java:666] An error has occurred
+hr.java.production.exception.DuplicateArticleException: This item already exists in store.
+	at hr.java.production.main.Main.createStore(Main.java:663)
+	at hr.java.production.main.Main.main(Main.java:158)
+2021-11-24 00:05:14,435 ERROR [main] h.j.p.m.Main [Main.java:666] An error has occurred
+hr.java.production.exception.DuplicateArticleException: This item already exists in store.
+	at hr.java.production.main.Main.createStore(Main.java:663)
+	at hr.java.production.main.Main.main(Main.java:158)
+2021-11-24 00:05:14,608 ERROR [main] h.j.p.m.Main [Main.java:666] An error has occurred
+hr.java.production.exception.DuplicateArticleException: This item already exists in store.
+	at hr.java.production.main.Main.createStore(Main.java:663)
+	at hr.java.production.main.Main.main(Main.java:158)

@@ -14,6 +14,11 @@ public class TechnicalStore<T extends Technical> extends Store {
     public TechnicalStore(String name, String webAddress, List<T> itemList) {
         super(name, webAddress, new HashSet<>());
         this.itemList = itemList;
+        Set<Item> set = new HashSet<>();
+        for (T i : itemList) {
+            set.add((Item) i);
+        }
+        this.setItems(set);
     }
 
     public List<T> getItemList() {

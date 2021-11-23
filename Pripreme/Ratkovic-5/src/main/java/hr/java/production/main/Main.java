@@ -7,10 +7,13 @@ import hr.java.production.genericsi.FoodStore;
 import hr.java.production.genericsi.TechnicalStore;
 import hr.java.production.model.*;
 import hr.java.production.sort.ProductionSorter;
+import hr.java.production.sort.VolumeSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -88,6 +91,8 @@ public class Main {
         /**
          * Technical Store input
          */
+        //Sort w/Lambda
+        Instant start = Instant.now();
         TechnicalStore<Laptop> technicalStore = createTechnicalStore(scanner, items);
         List<Technical> sortedTechnicals = technicalStore.getItemList().stream()
                 .sorted((i1, i2) -> {
@@ -98,6 +103,14 @@ public class Main {
                     } else return 0;
                 })
                 .collect(Collectors.toList());
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start, end));
+
+        //Sort without lambdas
+        start = Instant.now();
+        Collections.sort(technicalStore.getItemList(), new VolumeSorter<Technical>());
+        end = Instant.now();
+        System.out.println(Duration.between(start, end));
 
         System.out.println("Technical store items, sorted by volume: ");
         sortedTechnicals.stream()
@@ -108,6 +121,8 @@ public class Main {
          * Food Store input
          */
         FoodStore<Edible> foodStore = createFoodStore(scanner, items);
+        //Sort with lambdas
+        start = Instant.now();
         List<Edible> sortedEdibles = foodStore.getItemsList().stream()
                 .sorted((i1, i2) -> {
                     if (((Item) i1).getVolume().compareTo(((Item) i2).getVolume()) > 0) {
@@ -117,6 +132,14 @@ public class Main {
                     } else return 0;
                 })
                 .collect(Collectors.toList());
+        end = Instant.now();
+        System.out.println(Duration.between(start, end));
+
+        //Sort without lambdas
+        start = Instant.now();
+        Collections.sort(foodStore.getItemsList(), new VolumeSorter<Edible>());
+        end = Instant.now();
+        System.out.println(Duration.between(start, end));
 
         System.out.println("Food store items, sorted by volume: ");
         sortedEdibles.stream()
@@ -133,7 +156,32 @@ public class Main {
         Store[] stores = new Store[AMOUNT_OF_STORES];
         for (int i = 0; i < AMOUNT_OF_STORES; i++) {
             stores[i] = createStore(scanner, items, i);
+            //Sort with lambdas
+            start = Instant.now();
+            List<Item> sortedStoreItems = stores[i].getItems().stream()
+                    .sorted((i1, i2) -> {
+                        if (i1.getVolume().compareTo(i2.getVolume()) > 0) return 1;
+                        else if (i1.getVolume().compareTo(i2.getVolume()) < 0) return -1;
+                        else return 0;
+                    })
+                    .collect(Collectors.toList());
+            end = Instant.now();
+            System.out.println(Duration.between(start, end));
+
+            //Sort without lambdas
+            start = Instant.now();
+            Collections.sort(new ArrayList<Item>(stores[i].getItems()), new VolumeSorter<Item>());
+            end = Instant.now();
+            System.out.println(Duration.between(start, end));
+
+            System.out.println("Store items, sorted by volume: ");
+            sortedStoreItems.stream().forEach(item -> System.out.println(item.getName() + "(" + item.getVolume() + ")"));
         }
+
+        List<Store> allStores = new ArrayList<>();
+        allStores.add(technicalStore);
+        allStores.add(foodStore);
+        Arrays.stream(stores).forEach(s -> allStores.add(s));
 
         /*Find factory that manufactures item with the largest volume*/
         largestVolumeFactory(factories);

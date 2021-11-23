@@ -11,9 +11,14 @@ import java.util.Set;
 public class FoodStore<T extends Edible> extends Store {
     List<T> itemsList;
 
-    public FoodStore(String name, String webAddress, List<T> itemsList) {
+    public FoodStore(String name, String webAddress, List<T> itemList) {
         super(name, webAddress, new HashSet<>());
-        this.itemsList = itemsList;
+        this.itemsList = itemList;
+        Set<Item> set = new HashSet<>();
+        for (T i : itemList) {
+            set.add((Item) i);
+        }
+        this.setItems(set);
     }
 
     public List<T> getItemsList() {
