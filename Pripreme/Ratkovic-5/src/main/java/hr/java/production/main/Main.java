@@ -92,12 +92,15 @@ public class Main {
                 .collect(Collectors.toList());
         Optional<List<Item>> test = (sortedList.size() == 0) ? Optional.empty() : Optional.of(sortedList);
 
+        List<Store> storesList = new ArrayList<>();
+
         /**
          * Technical Store input
          */
         //Sort w/Lambda
-        Instant start = Instant.now();
         TechnicalStore<Laptop> technicalStore = createTechnicalStore(scanner, items);
+        storesList.add(technicalStore);
+        Instant start = Instant.now();
         List<Technical> sortedTechnicals = technicalStore.getItemList().stream()
                 .sorted((i1, i2) -> {
                     if (i1.getVolume().compareTo(i2.getVolume()) > 0) {
@@ -125,6 +128,7 @@ public class Main {
          * Food Store input
          */
         FoodStore<Edible> foodStore = createFoodStore(scanner, items);
+        storesList.add(foodStore);
         //Sort with lambdas
         start = Instant.now();
         List<Edible> sortedEdibles = foodStore.getItemsList().stream()
@@ -149,17 +153,11 @@ public class Main {
         sortedEdibles.stream()
                 .forEach(i -> System.out.println(((Item) i).getName() + "(" + (((Item) i).getVolume()) + ")"));
 
-
-        /*Factory input*/
-        Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
-        for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
-            factories[i] = createFactory(scanner, items, i);
-        }
-
         /*Store input*/
         Store[] stores = new Store[AMOUNT_OF_STORES];
         for (int i = 0; i < AMOUNT_OF_STORES; i++) {
             stores[i] = createStore(scanner, items, i);
+            storesList.add(stores[i]);
             //Sort with lambdas
             start = Instant.now();
             List<Item> sortedStoreItems = stores[i].getItems().stream()
@@ -180,6 +178,17 @@ public class Main {
 
             System.out.println("Store items, sorted by volume: ");
             sortedStoreItems.stream().forEach(item -> System.out.println(item.getName() + "(" + item.getVolume() + ")"));
+        }
+
+        storesList.stream()
+                .map(s -> s.getItems().size())
+                .forEach(System.out::println);
+
+
+        /*Factory input*/
+        Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
+        for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
+            factories[i] = createFactory(scanner, items, i);
         }
 
         List<Store> allStores = new ArrayList<>();
