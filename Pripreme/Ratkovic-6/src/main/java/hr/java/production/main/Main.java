@@ -47,7 +47,7 @@ public class Main {
         Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
         if (input.toUpperCase(Locale.ROOT).equals("Y")) {
             for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
-                categories[i] = new Category("Category" + (i + 1), "");
+                categories[i] = new Category("Category" + (i + 1), "", new Random().nextLong());
             }
         } else {
             for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
@@ -469,7 +469,7 @@ public class Main {
         String description = scanner.nextLine();
 
         /*Return object*/
-        return new Category(name, description);
+        return new Category(name, description, new Random().nextLong());
     }
 
     /**
@@ -550,12 +550,12 @@ public class Main {
             /*Create object of proper type*/
             Item returnItem;
             if (foodSelection == 1) {
-                returnItem = new Fries(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight);
+                returnItem = new Fries(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight, new Random().nextLong());
                 /*Total kcal, price*/
                 System.out.println("Total kcal: " + ((Fries) returnItem).totalKCAL());
                 System.out.println("Total price: " + ((Fries) returnItem).calculatePrice());
             } else {
-                returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight);
+                returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight, new Random().nextLong());
                 /*Total kcal, price*/
                 System.out.println("Total kcal: " + ((GummyBears) returnItem).totalKCAL());
                 System.out.println("Total price: " + ((GummyBears) returnItem).calculatePrice());
@@ -566,9 +566,9 @@ public class Main {
         else if (selection == 2) {
             System.out.print("Enter laptop warranty: ");
             int warranty = inputInt(scanner);
-            return new Laptop(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), warranty);
+            return new Laptop(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), warranty, new Random().nextLong());
         } else {
-            return new Item(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount));
+            return new Item(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), new Random().nextLong());
         }
     }
 
@@ -613,7 +613,7 @@ public class Main {
             factoryItems.add(items.get(selectedItem - 1));
         }
 
-        return new Factory(name, address, factoryItems);
+        return new Factory(name, address, factoryItems, new Random().nextLong());
     }
 
     /**
@@ -695,7 +695,7 @@ public class Main {
             storeItems.add(items.get(selectedItem - 1));
         }
 
-        return new Store(name, webAddress, storeItems);
+        return new Store(name, webAddress, storeItems, new Random().nextLong());
     }
 
     /**
@@ -710,7 +710,7 @@ public class Main {
         for (Item i : items) {
             if (i instanceof Technical) technicalItems.add((Technical) i);
         }
-        return new TechnicalStore<>(name, webAddress, technicalItems);
+        return new TechnicalStore<>(name, webAddress, technicalItems, new Random().nextLong());
     }
 
     /**
@@ -725,6 +725,6 @@ public class Main {
         for (Item i : items) {
             if (i instanceof Edible) technicalItems.add((Edible) i);
         }
-        return new FoodStore(name, webAddress, technicalItems);
+        return new FoodStore(name, webAddress, technicalItems, new Random().nextLong());
     }
 }

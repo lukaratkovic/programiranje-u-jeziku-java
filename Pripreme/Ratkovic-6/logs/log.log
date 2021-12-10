@@ -150,3 +150,4 @@ hr.java.production.exception.DuplicateArticleException: This item already exists
 2021-11-24 00:09:53,327 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
 2021-11-24 00:10:47,589 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
 2021-11-24 01:59:54,292 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.
+2021-12-10 12:51:57,234 INFO [main] h.j.p.m.Main [Main.java:39] The program has been started.

@@ -24,8 +24,8 @@ public non-sealed class Laptop extends Item implements Technical {
      * @param discount       Laptop discount (0-1)
      * @param warranty       Laptop warranty in years
      */
-    public Laptop(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, int warranty) {
-        super(name, category, width, height, length, productionCost, sellingPrice, discount);
+    public Laptop(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, int warranty, Long id) {
+        super(name, category, width, height, length, productionCost, sellingPrice, discount, id);
         this.warranty = warranty;
     }
 

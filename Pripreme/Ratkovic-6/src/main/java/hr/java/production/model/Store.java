@@ -18,8 +18,8 @@ public class Store extends NamedEntity {
      * @param webAddress Store web address (domain)
      * @param items      Item[] list
      */
-    public Store(String name, String webAddress, Set<Item> items) {
-        super(name);
+    public Store(String name, String webAddress, Set<Item> items, Long id) {
+        super(name, id);
         this.webAddress = webAddress;
         this.items = items;
     }

@@ -24,8 +24,8 @@ public class Fries extends Item implements Edible {
      * @param discount       Fries discount
      * @param weight         Fries weight
      */
-    public Fries(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
-        super(name, category, width, height, length, productionCost, sellingPrice, discount);
+    public Fries(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight, Long id) {
+        super(name, category, width, height, length, productionCost, sellingPrice, discount, id);
         this.weight = weight;
     }
 

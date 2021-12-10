@@ -25,8 +25,8 @@ public class GummyBears extends Item implements Edible {
      * @param discount       Gummy bears discount percentage (0-1)
      * @param weight         Gummy bears weight
      */
-    public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight) {
-        super(name, category, width, height, length, productionCost, sellingPrice, discount);
+    public GummyBears(String name, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice, Discount discount, BigDecimal weight, Long id) {
+        super(name, category, width, height, length, productionCost, sellingPrice, discount, id);
         this.weight = weight;
     }
 

@@ -7,15 +7,19 @@ import java.util.Objects;
  */
 public abstract class NamedEntity {
     String name;
+    Long id;
 
     /**
      * Constructor for NamedEntity
      *
-     * @param name name of NamedEntity
+     * @param name
+     * @param id
      */
-    public NamedEntity(String name) {
+    public NamedEntity(String name, Long id) {
         this.name = name;
+        this.id = id;
     }
+
 
     public String getName() {
         return name;
@@ -23,6 +27,14 @@ public abstract class NamedEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
