@@ -51,4 +51,13 @@ public class Category extends NamedEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), description);
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

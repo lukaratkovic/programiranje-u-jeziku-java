@@ -113,4 +113,19 @@ public class Item extends NamedEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), category, width, height, length, productionCost, sellingPrice, discount);
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "category=" + category +
+                ", width=" + width +
+                ", height=" + height +
+                ", length=" + length +
+                ", productionCost=" + productionCost +
+                ", sellingPrice=" + sellingPrice +
+                ", discount=" + discount +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

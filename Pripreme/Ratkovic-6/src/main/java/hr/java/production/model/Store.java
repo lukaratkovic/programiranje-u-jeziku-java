@@ -53,4 +53,14 @@ public class Store extends NamedEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), webAddress, items);
     }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", webAddress='" + webAddress + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }

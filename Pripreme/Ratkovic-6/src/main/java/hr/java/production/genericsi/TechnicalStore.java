@@ -24,8 +24,4 @@ public class TechnicalStore<T extends Technical> extends Store {
     public List<T> getItemList() {
         return itemList;
     }
-
-    public void setItemList(List<T> itemList) {
-        this.itemList = itemList;
-    }
 }

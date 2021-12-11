@@ -11,22 +11,36 @@ import hr.java.production.sort.VolumeSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.zip.InflaterOutputStream;
 
 /**
  * Runs the program
  */
 public class Main {
-    private static final int AMOUNT_OF_CATEGORIES = 3;
     private static final int AMOUNT_OF_ITEMS = 5;
-    private static final int AMOUNT_OF_FACTORIES = 2;
-    private static final int AMOUNT_OF_FACTORY_ITEMS = 2;
-    private static final int AMOUNT_OF_STORES = 2;
-    public static final int AMOUNT_OF_STORE_ITEMS = 2;
+
+    public static final String CATEGORY_FILE = "dat/categories.txt";
+    private static final String ITEM_FILE = "dat/items.txt";
+    private static final String ADDRESS_FILE = "dat/addresses.txt";
+    private static final String TECHNICAL_STORE_FILE = "dat/technical_store.txt";
+    private static final String FOOD_STORE_FILE = "dat/food_store.txt";
+    private static final String STORE_FILE = "dat/stores.txt";
+    private static final String FACTORIES_FILE = "dat/factories.txt";
+
+    public static final int LINES_PER_CATEGORY = 3;
+    public static final int LINES_PER_ITEM = 12;
+    public static final int LINES_PER_ADDRESS = 4;
+    private static final int LINES_PER_TECHNICAL_STORE = 4;
+    private static final int LINES_PER_FOOD_STORE = 4;
+    private static final int LINES_PER_STORE = 4;
+    private static final int LINES_PER_FACTORY = 4;
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
@@ -41,50 +55,11 @@ public class Main {
 
         Map<Category, List<Item>> categoryItemMap = new HashMap<>();
 
-        /*Category input*/
-        System.out.print("Skip category input? (Default categories will be created): ");
-        String input = scanner.nextLine();
-        Category[] categories = new Category[AMOUNT_OF_CATEGORIES];
-        if (input.toUpperCase(Locale.ROOT).equals("Y")) {
-            for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
-                categories[i] = new Category("Category" + (i + 1), "", new Random().nextLong());
-            }
-        } else {
-            for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
-                Category created;
-                boolean isValid = false;
-                do {
-                    created = createCategory(scanner, i);
-                    try {
-                        for (int j = 0; j < i; j++) {
-                            if (categories[j].equals(created))
-                                throw new DuplicateCategoryException("This category already exists!");
-                        }
-                        isValid = true;
-                    } catch (DuplicateCategoryException ex) {
-                        logger.error("An error has occurred", ex);
-                        System.out.println(ex.getMessage());
-                    }
-                } while (!isValid);
-                categories[i] = created;
-            }
-        }
+        /*Category input from file*/
+        List<Category> categories = loadCategories();
 
-        /*Item input*/
-        List<Item> items = new ArrayList<>();
-        for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            Item created = createItem(scanner, categories, i);
-            items.add(created);
-            if (categoryItemMap.containsKey(created.getCategory())) {
-                List<Item> currentItems = categoryItemMap.get(created.getCategory());
-                currentItems.add(created);
-                categoryItemMap.put(created.getCategory(), currentItems);
-            } else {
-                List<Item> currentItems = new ArrayList<>();
-                currentItems.add(created);
-                categoryItemMap.put(created.getCategory(), currentItems);
-            }
-        }
+        /*Item input from file*/
+        List<Item> items = loadItems(categories);
 
         aboveAveragePrice(items);
 
@@ -94,11 +69,12 @@ public class Main {
 
         List<Store> storesList = new ArrayList<>();
 
-        /**
-         * Technical Store input
-         */
+        List<Address> addresses = loadAddresses();
+
+        TechnicalStore<Laptop> technicalStore = loadTechnicalStore(items);
+        System.out.println(technicalStore.getName());
+
         //Sort w/Lambda
-        TechnicalStore<Laptop> technicalStore = createTechnicalStore(scanner, items);
         storesList.add(technicalStore);
         Instant start = Instant.now();
         List<Technical> sortedTechnicals = technicalStore.getItemList().stream()
@@ -124,10 +100,8 @@ public class Main {
                 .forEach(i -> System.out.println(((Item) i).getName() + " (" + ((Item) i).getVolume() + ")"));
 
 
-        /**
-         * Food Store input
-         */
-        FoodStore<Edible> foodStore = createFoodStore(scanner, items);
+        FoodStore<Edible> foodStore = loadFoodStore(items);
+
         storesList.add(foodStore);
         //Sort with lambdas
         start = Instant.now();
@@ -153,48 +127,38 @@ public class Main {
         sortedEdibles.stream()
                 .forEach(i -> System.out.println(((Item) i).getName() + "(" + (((Item) i).getVolume()) + ")"));
 
-        /*Store input*/
-        Store[] stores = new Store[AMOUNT_OF_STORES];
-        for (int i = 0; i < AMOUNT_OF_STORES; i++) {
-            stores[i] = createStore(scanner, items, i);
-            storesList.add(stores[i]);
-            //Sort with lambdas
-            start = Instant.now();
-            List<Item> sortedStoreItems = stores[i].getItems().stream()
+        /*Load stores from file*/
+        List<Store> stores = loadStores(items, addresses);
+
+        //Sort with lambdas
+        start = Instant.now();
+        stores.stream().forEach(s -> {
+            s.getItems().stream()
                     .sorted((i1, i2) -> {
                         if (i1.getVolume().compareTo(i2.getVolume()) > 0) return 1;
                         else if (i1.getVolume().compareTo(i2.getVolume()) < 0) return -1;
                         else return 0;
                     })
                     .collect(Collectors.toList());
-            end = Instant.now();
-            System.out.println(Duration.between(start, end));
+        });
+        end = Instant.now();
+        System.out.println("Sorting with lambdas duration: " + Duration.between(start, end));
 
-            //Sort without lambdas
-            start = Instant.now();
-            Collections.sort(new ArrayList<Item>(stores[i].getItems()), new VolumeSorter<Item>());
-            end = Instant.now();
-            System.out.println(Duration.between(start, end));
-
-            System.out.println("Store items, sorted by volume: ");
-            sortedStoreItems.stream().forEach(item -> System.out.println(item.getName() + "(" + item.getVolume() + ")"));
+        //Sort without lambdas
+        start = Instant.now();
+        for (Store s : stores) {
+            Collections.sort(new ArrayList<Item>(s.getItems()), new VolumeSorter<>());
         }
+        end = Instant.now();
+        System.out.println("Sorting without lambdas duration: " + Duration.between(start, end));
 
-        storesList.stream()
-                .map(s -> s.getItems().size())
-                .forEach(System.out::println);
-
-
-        /*Factory input*/
-        Factory[] factories = new Factory[AMOUNT_OF_FACTORIES];
-        for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
-            factories[i] = createFactory(scanner, items, i);
-        }
+        /*Load factories from file*/
+        List<Factory> factories = loadFactories(items, addresses);
 
         List<Store> allStores = new ArrayList<>();
         allStores.add(technicalStore);
         allStores.add(foodStore);
-        Arrays.stream(stores).forEach(s -> allStores.add(s));
+        stores.stream().forEach(s -> allStores.add(s));
 
         /*Find factory that manufactures item with the largest volume*/
         largestVolumeFactory(factories);
@@ -215,6 +179,352 @@ public class Main {
         EdibleTechnicalMinMax(items);
 
         logger.info("The program has finished to completion");
+    }
+
+    private static List<Factory> loadFactories(List<Item> items, List<Address> addresses) {
+        List<Factory> factories = new ArrayList<>();
+
+        /*Model: id, name, addressID, items*/
+        Optional<Long> id = Optional.empty();
+        Optional<String> name = Optional.empty();
+        Optional<Address> address = Optional.empty();
+        Set<Item> itemList = new HashSet<>();
+
+        File factoryFile = new File(FACTORIES_FILE);
+        try (BufferedReader factoryFileReader = new BufferedReader(new FileReader(factoryFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = factoryFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_FACTORY) {
+                    case 0:
+                        id = Optional.of(Long.parseLong(line));
+                        break;
+                    case 1:
+                        name = Optional.of(line);
+                        break;
+                    case 2:
+                        String finalLine = line;
+                        address = addresses.stream()
+                                .filter(a -> a.getId().equals(Long.parseLong(finalLine)))
+                                .findFirst();
+                        break;
+                    case 3:
+                        Arrays.asList(line.split(",")).stream().forEach(itemid -> {
+                            itemList.add(items.stream().
+                                    filter(i -> i.getId().equals(Long.parseLong(itemid)))
+                                    .findFirst().get());
+                        });
+                        factories.add(new Factory(name.get(), address.get(), itemList, id.get()));
+                        break;
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return factories;
+    }
+
+    private static List<Store> loadStores(List<Item> items, List<Address> addresses) {
+        List<Store> stores = new ArrayList<>();
+
+        Optional<Long> id = Optional.empty();
+        Optional<String> name = Optional.empty();
+        Optional<String> webAddress = Optional.empty();
+        Set<Item> itemList = new HashSet<>();
+
+        File storeFile = new File(STORE_FILE);
+        try (BufferedReader storeFileReader = new BufferedReader(new FileReader(storeFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = storeFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_STORE) {
+                    case 0:
+                        id = Optional.of(Long.parseLong(line));
+                        break;
+                    case 1:
+                        name = Optional.of(line);
+                        break;
+                    case 2:
+                        webAddress = Optional.of(line);
+                        break;
+                    case 3:
+                        Arrays.asList(line.split(",")).stream().forEach(itemid -> {
+                            itemList.add(items.stream().
+                                    filter(i -> i.getId().equals(Long.parseLong(itemid)))
+                                    .findFirst().get());
+                        });
+                        stores.add(new Store(name.get(), webAddress.get(), itemList, id.get()));
+                        break;
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stores;
+    }
+
+    /**
+     * Loads a food store from FOOD_STORE_FILE
+     *
+     * @param items List of Item objects
+     * @return Food store loaded from file
+     */
+    private static FoodStore<Edible> loadFoodStore(List<Item> items) {
+        /*Model: id, name, webAdress, itemList*/
+        Optional<Long> id = Optional.empty();
+        Optional<String> name = Optional.empty();
+        Optional<String> webAddress = Optional.empty();
+        List<Edible> itemList = new ArrayList<>();
+
+        File fstoreFile = new File(FOOD_STORE_FILE);
+        try (BufferedReader fstoreFileReader = new BufferedReader(new FileReader(fstoreFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = fstoreFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_FOOD_STORE) {
+                    case 0:
+                        id = Optional.of(Long.parseLong(line));
+                        break;
+                    case 1:
+                        name = Optional.of(line);
+                        break;
+                    case 2:
+                        webAddress = Optional.of(line);
+                        break;
+                    case 3:
+                        Arrays.asList(line.split(",")).stream().forEach(itemid -> {
+                            itemList.add((Edible) items.stream().
+                                    filter(i -> i.getId().equals(Long.parseLong(itemid)))
+                                    .findFirst().get());
+                        });
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new FoodStore<>(name.get(), webAddress.get(), itemList, id.get());
+    }
+
+    /**
+     * Loads a technical store from TECHNICAL_STORE_FILE
+     *
+     * @param items List of Item objects
+     * @return Technical Store loaded from file
+     */
+    private static TechnicalStore<Laptop> loadTechnicalStore(List<Item> items) {
+        /*Model: id, name, webAddress, itemList*/
+        Optional<Long> id = Optional.empty();
+        Optional<String> name = Optional.empty();
+        Optional<String> webAddress = Optional.empty();
+        List<Laptop> itemList = new ArrayList<>();
+
+        File tstoreFile = new File(TECHNICAL_STORE_FILE);
+        try (BufferedReader tstoreFileReader = new BufferedReader(new FileReader(tstoreFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = tstoreFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_TECHNICAL_STORE) {
+                    case 0:
+                        id = Optional.of(Long.parseLong(line));
+                        break;
+                    case 1:
+                        name = Optional.of(line);
+                        break;
+                    case 2:
+                        webAddress = Optional.of(line);
+                        break;
+                    case 3:
+                        Arrays.asList(line.split(",")).stream().forEach(itemid -> {
+                            itemList.add((Laptop) items.stream()
+                                    .filter(i -> i.getId().equals(Long.parseLong(itemid)))
+                                    .findFirst().get());
+                        });
+                        break;
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new TechnicalStore<>(name.get(), webAddress.get(), itemList, id.get());
+
+    }
+
+    /**
+     * Loads a list of Address from ADDRESS_FILE
+     *
+     * @return List of Address objects
+     */
+    private static List<Address> loadAddresses() {
+        List<Address> addresses = new ArrayList<>();
+        /*Model: street, houseNumber, City*/
+
+        Address.Builder addressBuilder = new Address.Builder();
+
+        /*Open file*/
+        File addressFile = new File(ADDRESS_FILE);
+        try (BufferedReader addressFileReader = new BufferedReader(new FileReader(addressFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = addressFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_ADDRESS) {
+                    case 0:
+                        addressBuilder.withId(Long.parseLong(line));
+                    case 1:
+                        addressBuilder.withStreet(line);
+                        break;
+                    case 2:
+                        addressBuilder.withHouseNumber(line);
+                        break;
+                    case 3:
+                        addressBuilder.withCity(switch (line) {
+                            case "ZAGREB" -> City.ZAGREB;
+                            case "DUGO SELO" -> City.DUGO_SELO;
+                            default -> City.RIJEKA;
+                        });
+                        addresses.add(addressBuilder.build());
+                        break;
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return addresses;
+    }
+
+    /**
+     * Loads a list of Items from ITEM_FILE
+     *
+     * @return List of Item objects
+     */
+    private static List<Item> loadItems(List<Category> categories) {
+        /*Model: ID, name, CategoryID, type (Basic, Fries, GummyBears, Laptop), width, height, length, weight,
+        productionCost, sellingCost, discount, warranty*/
+        List<Item> items = new ArrayList<>();
+        Optional<Long> id = Optional.empty();
+        Optional<String> name = Optional.empty();
+        Optional<Long> categoryID = Optional.empty();
+        Optional<String> type = Optional.empty();
+        Optional<BigDecimal> width = Optional.empty();
+        Optional<BigDecimal> height = Optional.empty();
+        Optional<BigDecimal> length = Optional.empty();
+        Optional<BigDecimal> weight = Optional.empty();
+        Optional<BigDecimal> productionCost = Optional.empty();
+        Optional<BigDecimal> sellingPrice = Optional.empty();
+        Optional<Discount> discount = Optional.empty();
+        Optional<Integer> warranty = Optional.empty();
+
+        /*Open file*/
+        File itemsFile = new File(ITEM_FILE);
+        try (BufferedReader itemsFileReader = new BufferedReader(new FileReader(itemsFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = itemsFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_ITEM) {
+                    case 0:
+                        id = Optional.of(Long.parseLong(line));
+                        break;
+                    case 1:
+                        name = Optional.of(line);
+                        break;
+                    case 2:
+                        categoryID = Optional.of(Long.parseLong(line));
+                        break;
+                    case 3:
+                        type = Optional.of(line);
+                        break;
+                    case 4:
+                        width = Optional.of(new BigDecimal(line));
+                        break;
+                    case 5:
+                        height = Optional.of(new BigDecimal(line));
+                        break;
+                    case 6:
+                        length = Optional.of(new BigDecimal(line));
+                        break;
+                    case 7:
+                        weight = Optional.of(new BigDecimal(line));
+                        break;
+                    case 8:
+                        productionCost = Optional.of(new BigDecimal(line));
+                        break;
+                    case 9:
+                        sellingPrice = Optional.of(new BigDecimal(line));
+                        break;
+                    case 10:
+                        discount = Optional.of(new Discount(new BigDecimal(line)));
+                        break;
+                    case 11:
+                        warranty = Optional.of(Integer.parseInt(line));
+                        Optional<Long> finalCategoryID = categoryID;
+                        Optional<Category> category = categories.stream()
+                                .filter(c -> c.getId().equals(finalCategoryID.get()))
+                                .findFirst();
+                        items.add(switch (type.get()) {
+                            case "GummyBears" -> new GummyBears(name.get(), category.get(), width.get(), height.get(),
+                                    length.get(), productionCost.get(), sellingPrice.get(), discount.get(),
+                                    weight.get(), id.get());
+                            case "Fries" -> new Fries(name.get(), category.get(), width.get(), height.get(),
+                                    length.get(), productionCost.get(), sellingPrice.get(), discount.get(),
+                                    weight.get(), id.get());
+                            case "Laptop" -> new Laptop(name.get(), category.get(), width.get(), height.get(),
+                                    length.get(), productionCost.get(), sellingPrice.get(), discount.get(),
+                                    warranty.get(), id.get());
+                            default -> new Item(name.get(), category.get(), width.get(), height.get(),
+                                    length.get(), productionCost.get(), sellingPrice.get(), discount.get(), id.get());
+                        });
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    /**
+     * Loads a list of categories from CATEGORY_FILE
+     *
+     * @return List of Category objects
+     */
+    private static List<Category> loadCategories() {
+        List<Category> categories = new ArrayList<>();
+        Optional<String> name = Optional.empty();
+        Optional<String> description = Optional.empty();
+        Optional<Long> id = Optional.empty();
+
+        File categoriesFile = new File(CATEGORY_FILE);
+        try (BufferedReader categoriesFileReader = new BufferedReader(new FileReader(categoriesFile))) {
+            int lineCounter = 0;
+            String line;
+            while ((line = categoriesFileReader.readLine()) != null) {
+                switch (lineCounter % LINES_PER_CATEGORY) {
+                    case 0:
+                        id = Optional.of(Long.parseLong(line));
+                        break;
+                    case 1:
+                        name = Optional.of(line);
+                        break;
+                    case 2:
+                        description = Optional.of(line);
+                        categories.add(new Category(name.get(), description.get(), id.get()));
+                        break;
+                }
+                lineCounter++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 
     /**
@@ -302,20 +612,18 @@ public class Main {
      *
      * @param factories List of factories to be checked
      */
-    private static void largestVolumeFactory(Factory[] factories) {
+    private static void largestVolumeFactory(List<Factory> factories) {
         /*Set first factory as one with largest volume*/
-        Factory largestVolumeFactory = factories[0];
+        Factory largestVolumeFactory = factories.get(0);
         /*Find largest volume item of FIRST factory*/
         Item largestVolumeItem = largestVolumeFactory.getItems().stream().toList().get(0);
         BigDecimal largestVolume = largestVolumeItem.getVolume();
-        /*Each factory*/
-        for (int i = 0; i < AMOUNT_OF_FACTORIES; i++) {
-            /*Each item*/
-            for (Item item : factories[i].getItems()) {
-                if (item.getVolume().compareTo(largestVolume) > 0) {
-                    largestVolumeFactory = factories[i];
-                    largestVolumeItem = item;
-                    largestVolume = largestVolumeItem.getVolume();
+        for (Factory f : factories) {
+            for (Item i : f.getItems()) {
+                if (i.getVolume().compareTo(largestVolume) > 0) {
+                    largestVolumeFactory = f;
+                    largestVolumeItem = i;
+                    largestVolume = i.getVolume();
                 }
             }
         }
@@ -330,19 +638,18 @@ public class Main {
      *
      * @param stores List of stores to be checked
      */
-    public static void cheapestArticleStore(Store[] stores) {
+    public static void cheapestArticleStore(List<Store> stores) {
         /*Set first store as the one with cheapest item*/
-        Store cheapestArticleStore = stores[0];
+        Store cheapestArticleStore = stores.get(0);
         /*Find cheapest item of FIRST store*/
         Item cheapestArticle = cheapestArticleStore.getItems().stream().toList().get(0);
         BigDecimal cheapestArticlePrice = cheapestArticle.getSellingPrice();
-        /*Each store*/
-        for (int i = 0; i < AMOUNT_OF_STORES; i++) {
-            /*Each item*/
-            for (Item item : stores[i].getItems()) {
-                if (item.getSellingPrice().compareTo(cheapestArticlePrice) < 0) {
-                    cheapestArticleStore = stores[i];
-                    cheapestArticle = item;
+
+        for (Store s : stores) {
+            for (Item i : s.getItems()) {
+                if (i.getSellingPrice().compareTo(cheapestArticlePrice) < 0) {
+                    cheapestArticleStore = s;
+                    cheapestArticle = i;
                     cheapestArticlePrice = cheapestArticle.getSellingPrice();
                 }
             }
@@ -362,6 +669,9 @@ public class Main {
         boolean foundOne = false;
         Item mostKcalItem = null;
         BigDecimal mostKcal = new BigDecimal(0);
+        for (Item i : items) {
+
+        }
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
             if (items.get(i) instanceof Fries fries) {
                 if (!foundOne) {
@@ -450,281 +760,5 @@ public class Main {
             scanner.nextLine();
         }
         return input;
-    }
-
-    /**
-     * Requests input of parameters for Category
-     *
-     * @param scanner Allows input from System.in
-     * @param n       Index of category that is being created
-     * @return Object of Category class
-     */
-    public static Category createCategory(Scanner scanner, int n) {
-        /*Input Name*/
-        System.out.print("Enter " + (n + 1) + ". category name: ");
-        String name = scanner.nextLine();
-
-        /*Input Description*/
-        System.out.print("Enter " + (n + 1) + ". category description: ");
-        String description = scanner.nextLine();
-
-        /*Return object*/
-        return new Category(name, description, new Random().nextLong());
-    }
-
-    /**
-     * Requests input of parameters for Item
-     *
-     * @param scanner    Allows input from System.in
-     * @param categories Category[], list of categories that can be selected
-     * @param n          Index of item that is being created
-     * @return Object of Item class
-     */
-    public static Item createItem(Scanner scanner, Category[] categories, int n) {
-        /*Input Name*/
-        System.out.print("Enter " + (n + 1) + ". item name: ");
-        String name = scanner.nextLine();
-
-        /*Select Category*/
-        System.out.println("Select category: ");
-        for (int i = 0; i < AMOUNT_OF_CATEGORIES; i++) {
-            System.out.println((i + 1) + " " + categories[i].getName());
-        }
-        int selectedCategory;
-        /*Repeat input until a correct option is selected*/
-        do {
-            System.out.print("Category: ");
-            selectedCategory = inputInt(scanner);
-        } while (selectedCategory < 1 || selectedCategory > AMOUNT_OF_CATEGORIES);
-        Category category = categories[selectedCategory - 1];
-
-        /*Input width*/
-        System.out.print("Enter width: ");
-        BigDecimal width = inputBigDecimal(scanner);
-
-        /*Input height*/
-        System.out.print("Enter height: ");
-        BigDecimal height = inputBigDecimal(scanner);
-
-        /*Input length*/
-        System.out.print("Enter length: ");
-        BigDecimal length = inputBigDecimal(scanner);
-
-        /*Input production cost*/
-        System.out.print("Enter production cost: ");
-        BigDecimal productionCost = inputBigDecimal(scanner);
-
-        /*Input selling price*/
-        System.out.print("Enter selling price: ");
-        BigDecimal sellingPrice = inputBigDecimal(scanner);
-
-        /*Input discount*/
-        System.out.print("Enter discount percentage: ");
-        BigDecimal discount = inputBigDecimal(scanner);
-
-        /*Check if edible*/
-        System.out.println("Select item type: ");
-        System.out.println("1 Edible");
-        System.out.println("2 Laptop");
-        System.out.println("3 Other");
-        int selection;
-        do {
-            System.out.print("Item type: ");
-            selection = inputInt(scanner);
-        } while (selection < 1 || selection > 3);
-
-        /*Select edible item*/
-        if (selection == 1) {
-            System.out.println("Select item: ");
-            System.out.println("1 Fries");
-            System.out.println("2 Gummy Bears");
-            /*Repeat selection until valid*/
-            int foodSelection;
-            do {
-                System.out.print("Food: ");
-                foodSelection = inputInt(scanner);
-            } while (foodSelection < 1 || foodSelection > 2);
-            /*Input weight*/
-            System.out.print("Input weight (kg): ");
-            BigDecimal weight = inputBigDecimal(scanner);
-            /*Create object of proper type*/
-            Item returnItem;
-            if (foodSelection == 1) {
-                returnItem = new Fries(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight, new Random().nextLong());
-                /*Total kcal, price*/
-                System.out.println("Total kcal: " + ((Fries) returnItem).totalKCAL());
-                System.out.println("Total price: " + ((Fries) returnItem).calculatePrice());
-            } else {
-                returnItem = new GummyBears(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), weight, new Random().nextLong());
-                /*Total kcal, price*/
-                System.out.println("Total kcal: " + ((GummyBears) returnItem).totalKCAL());
-                System.out.println("Total price: " + ((GummyBears) returnItem).calculatePrice());
-            }
-            return returnItem;
-        }
-        /*Laptop selected*/
-        else if (selection == 2) {
-            System.out.print("Enter laptop warranty: ");
-            int warranty = inputInt(scanner);
-            return new Laptop(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), warranty, new Random().nextLong());
-        } else {
-            return new Item(name, category, width, height, length, productionCost, sellingPrice, new Discount(discount), new Random().nextLong());
-        }
-    }
-
-    /**
-     * Requests input of parameters for Factory
-     *
-     * @param scanner Allows input from System.in
-     * @param items   Item[] list of articles that can be added to Factory
-     * @param n       Index of factory that is being created
-     * @return Object of Factory class
-     */
-    public static Factory createFactory(Scanner scanner, List<Item> items, int n) {
-        /*Input name*/
-        System.out.print("Enter " + (n + 1) + ". factory name: ");
-        String name = scanner.nextLine();
-
-        /*Input Address*/
-        Address address = createAddress(scanner);
-
-        /*Select items*/
-        Set<Item> factoryItems = new HashSet<>();
-        for (int i = 0; i < AMOUNT_OF_FACTORY_ITEMS; i++) {
-            System.out.println("Select " + (i + 1) + ". item: ");
-            for (Item item : items) {
-                System.out.println(item.getName());
-            }
-            int selectedItem;
-            do {
-                System.out.print("Item: ");
-                try {
-                    selectedItem = inputInt(scanner);
-                    for (Item factoryItem : factoryItems) {
-                        if (factoryItem.equals(items.get(selectedItem - 1)))
-                            throw new DuplicateArticleException("This item already exists in factory.");
-                    }
-                } catch (DuplicateArticleException ex) {
-                    logger.error("An error has occurred", ex);
-                    System.out.println(ex.getMessage());
-                    selectedItem = 0;
-                }
-            } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-            factoryItems.add(items.get(selectedItem - 1));
-        }
-
-        return new Factory(name, address, factoryItems, new Random().nextLong());
-    }
-
-    /**
-     * Requests input of parameters for Address
-     *
-     * @param scanner Allows input from System.in
-     * @return Object of Address class
-     */
-    public static Address createAddress(Scanner scanner) {
-        /*Input street*/
-        System.out.print("Enter street: ");
-        String street = scanner.nextLine();
-
-        /*input house number*/
-        System.out.print("Enter house number: ");
-        String houseNumber = scanner.nextLine();
-
-        /*Select city*/
-        //TODO Output city options from enum
-        boolean validInput = false;
-        City selected = null;
-        do {
-            System.out.print("Select city " + Arrays.asList(City.values()) + ": ");
-            try {
-                selected = City.valueOf(scanner.nextLine().toUpperCase(Locale.ROOT));
-                validInput = true;
-            } catch (IllegalArgumentException ex) {
-                System.out.println("Invalid input!");
-            }
-        } while (!validInput);
-
-        return new Address.Builder()
-                .withStreet(street)
-                .withHouseNumber(houseNumber)
-                .withCity(selected)
-                .build();
-    }
-
-    /**
-     * Requests input of parameters for Store
-     *
-     * @param scanner Allows input from System.in
-     * @param items   Item[] list of articles that can be added to Store
-     * @param n       Index of store that is being created
-     * @return Object of Store class
-     */
-    public static Store createStore(Scanner scanner, List<Item> items, int n) {
-        /*Input name*/
-        System.out.print("Enter " + (n + 1) + ". store name: ");
-        String name = scanner.nextLine();
-
-        /*Input web address*/
-        System.out.print("Enter web address: ");
-        String webAddress = scanner.nextLine();
-
-        /*Select items*/
-        Set<Item> storeItems = new HashSet<>();
-        for (int i = 0; i < AMOUNT_OF_STORE_ITEMS; i++) {
-            System.out.println("Select " + (i + 1) + ". item: ");
-            for (int j = 0; j < AMOUNT_OF_ITEMS; j++) {
-                System.out.println((j + 1) + " " + items.get(j).getName());
-            }
-            int selectedItem;
-            do {
-                System.out.print("Item: ");
-                try {
-                    selectedItem = inputInt(scanner);
-                    /*Compare item [selectedItem-1] with all previous entries*/
-                    for (Item item : storeItems) {
-                        if (item.equals(items.get(selectedItem - 1)))
-                            throw new DuplicateArticleException("This item already exists in store.");
-                    }
-                } catch (DuplicateArticleException ex) {
-                    logger.error("An error has occurred", ex);
-                    System.out.println(ex.getMessage());
-                    selectedItem = 0;
-                }
-            } while (selectedItem < 1 || selectedItem > AMOUNT_OF_ITEMS);
-            storeItems.add(items.get(selectedItem - 1));
-        }
-
-        return new Store(name, webAddress, storeItems, new Random().nextLong());
-    }
-
-    /**
-     * Requests input of parameters for TechnicalStore
-     */
-    public static TechnicalStore createTechnicalStore(Scanner scanner, List<Item> items) {
-        System.out.print("Technical store name: ");
-        String name = scanner.nextLine();
-        System.out.println("Web address: ");
-        String webAddress = scanner.nextLine();
-        List<Technical> technicalItems = new ArrayList<>();
-        for (Item i : items) {
-            if (i instanceof Technical) technicalItems.add((Technical) i);
-        }
-        return new TechnicalStore<>(name, webAddress, technicalItems, new Random().nextLong());
-    }
-
-    /**
-     * Requests input of parameters for FoodStore
-     */
-    public static FoodStore createFoodStore(Scanner scanner, List<Item> items) {
-        System.out.print("Food store name: ");
-        String name = scanner.nextLine();
-        System.out.println("Web address: ");
-        String webAddress = scanner.nextLine();
-        List<Edible> technicalItems = new ArrayList<>();
-        for (Item i : items) {
-            if (i instanceof Edible) technicalItems.add((Edible) i);
-        }
-        return new FoodStore(name, webAddress, technicalItems, new Random().nextLong());
     }
 }

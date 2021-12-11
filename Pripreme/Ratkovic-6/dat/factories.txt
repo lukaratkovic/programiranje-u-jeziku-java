@@ -1,0 +1,12 @@
+1
+Laptop Factory
+1
+3,4
+2
+Food Factory
+2
+1,2
+3
+Book Factory
+3
+5

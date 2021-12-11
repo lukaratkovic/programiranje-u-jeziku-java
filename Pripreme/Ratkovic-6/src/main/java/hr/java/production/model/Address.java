@@ -11,6 +11,7 @@ import java.util.Objects;
 public class Address {
     String street, houseNumber;
     City city;
+    Long id;
 
     /**
      * Empty constructor for Address class, should be used in conjunction with Build Pattern
@@ -76,11 +77,17 @@ public class Address {
     public static class Builder {
         private String street, houseNumber;
         City city;
+        Long id;
 
         /**
          * Constructor for Builder class (Address), should be used in conjunction with .build()
          */
         public Builder() {
+        }
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
         }
 
         /**
@@ -126,8 +133,23 @@ public class Address {
             address.street = this.street;
             address.houseNumber = this.houseNumber;
             address.city = this.city;
+            address.id = this.id;
 
             return address;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", city=" + city +
+                ", id=" + id +
+                '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 }
