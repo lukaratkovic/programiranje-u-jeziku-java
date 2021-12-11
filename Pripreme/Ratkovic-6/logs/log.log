@@ -211,3 +211,29 @@ hr.java.production.exception.DuplicateArticleException: This item already exists
 2021-12-11 17:12:31,751 INFO [main] h.j.p.m.Main [Main.java:55] The program has been started.
 2021-12-11 17:13:24,591 INFO [main] h.j.p.m.Main [Main.java:55] The program has been started.
 2021-12-11 17:13:24,639 INFO [main] h.j.p.m.Main [Main.java:191] The program has finished to completion
+2021-12-11 17:50:01,979 INFO [main] h.j.p.m.Main [Main.java:53] The program has been started.
+2021-12-11 17:50:02,024 INFO [main] h.j.p.m.Main [Main.java:188] The program has finished to completion
+2021-12-11 17:53:22,529 INFO [main] h.j.p.m.Main [Main.java:53] The program has been started.
+2021-12-11 17:53:22,577 INFO [main] h.j.p.m.Main [Main.java:188] The program has finished to completion
+2021-12-11 17:53:54,849 INFO [main] h.j.p.m.Main [Main.java:54] The program has been started.
+2021-12-11 17:53:54,907 INFO [main] h.j.p.m.Main [Main.java:189] The program has finished to completion
+2021-12-11 17:54:55,577 INFO [main] h.j.p.m.Main [Main.java:54] The program has been started.
+2021-12-11 17:54:55,620 INFO [main] h.j.p.m.Main [Main.java:189] The program has finished to completion
+2021-12-11 17:55:07,150 INFO [main] h.j.p.m.Main [Main.java:54] The program has been started.
+2021-12-11 17:55:07,196 INFO [main] h.j.p.m.Main [Main.java:189] The program has finished to completion
+2021-12-11 17:56:22,486 INFO [main] h.j.p.m.Main [Main.java:54] The program has been started.
+2021-12-11 17:56:22,529 INFO [main] h.j.p.m.Main [Main.java:189] The program has finished to completion
+2021-12-11 18:23:50,945 INFO [main] h.j.p.m.Main [Main.java:56] The program has been started.
+2021-12-11 18:23:50,999 INFO [main] h.j.p.m.Main [Main.java:196] The program has finished to completion
+2021-12-11 18:24:27,165 INFO [main] h.j.p.m.Main [Main.java:56] The program has been started.
+2021-12-11 18:24:27,213 INFO [main] h.j.p.m.Main [Main.java:196] The program has finished to completion
+2021-12-11 18:24:42,399 INFO [main] h.j.p.m.Main [Main.java:56] The program has been started.
+2021-12-11 18:24:42,453 INFO [main] h.j.p.m.Main [Main.java:196] The program has finished to completion
+2021-12-11 18:24:57,354 INFO [main] h.j.p.m.Main [Main.java:56] The program has been started.
+2021-12-11 18:24:57,407 INFO [main] h.j.p.m.Main [Main.java:196] The program has finished to completion
+2021-12-11 18:26:32,636 INFO [main] h.j.p.m.Main [Main.java:56] The program has been started.
+2021-12-11 18:26:32,690 INFO [main] h.j.p.m.Main [Main.java:203] The program has finished to completion
+2021-12-11 18:26:52,722 INFO [main] h.j.p.m.Main [Main.java:56] The program has been started.
+2021-12-11 18:26:52,774 INFO [main] h.j.p.m.Main [Main.java:203] The program has finished to completion
+2021-12-11 18:27:24,503 INFO [main] h.j.p.m.Main [Main.java:57] The program has been started.
+2021-12-11 18:27:24,561 INFO [main] h.j.p.m.Main [Main.java:209] The program has finished to completion

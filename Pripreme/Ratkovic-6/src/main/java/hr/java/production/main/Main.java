@@ -1,5 +1,6 @@
 package hr.java.production.main;
 
+import ch.qos.logback.core.net.ObjectWriter;
 import hr.java.production.enums.City;
 import hr.java.production.exception.DuplicateArticleException;
 import hr.java.production.exception.DuplicateCategoryException;
@@ -8,6 +9,7 @@ import hr.java.production.genericsi.TechnicalStore;
 import hr.java.production.model.*;
 import hr.java.production.sort.ProductionSorter;
 import hr.java.production.sort.VolumeSorter;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,8 @@ public class Main {
     private static final String FOOD_STORE_FILE = "dat/food_store.txt";
     private static final String STORE_FILE = "dat/stores.txt";
     private static final String FACTORIES_FILE = "dat/factories.txt";
+    private static final String STORE_SERIALIZATION_FILE = "dat/serialized_stores.ser";
+    private static final String FACTORY_SERIALIZATION_FILE = "dat/serialized_factories.ser";
 
     public static final int LINES_PER_CATEGORY = 3;
     public static final int LINES_PER_ITEM = 12;
@@ -178,6 +182,30 @@ public class Main {
         /*Find cheapest and most expensive items from objects that implement Edible and Technical interface*/
         EdibleTechnicalMinMax(items);
 
+        /*Serialize stores with 5 or more items*/
+        stores.stream().forEach(s -> {
+            if (s.getItems().size() >= 5) {
+                try (ObjectOutputStream objectWriter =
+                             new ObjectOutputStream(new FileOutputStream(STORE_SERIALIZATION_FILE))) {
+                    objectWriter.writeObject(s);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        /*Serialize factories with 5 or more items*/
+        factories.stream().forEach(f -> {
+            if (f.getItems().size() >= 5) {
+                try (ObjectOutputStream objectWriter =
+                             new ObjectOutputStream(new FileOutputStream(FACTORY_SERIALIZATION_FILE))) {
+                    objectWriter.writeObject(f);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         logger.info("The program has finished to completion");
     }
 
@@ -209,12 +237,14 @@ public class Main {
                                 .findFirst();
                         break;
                     case 3:
+                        Set<Item> finalItemList = itemList;
                         Arrays.asList(line.split(",")).stream().forEach(itemid -> {
-                            itemList.add(items.stream().
+                            finalItemList.add(items.stream().
                                     filter(i -> i.getId().equals(Long.parseLong(itemid)))
                                     .findFirst().get());
                         });
                         factories.add(new Factory(name.get(), address.get(), itemList, id.get()));
+                        itemList = new HashSet<>();
                         break;
                 }
                 lineCounter++;
@@ -250,11 +280,13 @@ public class Main {
                         webAddress = Optional.of(line);
                         break;
                     case 3:
+                        Set<Item> finalItemList = itemList;
                         Arrays.asList(line.split(",")).stream().forEach(itemid -> {
-                            itemList.add(items.stream().
+                            finalItemList.add(items.stream().
                                     filter(i -> i.getId().equals(Long.parseLong(itemid)))
                                     .findFirst().get());
                         });
+                        itemList = new HashSet<>();
                         stores.add(new Store(name.get(), webAddress.get(), itemList, id.get()));
                         break;
                 }

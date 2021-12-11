@@ -9,4 +9,4 @@ www.kaufland.hr
 3
 Lidl
 www.lidl.hr
-2,3,4
+1,2,3,4,5

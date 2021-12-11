@@ -3,12 +3,13 @@ package hr.java.production.model;
 
 import hr.java.production.enums.City;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Represents a physical location
  */
-public class Address {
+public class Address implements Serializable {
     String street, houseNumber;
     City city;
     Long id;

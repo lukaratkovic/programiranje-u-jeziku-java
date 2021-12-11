@@ -1,11 +1,12 @@
 package hr.java.production.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Represents any entity with a name
  */
-public abstract class NamedEntity {
+public abstract class NamedEntity implements Serializable {
     String name;
     Long id;
 
