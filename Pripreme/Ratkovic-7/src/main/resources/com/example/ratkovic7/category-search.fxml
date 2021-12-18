@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ratkovic7.CategorySearch">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ratkovic7.SearchCategoriesController">
             <fx:include source="menu.fxml" />
    <GridPane layoutY="25.0" prefHeight="375.0" prefWidth="600.0">
      <columnConstraints>
@@ -33,22 +33,17 @@
                <Font name="System Bold" size="19.0" />
             </font>
          </Label>
-         <Label text="Enter item name:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-         <Button mnemonicParsing="false" text="Search" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-         <TextField GridPane.columnIndex="3" GridPane.rowIndex="1">
+         <Label text="Enter category name:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+         <Button mnemonicParsing="false" onAction="#onSearchButtonClick" text="Search" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+         <TextField fx:id="nameTextField" GridPane.columnIndex="3" GridPane.rowIndex="1">
             <GridPane.margin>
                <Insets left="5.0" right="5.0" />
             </GridPane.margin>
          </TextField>
-         <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3">
+         <TableView fx:id="categoriesTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3">
            <columns>
-             <TableColumn prefWidth="75.0" text="Name" />
-             <TableColumn prefWidth="75.0" text="Category" />
-               <TableColumn prefWidth="75.0" text="Width" />
-               <TableColumn prefWidth="75.0" text="Height" />
-               <TableColumn prefWidth="75.0" text="Length" />
-               <TableColumn prefWidth="124.0" text="Production costs" />
-               <TableColumn prefWidth="100.0" text="Selling Price" />
+             <TableColumn fx:id="nameTableColumn" prefWidth="178.0" text="Name" />
+             <TableColumn fx:id="descriptionTableColumn" prefWidth="421.0" text="Description" />
            </columns>
          </TableView>
       </children>

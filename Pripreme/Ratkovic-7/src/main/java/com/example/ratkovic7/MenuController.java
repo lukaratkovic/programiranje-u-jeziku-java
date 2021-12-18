@@ -1,9 +1,16 @@
 package com.example.ratkovic7;
 
+import hr.java.production.model.Address;
+import hr.java.production.model.Category;
+import hr.java.production.model.Item;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.util.List;
+
+import static hr.java.production.main.Main.*;
 
 public class MenuController {
     public void showItemSearchScreen() {
