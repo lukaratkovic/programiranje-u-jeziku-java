@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static hr.java.production.main.Main.loadCategories;
@@ -41,10 +42,10 @@ public class SearchCategoriesController {
 
     @FXML
     protected void onSearchButtonClick(){
-        String enteredName = nameTextField.getText();
+        String enteredName = nameTextField.getText().toUpperCase(Locale.ROOT);
 
         List<Category> filteredCategories = categories.stream()
-                .filter(c -> c.getName().contains(enteredName))
+                .filter(c -> c.getName().toUpperCase(Locale.ROOT).contains(enteredName))
                 .collect(Collectors.toList());
 
         categoriesTableView.setItems(FXCollections.observableList(filteredCategories));

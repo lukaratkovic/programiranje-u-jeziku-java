@@ -53,4 +53,13 @@ public class Factory extends NamedEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), address, items);
     }
+
+    public String getItemsAsString(){
+        if(items.size() == 0) return "";
+        String ret = "";
+        for(Item i : items){
+            ret += i.getName() + ", ";
+        }
+        return ret.substring(0, ret.length() - 2);
+    }
 }

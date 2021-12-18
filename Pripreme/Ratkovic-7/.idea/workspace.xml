@@ -5,21 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc3d45e2-acf2-4332-9e6b-5950da3ed525" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/SearchItemsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/CategorySearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/SearchCategoriesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/ItemSearch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/MainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7/category-search.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7/category-search.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7/item-search.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7/item-search.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/SearchCategoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/SearchCategoriesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/SearchItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic7/SearchItemsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Store.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7/menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/CategorySearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/ItemSearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/MainViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/MainViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/MenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/MenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/category-search.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/category-search.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/item-search.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/item-search.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/SearchCategoriesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/SearchCategoriesController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/SearchItemsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/SearchItemsController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic7/menu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +113,7 @@
       <workItem from="1639768697039" duration="2532000" />
       <workItem from="1639778390798" duration="3634000" />
       <workItem from="1639783070128" duration="24000" />
-      <workItem from="1639820774487" duration="3650000" />
+      <workItem from="1639820774487" duration="10670000" />
     </task>
     <servers />
   </component>

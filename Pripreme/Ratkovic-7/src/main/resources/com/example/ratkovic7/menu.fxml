@@ -21,12 +21,12 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Factory">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Search" />
+                        <MenuItem mnemonicParsing="false" onAction="#showFactorySearchScreen" text="Search" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Store">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Search" />
+                        <MenuItem mnemonicParsing="false" onAction="#showStoreSearchScreen" text="Search" />
                     </items>
                 </Menu>
             </menus>

@@ -39,5 +39,29 @@ public class MenuController {
         HelloApplication.getStage().show();
     }
 
+    public void showFactorySearchScreen(){
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("factory-search.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HelloApplication.getStage().setTitle("Factories");
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
 
+    public void showStoreSearchScreen(){
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("store-search.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HelloApplication.getStage().setTitle("Stores");
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
 }

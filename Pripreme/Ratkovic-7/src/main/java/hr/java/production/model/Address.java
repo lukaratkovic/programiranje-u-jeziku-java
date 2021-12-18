@@ -142,12 +142,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "street='" + street + '\'' +
-                ", houseNumber='" + houseNumber + '\'' +
-                ", city=" + city +
-                ", id=" + id +
-                '}';
+        return street + " " + houseNumber + ", "+city.getName();
     }
 
     public Long getId() {

@@ -125,7 +125,7 @@ public class Main {
                 .forEach(i -> System.out.println(((Item) i).getName() + "(" + (((Item) i).getVolume()) + ")"));
 
         /*Load stores from file*/
-        List<Store> stores = loadStores(items, addresses);
+        List<Store> stores = loadStores(items);
 
         //Sort with lambdas
         start = Instant.now();
@@ -201,7 +201,7 @@ public class Main {
         });
     }
 
-    private static List<Factory> loadFactories(List<Item> items, List<Address> addresses) {
+    public static List<Factory> loadFactories(List<Item> items, List<Address> addresses) {
         List<Factory> factories = new ArrayList<>();
 
         /*Model: id, name, addressID, items*/
@@ -248,7 +248,7 @@ public class Main {
         return factories;
     }
 
-    private static List<Store> loadStores(List<Item> items, List<Address> addresses) {
+    public static List<Store> loadStores(List<Item> items) {
         List<Store> stores = new ArrayList<>();
 
         Optional<Long> id = Optional.empty();
@@ -278,8 +278,8 @@ public class Main {
                                     filter(i -> i.getId().equals(Long.parseLong(itemid)))
                                     .findFirst().get());
                         });
-                        itemList = new HashSet<>();
                         stores.add(new Store(name.get(), webAddress.get(), itemList, id.get()));
+                        itemList = new HashSet<>();
                         break;
                 }
                 lineCounter++;

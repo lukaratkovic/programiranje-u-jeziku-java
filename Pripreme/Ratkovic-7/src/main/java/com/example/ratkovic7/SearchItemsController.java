@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static hr.java.production.main.Main.loadCategories;
@@ -87,7 +88,7 @@ public class SearchItemsController {
         Object enteredCategory = itemCategoryComboBox.getValue();
 
         List<Item> filteredItems = items.stream()
-                .filter(i->i.getName().contains(enteredName))
+                .filter(i->i.getName().toUpperCase(Locale.ROOT).contains(enteredName.toUpperCase(Locale.ROOT)))
                 .collect(Collectors.toList());
 
         if(!enteredCategory.equals("All Categories")) {

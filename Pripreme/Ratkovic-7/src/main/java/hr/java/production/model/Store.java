@@ -63,4 +63,13 @@ public class Store extends NamedEntity {
                 ", items=" + items +
                 '}';
     }
+
+    public String getItemsAsString(){
+        if(items.size() == 0) return "";
+        String ret = "";
+        for(Item i : items){
+            ret += i.getName() + ", ";
+        }
+        return ret.substring(0, ret.length() - 2);
+    }
 }
