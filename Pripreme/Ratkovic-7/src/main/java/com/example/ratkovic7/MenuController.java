@@ -64,4 +64,17 @@ public class MenuController {
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
     }
+
+    public void showItemCreateScreen(){
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("item-create.fxml"));
+        Scene scene = null;
+        try{
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        HelloApplication.getStage().setTitle("Create Item");
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
 }
