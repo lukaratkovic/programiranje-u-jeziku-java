@@ -55,6 +55,7 @@ public class CreateItemController {
 
     @FXML
     protected void onSaveButtonClick(){
+        //TODO: Checks for validity of fields before saving
         String enteredName = itemNameTextField.getText();
         BigDecimal enteredWidth = new BigDecimal(itemWidthTextField.getText());
         BigDecimal enteredHeight = new BigDecimal(itemHeightTextField.getText());
@@ -65,7 +66,7 @@ public class CreateItemController {
                 .filter(c -> c.getName().equals(itemCategoryComboBox.getValue()))
                 .findFirst()
                 .get();
-        Long id = items.get(items.size()-1).getId();
+        Long id = items.get(items.size()-1).getId()+1;
 
         try(FileWriter itemFileWriter = new FileWriter(ITEM_FILE, true))
         {
