@@ -25,7 +25,7 @@ public class Main {
     private static final int AMOUNT_OF_ITEMS = 5;
 
     public static final String CATEGORY_FILE = "dat/categories.txt";
-    private static final String ITEM_FILE = "dat/items.txt";
+    public static final String ITEM_FILE = "dat/items.txt";
     private static final String ADDRESS_FILE = "dat/addresses.txt";
     private static final String TECHNICAL_STORE_FILE = "dat/technical_store.txt";
     private static final String FOOD_STORE_FILE = "dat/food_store.txt";
