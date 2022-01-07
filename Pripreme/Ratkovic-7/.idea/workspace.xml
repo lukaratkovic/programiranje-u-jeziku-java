@@ -40,12 +40,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="format.on.save" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="actions.on.save" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -101,7 +103,8 @@
       <workItem from="1639783070128" duration="24000" />
       <workItem from="1639820774487" duration="10670000" />
       <workItem from="1641411718760" duration="2845000" />
-      <workItem from="1641491413196" duration="3837000" />
+      <workItem from="1641491413196" duration="3905000" />
+      <workItem from="1641526637840" duration="2137000" />
     </task>
     <servers />
   </component>
