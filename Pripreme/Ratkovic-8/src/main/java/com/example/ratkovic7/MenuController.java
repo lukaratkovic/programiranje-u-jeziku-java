@@ -39,7 +39,7 @@ public class MenuController {
         HelloApplication.getStage().show();
     }
 
-    public void showFactorySearchScreen(){
+    public void showFactorySearchScreen() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("factory-search.fxml"));
         Scene scene = null;
         try {
@@ -52,7 +52,7 @@ public class MenuController {
         HelloApplication.getStage().show();
     }
 
-    public void showStoreSearchScreen(){
+    public void showStoreSearchScreen() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("store-search.fxml"));
         Scene scene = null;
         try {
@@ -65,12 +65,12 @@ public class MenuController {
         HelloApplication.getStage().show();
     }
 
-    public void showItemCreateScreen(){
+    public void showItemCreateScreen() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("item-create.fxml"));
         Scene scene = null;
-        try{
+        try {
             scene = new Scene(fxmlLoader.load(), 600, 400);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         HelloApplication.getStage().setTitle("Create Item");
@@ -78,15 +78,28 @@ public class MenuController {
         HelloApplication.getStage().show();
     }
 
-    public void showCategoryCreateScreen(){
+    public void showCategoryCreateScreen() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("category-create.fxml"));
         Scene scene = null;
-        try{
+        try {
             scene = new Scene(fxmlLoader.load(), 600, 400);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         HelloApplication.getStage().setTitle("Create Category");
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
+
+    public void showStoreCreateScreen() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("store-create.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HelloApplication.getStage().setTitle("Create Store");
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
     }

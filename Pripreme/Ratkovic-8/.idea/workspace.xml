@@ -41,6 +41,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="format.on.save" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/example/ratkovic7" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/com/example/ratkovic7" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -51,6 +52,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Luka\Documents\TVZ\programiranje-u-jeziku-java\Pripreme\Ratkovic-8\src\main\resources\com\example\ratkovic7" />
       <recent name="C:\Users\Luka\Documents\TVZ\programiranje-u-jeziku-java\Pripreme\Ratkovic-7\src\main\resources\com\example\ratkovic7" />
       <recent name="E:\Documents\TVZ\sem3\programiranje-u-jeziku-java\Pripreme\Ratkovic-7\src\main\resources\com\example\ratkovic7" />
     </key>
@@ -106,6 +108,7 @@
       <workItem from="1641491413196" duration="3905000" />
       <workItem from="1641526637840" duration="3921000" />
       <workItem from="1641575864114" duration="742000" />
+      <workItem from="1641579113828" duration="4669000" />
     </task>
     <servers />
   </component>

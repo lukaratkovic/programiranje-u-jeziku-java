@@ -164,6 +164,7 @@ public class CreateItemController {
             itemProductionCostTextField.setText("");
             itemSellingPriceTextField.setText("");
             itemCategoryComboBox.getSelectionModel().selectFirst();
+            categories = loadCategories();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Save action failed!");

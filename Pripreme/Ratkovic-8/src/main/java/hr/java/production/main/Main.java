@@ -29,7 +29,7 @@ public class Main {
     private static final String ADDRESS_FILE = "dat/addresses.txt";
     private static final String TECHNICAL_STORE_FILE = "dat/technical_store.txt";
     private static final String FOOD_STORE_FILE = "dat/food_store.txt";
-    private static final String STORE_FILE = "dat/stores.txt";
+    public static final String STORE_FILE = "dat/stores.txt";
     private static final String FACTORIES_FILE = "dat/factories.txt";
     private static final String STORE_SERIALIZATION_FILE = "dat/serialized_stores.ser";
     private static final String FACTORY_SERIALIZATION_FILE = "dat/serialized_factories.ser";

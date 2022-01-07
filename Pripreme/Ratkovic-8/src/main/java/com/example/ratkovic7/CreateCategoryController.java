@@ -63,6 +63,7 @@ public class CreateCategoryController {
             alert.showAndWait();
             categoryNameTextField.setText("");
             categoryDescriptionTextField.setText("");
+            categories = loadCategories();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Save action failed!");
