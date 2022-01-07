@@ -4,6 +4,7 @@ import hr.java.production.model.Category;
 import hr.java.production.model.Item;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -43,7 +44,7 @@ public class CreateItemController {
     TextField itemSellingPriceTextField;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         categories = loadCategories();
         items = loadItems(categories);
         List<String> categoryNames = categories.stream()
@@ -54,46 +55,125 @@ public class CreateItemController {
     }
 
     @FXML
-    protected void onSaveButtonClick(){
+    protected void onSaveButtonClick() {
         //TODO: Checks for validity of fields before saving
-        String enteredName = itemNameTextField.getText();
-        BigDecimal enteredWidth = new BigDecimal(itemWidthTextField.getText());
-        BigDecimal enteredHeight = new BigDecimal(itemHeightTextField.getText());
-        BigDecimal enteredLength = new BigDecimal(itemLengthTextField.getText());
-        BigDecimal enteredProductionCost = new BigDecimal(itemProductionCostTextField.getText());
-        BigDecimal enteredSellingPrice = new BigDecimal(itemSellingPriceTextField.getText());
-        Category selectedCategory = categories.stream()
+
+        StringBuilder recordValue = new StringBuilder();
+        StringBuilder errorMessage = new StringBuilder();
+
+        Long id;
+        if (items.size() < 1) id = 1L;
+        else id = items.get(items.size() - 1).getId() + 1;
+        recordValue.append(id.toString());
+        recordValue.append("\n");
+
+        if (itemNameTextField.getText().isEmpty()) {
+            errorMessage.append("Item name should not be empty!\n");
+        } else {
+            recordValue.append(itemNameTextField.getText());
+            recordValue.append("\n");
+        }
+
+        Long categoryID = categories.stream()
                 .filter(c -> c.getName().equals(itemCategoryComboBox.getValue()))
+                .map(c -> c.getId())
                 .findFirst()
                 .get();
-        Long id = items.get(items.size()-1).getId()+1;
+        recordValue.append(categoryID);
+        recordValue.append("\n");
+        recordValue.append("Basic\n");
 
-        try(FileWriter itemFileWriter = new FileWriter(ITEM_FILE, true))
-        {
-            itemFileWriter.write(id.toString()+"\n");
-            itemFileWriter.write(enteredName+"\n");
-            itemFileWriter.write(selectedCategory.getId().toString()+"\n");
-            itemFileWriter.write("Basic\n");
-            itemFileWriter.write(enteredWidth.toString()+"\n");
-            itemFileWriter.write(enteredHeight.toString()+"\n");
-            itemFileWriter.write(enteredLength.toString()+"\n");
-            itemFileWriter.write("0\n");
-            itemFileWriter.write(enteredProductionCost.toString()+"\n");
-            itemFileWriter.write(enteredSellingPrice.toString()+"\n");
-            itemFileWriter.write("0\n");
-            itemFileWriter.write("0\n");
-        }
-        catch (IOException e){
-            e.printStackTrace();
+        if (itemWidthTextField.getText().isEmpty()) {
+            errorMessage.append("Item width should not be empty!\n");
+        } else {
+            try {
+                BigDecimal enteredWidth = new BigDecimal(itemWidthTextField.getText());
+                recordValue.append(enteredWidth);
+                recordValue.append("\n");
+            } catch (NumberFormatException ex) {
+                errorMessage.append("Incorrect format for item width!\n");
+            }
         }
 
-        itemNameTextField.setText("");
-        itemWidthTextField.setText("");
-        itemHeightTextField.setText("");
-        itemLengthTextField.setText("");
-        itemProductionCostTextField.setText("");
-        itemSellingPriceTextField.setText("");
-        itemCategoryComboBox.getSelectionModel().selectFirst();
+        if (itemHeightTextField.getText().isEmpty()) {
+            errorMessage.append("Item height should not be empty!\n");
+        } else {
+            try {
+                BigDecimal enteredHeight = new BigDecimal(itemHeightTextField.getText());
+                recordValue.append(enteredHeight);
+                recordValue.append("\n");
+            } catch (NumberFormatException ex) {
+                errorMessage.append("Incorrect format for item height!\n");
+            }
+        }
+
+        if (itemLengthTextField.getText().isEmpty()) {
+            errorMessage.append("Item length should not be empty!\n");
+        } else {
+            try {
+                BigDecimal enteredLength = new BigDecimal(itemLengthTextField.getText());
+                recordValue.append(enteredLength);
+                recordValue.append("\n");
+            } catch (NumberFormatException ex) {
+                errorMessage.append("Incorrect format for item length!\n");
+            }
+        }
+
+        recordValue.append("0\n");
+
+        if (itemProductionCostTextField.getText().isEmpty()) {
+            errorMessage.append("Item production cost should not be empty!\n");
+        } else {
+            try {
+                BigDecimal enteredProductionCost = new BigDecimal(itemProductionCostTextField.getText());
+                recordValue.append(enteredProductionCost);
+                recordValue.append("\n");
+            } catch (NumberFormatException ex) {
+                errorMessage.append("Incorrect format for item production cost!\n");
+            }
+        }
+
+        if (itemSellingPriceTextField.getText().isEmpty()) {
+            errorMessage.append("Item selling price should not be empty!\n");
+        } else {
+            try {
+                BigDecimal enteredSellingPrice = new BigDecimal(itemSellingPriceTextField.getText());
+                recordValue.append(enteredSellingPrice);
+                recordValue.append("\n");
+            } catch (NumberFormatException ex) {
+                errorMessage.append("Incorrect format for item selling price!\n");
+            }
+        }
+
+        recordValue.append("0\n0\n");
+
+
+        if (errorMessage.isEmpty()) {
+            try (FileWriter itemFileWriter = new FileWriter(ITEM_FILE, true)) {
+                itemFileWriter.write(recordValue.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Save action successful!");
+            alert.setHeaderText("Item successfully saved");
+            alert.setContentText(new StringBuilder().append("Item ").append(itemNameTextField.getText()).append(" successfully saved").toString());
+            alert.showAndWait();
+            itemNameTextField.setText("");
+            itemWidthTextField.setText("");
+            itemHeightTextField.setText("");
+            itemLengthTextField.setText("");
+            itemProductionCostTextField.setText("");
+            itemSellingPriceTextField.setText("");
+            itemCategoryComboBox.getSelectionModel().selectFirst();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Save action failed!");
+            alert.setHeaderText("Category could not be saved");
+            alert.setContentText(errorMessage.toString());
+            alert.showAndWait();
+        }
+
     }
 }
 
