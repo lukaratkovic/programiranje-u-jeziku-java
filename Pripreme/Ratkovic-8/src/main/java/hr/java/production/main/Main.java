@@ -26,11 +26,11 @@ public class Main {
 
     public static final String CATEGORY_FILE = "dat/categories.txt";
     public static final String ITEM_FILE = "dat/items.txt";
-    private static final String ADDRESS_FILE = "dat/addresses.txt";
+    public static final String ADDRESS_FILE = "dat/addresses.txt";
     private static final String TECHNICAL_STORE_FILE = "dat/technical_store.txt";
     private static final String FOOD_STORE_FILE = "dat/food_store.txt";
     public static final String STORE_FILE = "dat/stores.txt";
-    private static final String FACTORIES_FILE = "dat/factories.txt";
+    public static final String FACTORIES_FILE = "dat/factories.txt";
     private static final String STORE_SERIALIZATION_FILE = "dat/serialized_stores.ser";
     private static final String FACTORY_SERIALIZATION_FILE = "dat/serialized_factories.ser";
 
@@ -410,7 +410,7 @@ public class Main {
                     case 3:
                         addressBuilder.withCity(switch (line) {
                             case "ZAGREB" -> City.ZAGREB;
-                            case "DUGO SELO" -> City.DUGO_SELO;
+                            case "DUGO_SELO" -> City.DUGO_SELO;
                             default -> City.RIJEKA;
                         });
                         addresses.add(addressBuilder.build());

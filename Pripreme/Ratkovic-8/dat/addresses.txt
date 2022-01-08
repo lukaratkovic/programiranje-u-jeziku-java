@@ -5,7 +5,7 @@ ZAGREB
 2
 Savska
 12c
-DUGO SELO
+DUGO_SELO
 3
 Zvonimirova ul.
 3
