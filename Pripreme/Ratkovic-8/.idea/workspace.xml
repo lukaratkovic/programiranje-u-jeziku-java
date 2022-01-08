@@ -48,7 +48,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="actions.on.save" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -56,6 +56,11 @@
       <recent name="C:\Users\Luka\Documents\TVZ\programiranje-u-jeziku-java\Pripreme\Ratkovic-7\src\main\resources\com\example\ratkovic7" />
       <recent name="E:\Documents\TVZ\sem3\programiranje-u-jeziku-java\Pripreme\Ratkovic-7\src\main\resources\com\example\ratkovic7" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.HelloApplication">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -109,7 +114,8 @@
       <workItem from="1641526637840" duration="3921000" />
       <workItem from="1641575864114" duration="742000" />
       <workItem from="1641579113828" duration="7186000" />
-      <workItem from="1641631984716" duration="3936000" />
+      <workItem from="1641631984716" duration="4345000" />
+      <workItem from="1641636407507" duration="396000" />
     </task>
     <servers />
   </component>
