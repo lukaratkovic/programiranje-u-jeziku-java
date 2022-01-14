@@ -1,17 +1,13 @@
 package database;
 
-import hr.java.production.model.Category;
-import hr.java.production.model.Discount;
-import hr.java.production.model.Item;
+import hr.java.production.enums.City;
+import hr.java.production.model.*;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class Database {
 
@@ -72,4 +68,212 @@ public class Database {
         return items;
     }
 
+    public static List<Store> fetchStores(Connection connection, List<Category> categories) throws SQLException {
+        List<Store> stores = new ArrayList<>();
+
+        Statement sql = connection.createStatement();
+        ResultSet storeResultSet = sql.executeQuery("SELECT * FROM STORE");
+
+        while (storeResultSet.next()) {
+            Long id = storeResultSet.getLong("ID");
+            String name = storeResultSet.getString("NAME");
+            String webAddress = storeResultSet.getString("WEB_ADDRESS");
+
+            Set<Item> storeItems = fetchStoreItems(connection, id, categories);
+
+            Store store = new Store(name, webAddress, storeItems, id);
+            stores.add(store);
+        }
+
+        return stores;
+    }
+
+    public static List<Address> fetchAddresses(Connection connection) throws SQLException {
+        List<Address> addresses = new ArrayList<>();
+
+        Statement sql = connection.createStatement();
+        ResultSet addressResultSet = sql.executeQuery("SELECT * FROM ADDRESS");
+
+        while (addressResultSet.next()) {
+            Long id = addressResultSet.getLong("ID");
+            String street = addressResultSet.getString("STREET");
+            String houseNumber = addressResultSet.getString("HOUSE_NUMBER");
+            String cityString = addressResultSet.getString("CITY");
+            City city = switch (cityString) {
+                case "Dugo Selo" -> City.DUGO_SELO;
+                case "Koprivnica" -> City.KOPRIVNICA;
+                case "New York" -> City.NEW_YORK;
+                case "Rijeka" -> City.RIJEKA;
+                case "Zagreb" -> City.ZAGREB;
+                default -> throw new IllegalStateException("Unexpected City value.");
+            };
+
+            Address address = new Address(street, houseNumber, city);
+            addresses.add(address);
+        }
+
+        return addresses;
+    }
+
+    public static List<Factory> fetchFactories(Connection connection, List<Address> addresses, List<Category> categories) throws SQLException {
+        List<Factory> factories = new ArrayList<>();
+
+        Statement sql = connection.createStatement();
+        ResultSet factoryResultSet = sql.executeQuery("SELECT * FROM FACTORY");
+
+        while (factoryResultSet.next()) {
+            Long id = factoryResultSet.getLong("ID");
+            String name = factoryResultSet.getString("NAME");
+            Long addressID = factoryResultSet.getLong("ADDRESS_ID");
+
+            Set<Item> factoryItems = fetchFactoryItems(connection, id, categories);
+            Address address = fetchAddressById(connection, addressID);
+
+            Factory factory = new Factory(name, address, factoryItems, id);
+            factories.add(factory);
+        }
+
+        return factories;
+    }
+
+    public static Set<Item> fetchStoreItems(Connection connection, Long storeID, List<Category> categories) throws SQLException {
+        Set<Item> storeItems = new HashSet<>();
+
+        PreparedStatement itemStatement = connection.
+                prepareStatement("SELECT * FROM STORE_ITEM SI, ITEM I WHERE SI.STORE_ID = ? AND SI.ITEM_ID = I.ID");
+        itemStatement.setLong(1, storeID);
+        ResultSet itemResultSet = itemStatement.executeQuery();
+
+        while (itemResultSet.next()) {
+            Long id = itemResultSet.getLong("ID");
+            Long categoryId = itemResultSet.getLong("CATEGORY_ID");
+            Category category = categories.stream().filter(c -> c.getId().equals(categoryId)).findFirst().get();
+            String name = itemResultSet.getString("NAME");
+            BigDecimal width = itemResultSet.getBigDecimal("WIDTH");
+            BigDecimal height = itemResultSet.getBigDecimal("HEIGHT");
+            BigDecimal length = itemResultSet.getBigDecimal("LENGTH");
+            BigDecimal productionCost = itemResultSet.getBigDecimal("PRODUCTION_COST");
+            BigDecimal sellingPrice = itemResultSet.getBigDecimal("SELLING_PRICE");
+
+            Item item = new Item(name, category, width, height, length,
+                    productionCost, sellingPrice, new Discount(BigDecimal.ZERO), id);
+
+            storeItems.add(item);
+        }
+
+        return storeItems;
+    }
+
+    public static Set<Item> fetchFactoryItems(Connection connection, Long factoryID, List<Category> categories) throws SQLException {
+        Set<Item> factoryItems = new HashSet<>();
+
+        PreparedStatement itemStatement = connection.
+                prepareStatement("SELECT * FROM FACTORY_ITEM FI, ITEM I WHERE FI.FACTORY_ID = ? AND FI.ITEM_ID = I.ID");
+        itemStatement.setLong(1, factoryID);
+        ResultSet itemResultSet = itemStatement.executeQuery();
+
+        while (itemResultSet.next()) {
+            Long id = itemResultSet.getLong("ID");
+            Long categoryId = itemResultSet.getLong("CATEGORY_ID");
+            Category category = categories.stream().filter(c -> c.getId().equals(categoryId)).findFirst().get();
+            String name = itemResultSet.getString("NAME");
+            BigDecimal width = itemResultSet.getBigDecimal("WIDTH");
+            BigDecimal height = itemResultSet.getBigDecimal("HEIGHT");
+            BigDecimal length = itemResultSet.getBigDecimal("LENGTH");
+            BigDecimal productionCost = itemResultSet.getBigDecimal("PRODUCTION_COST");
+            BigDecimal sellingPrice = itemResultSet.getBigDecimal("SELLING_PRICE");
+
+            Item item = new Item(name, category, width, height, length,
+                    productionCost, sellingPrice, new Discount(BigDecimal.ZERO), id);
+
+            factoryItems.add(item);
+        }
+
+        return factoryItems;
+    }
+
+    public static Category fetchCategoryById(Connection connection, Long categoryId) throws SQLException {
+        PreparedStatement categoryStatement = connection.prepareStatement("SELECT * FROM CATEGORY WHERE ID = ? LIMIT 1");
+        categoryStatement.setLong(1, categoryId);
+        ResultSet categoryResultSet = categoryStatement.executeQuery();
+
+        categoryResultSet.next();
+        Long id = categoryResultSet.getLong("ID");
+        String name = categoryResultSet.getString("NAME");
+        String description = categoryResultSet.getString("DESCRIPTION");
+
+        return new Category(name, description, id);
+    }
+
+    public static Item fetchItemById(Connection connection, Long itemId, List<Category> categories) throws SQLException {
+        PreparedStatement itemStatement = connection.prepareStatement("SELECT * FROM ITEM WHERE ID = ? LIMIT 1");
+        itemStatement.setLong(1, itemId);
+        ResultSet itemResultSet = itemStatement.executeQuery();
+
+        itemResultSet.next();
+        Long id = itemResultSet.getLong("ID");
+        Long categoryId = itemResultSet.getLong("CATEGORY_ID");
+        Category category = categories.stream().filter(c -> c.getId().equals(categoryId)).findFirst().get();
+        String name = itemResultSet.getString("NAME");
+        BigDecimal width = itemResultSet.getBigDecimal("WIDTH");
+        BigDecimal height = itemResultSet.getBigDecimal("HEIGHT");
+        BigDecimal length = itemResultSet.getBigDecimal("LENGTH");
+        BigDecimal productionCost = itemResultSet.getBigDecimal("PRODUCTION_COST");
+        BigDecimal sellingPrice = itemResultSet.getBigDecimal("SELLING_PRICE");
+
+        return new Item(name, category, width, height, length,
+                productionCost, sellingPrice, new Discount(BigDecimal.ZERO), id);
+    }
+
+    public static Address fetchAddressById(Connection connection, Long addressId) throws SQLException {
+        PreparedStatement addressStatement = connection.prepareStatement("SELECT * FROM ADDRESS WHERE ID = ? LIMIT 1");
+        addressStatement.setLong(1, addressId);
+        ResultSet addressResultSet = addressStatement.executeQuery();
+
+        addressResultSet.next();
+        String street = addressResultSet.getString("STREET");
+        String houseNumber = addressResultSet.getString("HOUSE_NUMBER");
+        String cityString = addressResultSet.getString("CITY");
+        City city = switch (cityString) {
+            case "Dugo Selo" -> City.DUGO_SELO;
+            case "Koprivnica" -> City.KOPRIVNICA;
+            case "New York" -> City.NEW_YORK;
+            case "Rijeka" -> City.RIJEKA;
+            case "Zagreb" -> City.ZAGREB;
+            default -> throw new IllegalStateException("Unexpected City value.");
+        };
+
+        return new Address(street, houseNumber, city);
+    }
+
+    public static Factory fetchFactoryById(Connection connection, Long factoryId, List<Category> categories) throws SQLException {
+        PreparedStatement factoryStatement = connection.prepareStatement("SELECT * FROM FACTORY WHERE ID = ? LIMIT 1");
+        factoryStatement.setLong(1, factoryId);
+        ResultSet factoryResultSet = factoryStatement.executeQuery();
+
+        factoryResultSet.next();
+        Long id = factoryResultSet.getLong("ID");
+        String name = factoryResultSet.getString("NAME");
+        Long addressID = factoryResultSet.getLong("ADDRESS_ID");
+
+        Set<Item> factoryItems = fetchFactoryItems(connection, id, categories);
+        Address address = fetchAddressById(connection, addressID);
+
+        return new Factory(name, address, factoryItems, id);
+    }
+
+    public static Store fetchStoreById(Connection connection, Long storeId, List<Category> categories) throws SQLException {
+        PreparedStatement storeStatement = connection.prepareStatement("SELECT * FROM STORE WHERE ID = ? LIMIT 1");
+        storeStatement.setLong(1, storeId);
+        ResultSet storeResultSet = storeStatement.executeQuery();
+
+        storeResultSet.next();
+        Long id = storeResultSet.getLong("ID");
+        String name = storeResultSet.getString("NAME");
+        String webAddress = storeResultSet.getString("WEB_ADDRESS");
+
+        Set<Item> storeItems = fetchStoreItems(connection, id, categories);
+
+        return new Store(name, webAddress, storeItems, id);
+    }
 }

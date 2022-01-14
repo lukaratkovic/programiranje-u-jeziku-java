@@ -54,12 +54,22 @@ public class Factory extends NamedEntity {
         return Objects.hash(super.hashCode(), address, items);
     }
 
-    public String getItemsAsString(){
-        if(items.size() == 0) return "";
+    public String getItemsAsString() {
+        if (items.size() == 0) return "";
         String ret = "";
-        for(Item i : items){
+        for (Item i : items) {
             ret += i.getName() + ", ";
         }
         return ret.substring(0, ret.length() - 2);
+    }
+
+    @Override
+    public String toString() {
+        return "Factory{" +
+                "address=" + address +
+                ", items=" + items +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

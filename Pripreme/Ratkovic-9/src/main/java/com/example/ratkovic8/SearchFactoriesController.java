@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import database.Database;
 import hr.java.production.enums.City;
 import hr.java.production.model.Address;
 import hr.java.production.model.Category;
@@ -13,6 +14,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,10 +63,17 @@ public class SearchFactoriesController {
 
         itemsTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemsAsString()));
 
-        categories = loadCategories();
-        items = loadItems(categories);
-        addresses = loadAddresses();
-        factories = loadFactories(items, addresses);
+        try (Connection connection = Database.connectToDatabase()) {
+            System.out.println("Connected to database.");
+            categories = Database.fetchCategories(connection);
+            items = Database.fetchItems(connection, categories);
+            addresses = Database.fetchAddresses(connection);
+            factories = Database.fetchFactories(connection, addresses, categories);
+        } catch (SQLException | IOException ex) {
+            System.out.println("Error connecting to database");
+            ex.printStackTrace();
+        }
+
         List<String> cityNames = Arrays.stream(City.values()).toList().stream()
                 .map(c -> c.getName())
                 .collect(Collectors.toList());

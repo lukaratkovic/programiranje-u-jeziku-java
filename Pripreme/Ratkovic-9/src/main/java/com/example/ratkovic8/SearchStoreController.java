@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import database.Database;
 import hr.java.production.model.Category;
 import hr.java.production.model.Item;
 import hr.java.production.model.Store;
@@ -8,6 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -49,9 +53,16 @@ public class SearchStoreController {
 
         itemsTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemsAsString()));
 
-        categories = loadCategories();
-        items = loadItems(categories);
-        stores = loadStores(items);
+        try (Connection connection = Database.connectToDatabase()) {
+            System.out.println("Connected to database.");
+            categories = Database.fetchCategories(connection);
+            items = Database.fetchItems(connection, categories);
+            stores = Database.fetchStores(connection, categories);
+            System.out.println(Database.fetchStoreById(connection, 1L, categories));
+        } catch (SQLException | IOException ex) {
+            System.out.println("Error connecting to database");
+            ex.printStackTrace();
+        }
 
         List<String> itemNames = items.stream()
                 .map(i -> i.getName())
