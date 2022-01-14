@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import database.Database;
 import hr.java.production.model.Category;
 import hr.java.production.model.Item;
 import javafx.collections.FXCollections;
@@ -11,7 +12,10 @@ import javafx.scene.control.TextField;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static hr.java.production.main.Main.*;
@@ -43,8 +47,15 @@ public class CreateItemController {
 
     @FXML
     public void initialize() {
-        categories = loadCategories();
-        items = loadItems(categories);
+        try (Connection connection = Database.connectToDatabase()) {
+            System.out.println("Connected to database.");
+            categories = Database.fetchCategories(connection);
+            items = Database.fetchItems(connection, categories);
+        } catch (SQLException | IOException ex) {
+            System.out.println("Error connecting to database");
+            ex.printStackTrace();
+        }
+
         List<String> categoryNames = categories.stream()
                 .map(c -> c.getName())
                 .collect(Collectors.toList());
@@ -54,102 +65,82 @@ public class CreateItemController {
 
     @FXML
     protected void onSaveButtonClick() {
-        StringBuilder recordValue = new StringBuilder();
         StringBuilder errorMessage = new StringBuilder();
 
-        Long id;
-        if (items.size() < 1) id = 1L;
-        else id = items.get(items.size() - 1).getId() + 1;
-        recordValue.append(id.toString());
-        recordValue.append("\n");
-
-        if (itemNameTextField.getText().isEmpty()) {
+        String name = itemNameTextField.getText();
+        if (name.isEmpty())
             errorMessage.append("Item name should not be empty!\n");
-        } else {
-            recordValue.append(itemNameTextField.getText());
-            recordValue.append("\n");
-        }
 
-        Long categoryID = categories.stream()
+        Category category = categories.stream()
                 .filter(c -> c.getName().equals(itemCategoryComboBox.getValue()))
-                .map(c -> c.getId())
                 .findFirst()
                 .get();
-        recordValue.append(categoryID);
-        recordValue.append("\n");
-        recordValue.append("Basic\n");
 
-        if (itemWidthTextField.getText().isEmpty()) {
+        Optional<BigDecimal> width = Optional.empty();
+        if (itemWidthTextField.getText().isEmpty())
             errorMessage.append("Item width should not be empty!\n");
-        } else {
+        else {
             try {
-                BigDecimal enteredWidth = new BigDecimal(itemWidthTextField.getText());
-                recordValue.append(enteredWidth);
-                recordValue.append("\n");
+                width = Optional.of(new BigDecimal(itemWidthTextField.getText()));
             } catch (NumberFormatException ex) {
                 errorMessage.append("Incorrect format for item width!\n");
             }
         }
 
-        if (itemHeightTextField.getText().isEmpty()) {
+        Optional<BigDecimal> height = Optional.empty();
+        if (itemHeightTextField.getText().isEmpty())
             errorMessage.append("Item height should not be empty!\n");
-        } else {
+        else {
             try {
-                BigDecimal enteredHeight = new BigDecimal(itemHeightTextField.getText());
-                recordValue.append(enteredHeight);
-                recordValue.append("\n");
+                height = Optional.of(new BigDecimal(itemHeightTextField.getText()));
             } catch (NumberFormatException ex) {
-                errorMessage.append("Incorrect format for item height!\n");
+                errorMessage.append("Incorrect format for item width!\n");
             }
         }
 
-        if (itemLengthTextField.getText().isEmpty()) {
+        Optional<BigDecimal> length = Optional.empty();
+        if (itemLengthTextField.getText().isEmpty())
             errorMessage.append("Item length should not be empty!\n");
-        } else {
+        else {
             try {
-                BigDecimal enteredLength = new BigDecimal(itemLengthTextField.getText());
-                recordValue.append(enteredLength);
-                recordValue.append("\n");
+                length = Optional.of(new BigDecimal(itemLengthTextField.getText()));
             } catch (NumberFormatException ex) {
                 errorMessage.append("Incorrect format for item length!\n");
             }
         }
 
-        recordValue.append("0\n");
-
-        if (itemProductionCostTextField.getText().isEmpty()) {
+        Optional<BigDecimal> productionCost = Optional.empty();
+        if (itemProductionCostTextField.getText().isEmpty())
             errorMessage.append("Item production cost should not be empty!\n");
-        } else {
+        else {
             try {
-                BigDecimal enteredProductionCost = new BigDecimal(itemProductionCostTextField.getText());
-                recordValue.append(enteredProductionCost);
-                recordValue.append("\n");
+                productionCost = Optional.of(new BigDecimal(itemProductionCostTextField.getText()));
             } catch (NumberFormatException ex) {
                 errorMessage.append("Incorrect format for item production cost!\n");
             }
         }
 
-        if (itemSellingPriceTextField.getText().isEmpty()) {
+        Optional<BigDecimal> sellingPrice = Optional.empty();
+        if (itemSellingPriceTextField.getText().isEmpty())
             errorMessage.append("Item selling price should not be empty!\n");
-        } else {
+        else {
             try {
-                BigDecimal enteredSellingPrice = new BigDecimal(itemSellingPriceTextField.getText());
-                recordValue.append(enteredSellingPrice);
-                recordValue.append("\n");
+                sellingPrice = Optional.of(new BigDecimal(itemSellingPriceTextField.getText()));
             } catch (NumberFormatException ex) {
                 errorMessage.append("Incorrect format for item selling price!\n");
             }
         }
 
-        recordValue.append("0\n0\n");
-
 
         if (errorMessage.isEmpty()) {
-            try (FileWriter itemFileWriter = new FileWriter(ITEM_FILE, true)) {
-                itemFileWriter.write(recordValue.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+            try (Connection connection = Database.connectToDatabase()) {
+                System.out.println("Connected to database.");
+                Database.insertItem(connection, new Item(name, 0L, category, width.get(), height.get(), length.get(), productionCost.get(), sellingPrice.get()));
+            } catch (SQLException | IOException ex) {
+                System.out.println("Error connecting to database");
+                ex.printStackTrace();
             }
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save action successful!");
             alert.setHeaderText("Item successfully saved");
@@ -162,7 +153,6 @@ public class CreateItemController {
             itemProductionCostTextField.setText("");
             itemSellingPriceTextField.setText("");
             itemCategoryComboBox.getSelectionModel().selectFirst();
-            categories = loadCategories();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Save action failed!");

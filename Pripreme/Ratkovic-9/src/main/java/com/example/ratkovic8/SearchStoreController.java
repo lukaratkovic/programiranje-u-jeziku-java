@@ -58,7 +58,6 @@ public class SearchStoreController {
             categories = Database.fetchCategories(connection);
             items = Database.fetchItems(connection, categories);
             stores = Database.fetchStores(connection, categories);
-            System.out.println(Database.fetchStoreById(connection, 1L, categories));
         } catch (SQLException | IOException ex) {
             System.out.println("Error connecting to database");
             ex.printStackTrace();

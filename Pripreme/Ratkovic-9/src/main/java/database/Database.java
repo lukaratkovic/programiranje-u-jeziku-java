@@ -59,8 +59,8 @@ public class Database {
             BigDecimal productionCost = itemResultSet.getBigDecimal("PRODUCTION_COST");
             BigDecimal sellingPrice = itemResultSet.getBigDecimal("SELLING_PRICE");
 
-            Item item = new Item(name, category, width, height, length,
-                    productionCost, sellingPrice, new Discount(BigDecimal.ZERO), id);
+            Item item = new Item(name, id, category, width, height, length,
+                    productionCost, sellingPrice);
 
             items.add(item);
         }
@@ -275,5 +275,28 @@ public class Database {
         Set<Item> storeItems = fetchStoreItems(connection, id, categories);
 
         return new Store(name, webAddress, storeItems, id);
+    }
+
+    public static void insertCategory(Connection connection, Category category) throws SQLException {
+        PreparedStatement categoryStatement = connection.
+                prepareStatement("INSERT INTO CATEGORY (NAME, DESCRIPTION) VALUES(?, ?)");
+        categoryStatement.setString(1, category.getName());
+        categoryStatement.setString(2, category.getDescription());
+        categoryStatement.executeUpdate();
+    }
+
+    public static void insertItem(Connection connection, Item item) throws SQLException {
+        PreparedStatement itemStatement = connection.
+                prepareStatement("INSERT INTO ITEM " +
+                        "(CATEGORY_ID, NAME, WIDTH, HEIGHT, LENGTH, PRODUCTION_COST, SELLING_PRICE)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)");
+        itemStatement.setLong(1, item.getCategory().getId());
+        itemStatement.setString(2, item.getName());
+        itemStatement.setBigDecimal(3, item.getWidth());
+        itemStatement.setBigDecimal(4, item.getHeight());
+        itemStatement.setBigDecimal(5, item.getLength());
+        itemStatement.setBigDecimal(6, item.getProductionCost());
+        itemStatement.setBigDecimal(7, item.getSellingPrice());
+        itemStatement.executeUpdate();
     }
 }

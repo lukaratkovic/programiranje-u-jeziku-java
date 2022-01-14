@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import database.Database;
 import hr.java.production.model.Category;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -7,13 +8,14 @@ import javafx.scene.control.TextField;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import static hr.java.production.main.Main.CATEGORY_FILE;
 import static hr.java.production.main.Main.loadCategories;
 
 public class CreateCategoryController {
-    List<Category> categories;
 
     @FXML
     TextField categoryNameTextField;
@@ -22,40 +24,26 @@ public class CreateCategoryController {
     TextField categoryDescriptionTextField;
 
     @FXML
-    public void initialize() {
-        categories = loadCategories();
-    }
-
-    @FXML
     protected void onSaveButtonClick() {
-        StringBuilder recordValue = new StringBuilder();
         StringBuilder errorMessage = new StringBuilder();
 
-        Long id;
-        if (categories.size() < 1) id = 1L;
-        else id = categories.get(categories.size() - 1).getId() + 1;
-        recordValue.append(id.toString());
-        recordValue.append("\n");
-
-        if (categoryNameTextField.getText().isEmpty()) {
+        String name = categoryNameTextField.getText();
+        if (name.isEmpty())
             errorMessage.append("Category name should not be empty!\n");
-        } else {
-            recordValue.append(categoryNameTextField.getText());
-            recordValue.append("\n");
-        }
 
-        if (categoryDescriptionTextField.getText().isEmpty()) {
+        String description = categoryDescriptionTextField.getText();
+        if (description.isEmpty())
             errorMessage.append("Category description should not be empty!\n");
-        } else {
-            recordValue.append(categoryDescriptionTextField.getText());
-            recordValue.append("\n");
-        }
+
         if (errorMessage.isEmpty()) {
-            try (FileWriter categoryFileWriter = new FileWriter(CATEGORY_FILE, true)) {
-                categoryFileWriter.write(recordValue.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+            try (Connection connection = Database.connectToDatabase()) {
+                System.out.println("Connected to database.");
+                Database.insertCategory(connection, new Category(name, description, 0L));
+            } catch (SQLException | IOException ex) {
+                System.out.println("Error connecting to database");
+                ex.printStackTrace();
             }
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save action successful!");
             alert.setHeaderText("Category successfully saved");
@@ -63,7 +51,7 @@ public class CreateCategoryController {
             alert.showAndWait();
             categoryNameTextField.setText("");
             categoryDescriptionTextField.setText("");
-            categories = loadCategories();
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Save action failed!");

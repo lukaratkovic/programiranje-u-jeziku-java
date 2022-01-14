@@ -7,15 +7,11 @@
     <list default="true" id="fc3d45e2-acf2-4332-9e6b-5950da3ed525" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/log.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/log.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchFactoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchFactoriesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateCategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateItemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchStoreController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/enums/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/enums/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Factory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchFactoriesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchFactoriesController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchStoreController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/database/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/database/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hr/java/production/enums/City.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hr/java/production/enums/City.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Item.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +132,8 @@
       <workItem from="1642114576915" duration="5815000" />
       <workItem from="1642177273278" duration="5242000" />
       <workItem from="1642182570051" duration="632000" />
+      <workItem from="1642188539375" duration="525000" />
+      <workItem from="1642189123748" duration="7090000" />
     </task>
     <servers />
   </component>

@@ -35,6 +35,16 @@ public class Item extends NamedEntity {
         this.discount = discount;
     }
 
+    public Item(String name, Long id, Category category, BigDecimal width, BigDecimal height, BigDecimal length, BigDecimal productionCost, BigDecimal sellingPrice) {
+        super(name, id);
+        this.category = category;
+        this.width = width;
+        this.height = height;
+        this.length = length;
+        this.productionCost = productionCost;
+        this.sellingPrice = sellingPrice;
+    }
+
     public Category getCategory() {
         return category;
     }
