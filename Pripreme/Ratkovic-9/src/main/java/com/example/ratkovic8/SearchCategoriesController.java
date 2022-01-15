@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import static hr.java.production.main.Main.loadCategories;
-
 public class SearchCategoriesController {
     List<Category> categories = new ArrayList<>();
 

@@ -55,7 +55,7 @@
                     <Insets left="5.0" right="5.0"/>
                 </GridPane.margin>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save Store" GridPane.columnSpan="2"
+            <Button mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save Factory" GridPane.columnSpan="2"
                     GridPane.halignment="CENTER" GridPane.rowIndex="8"/>
             <ListView fx:id="selectedItemsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
                       GridPane.rowIndex="6">

@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static hr.java.production.main.Main.*;
-
 public class CreateItemController {
     List<Category> categories;
     List<Item> items;

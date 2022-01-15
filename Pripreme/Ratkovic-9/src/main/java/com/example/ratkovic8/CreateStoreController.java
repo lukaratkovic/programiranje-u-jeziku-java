@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import database.Database;
 import hr.java.production.model.Category;
 import hr.java.production.model.Item;
 import hr.java.production.model.Store;
@@ -12,10 +13,13 @@ import javafx.scene.control.TextField;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-
-import static hr.java.production.main.Main.*;
 
 public class CreateStoreController {
     List<Category> categories;
@@ -61,9 +65,14 @@ public class CreateStoreController {
             }
         });
 
-        categories = loadCategories();
-        items = loadItems(categories);
-        stores = loadStores(items);
+        try (Connection connection = Database.connectToDatabase()) {
+            categories = Database.fetchCategories(connection);
+            items = Database.fetchItems(connection, categories);
+        } catch (SQLException | IOException ex) {
+            System.out.println("Error connecting to database");
+            ex.printStackTrace();
+        }
+
         availableItemsListView.setItems(FXCollections.observableList(items));
 
         selectedItemsListView.getItems().clear();
@@ -87,40 +96,29 @@ public class CreateStoreController {
         StringBuilder recordValue = new StringBuilder();
         StringBuilder errorMessage = new StringBuilder();
 
-        Long id = 1L;
-        if (stores.size() > 0) {
-            id = stores.get(stores.size() - 1).getId() + 1;
-        }
-        recordValue.append(id).append("\n");
-
-        if (storeNameTextField.getText().isEmpty()) {
+        String storeName = storeNameTextField.getText();
+        if (storeName.isEmpty())
             errorMessage.append("Store name should not be empty!\n");
-        } else {
-            recordValue.append(storeNameTextField.getText()).append("\n");
-        }
 
-        if (storeWebAddressTextField.getText().isEmpty()) {
+        String storeWebAddress = storeWebAddressTextField.getText();
+        if (storeWebAddress.isEmpty())
             errorMessage.append("Store web address should not be empty!\n");
-        } else {
-            recordValue.append(storeWebAddressTextField.getText()).append("\n");
-        }
 
+
+        Set<Item> storeItems = new HashSet<>();
         if (selectedItemsListView.getItems().isEmpty()) {
             errorMessage.append("Store should contain at least one item!\n");
         } else {
-            String selectedItemsIds = selectedItemsListView.getItems().stream()
-                    .map(i -> i.getId())
-                    .collect(Collectors.toList())
-                    .toString();
-            for (char c : "[] ".toCharArray()) selectedItemsIds = selectedItemsIds.replace("" + c, "");
-            recordValue.append(selectedItemsIds).append("\n");
+            storeItems = new HashSet<>(selectedItemsListView.getItems());
         }
 
         if (errorMessage.isEmpty()) {
-            try (FileWriter categoryFileWriter = new FileWriter(STORE_FILE, true)) {
-                categoryFileWriter.write(recordValue.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+            try (Connection connection = Database.connectToDatabase()) {
+                Store store = new Store(storeName, storeWebAddress, storeItems, 0L);
+                Database.insertStore(connection, store);
+            } catch (SQLException | IOException ex) {
+                System.out.println("Error connecting to database");
+                ex.printStackTrace();
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save action successful!");

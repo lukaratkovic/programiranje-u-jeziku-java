@@ -20,8 +20,6 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static hr.java.production.main.Main.*;
-
 public class SearchFactoriesController {
     List<Category> categories = new ArrayList<>();
     List<Item> items = new ArrayList<>();

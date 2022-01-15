@@ -18,8 +18,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static hr.java.production.main.Main.*;
-
 public class SearchStoreController {
     List<Category> categories = new ArrayList<>();
     List<Item> items = new ArrayList<>();

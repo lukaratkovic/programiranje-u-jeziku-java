@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import database.Database;
 import hr.java.production.enums.City;
 import hr.java.production.model.Address;
 import hr.java.production.model.Category;
@@ -12,11 +13,10 @@ import javafx.util.StringConverter;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static hr.java.production.main.Main.*;
 
 public class CreateFactoryController {
     List<Category> categories;
@@ -81,10 +81,15 @@ public class CreateFactoryController {
             }
         });
 
-        categories = loadCategories();
-        items = loadItems(categories);
-        addresses = loadAddresses();
-        factories = loadFactories(items, addresses);
+        try (Connection connection = Database.connectToDatabase()) {
+            System.out.println("Connected to database.");
+            categories = Database.fetchCategories(connection);
+            items = Database.fetchItems(connection, categories);
+            addresses = Database.fetchAddresses(connection);
+        } catch (SQLException | IOException ex) {
+            System.out.println("Error connecting to database");
+            ex.printStackTrace();
+        }
 
         availableItemsListView.setItems(FXCollections.observableList(items));
         selectedItemsListView.getItems().clear();
@@ -109,67 +114,42 @@ public class CreateFactoryController {
     }
 
     public void onSaveButtonClick() {
-        StringBuilder addressRecordValue = new StringBuilder();
         StringBuilder errorMessage = new StringBuilder();
 
-        Long addressId = 1L;
-        if (addresses.size() > 0) {
-            addressId = addresses.get(addresses.size() - 1).getId() + 1;
-        }
-        addressRecordValue.append(addressId).append("\n");
-
-        if (factoryStreetTextField.getText().isEmpty()) {
+        String addressStreet = factoryStreetTextField.getText();
+        if (addressStreet.isEmpty())
             errorMessage.append("Factory street should not be empty!\n");
-        } else {
-            addressRecordValue.append(factoryStreetTextField.getText()).append("\n");
-        }
 
-        if (factoryHouseNumberTextField.getText().isEmpty()) {
+        String addressHouseNumber = factoryHouseNumberTextField.getText();
+        if (addressHouseNumber.isEmpty())
             errorMessage.append("Factory house number should not be empty!\n");
-        } else {
-            addressRecordValue.append(factoryHouseNumberTextField.getText()).append("\n");
-        }
 
-        addressRecordValue.append(factoryCityComboBox.getValue()).append("\n");
+        City addressCity = (City) factoryCityComboBox.getValue();
 
-        StringBuilder factoryRecordValue = new StringBuilder();
+        Address address = new Address(addressStreet, addressHouseNumber, addressCity);
 
-        Long factoryId = 1L;
-        if (factories.size() > 0) {
-            factoryId = factories.get(factories.size() - 1).getId() + 1;
-        }
-        factoryRecordValue.append(factoryId).append("\n");
-
-        if (factoryNameTextField.getText().isEmpty()) {
+        String factoryName = factoryNameTextField.getText();
+        if (factoryName.isEmpty())
             errorMessage.append("Factory name should not be empty!\n");
-        } else {
-            factoryRecordValue.append(factoryNameTextField.getText()).append("\n");
-        }
 
-        factoryRecordValue.append(addressId).append("\n");
-
+        Set<Item> factoryItems = new HashSet<>();
         if (selectedItemsListView.getItems().isEmpty()) {
             errorMessage.append("Factory should contain at least one item!");
         } else {
-            String selectedItemsIds = selectedItemsListView.getItems().stream()
-                    .map(i -> i.getId())
-                    .collect(Collectors.toList())
-                    .toString();
-            for (char c : "[] ".toCharArray()) selectedItemsIds = selectedItemsIds.replace("" + c, "");
-            factoryRecordValue.append(selectedItemsIds).append("\n");
+            factoryItems = new HashSet<>(selectedItemsListView.getItems());
         }
 
         if (errorMessage.isEmpty()) {
-            try (FileWriter categoryFileWriter = new FileWriter(ADDRESS_FILE, true)) {
-                categoryFileWriter.write(addressRecordValue.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try (FileWriter categoryFileWriter = new FileWriter(FACTORIES_FILE, true)) {
-                categoryFileWriter.write(factoryRecordValue.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+            try (Connection connection = Database.connectToDatabase()) {
+                System.out.println("Connected to database.");
+                /*Save address and get its Id*/
+                Long addressId = Database.insertAddress(connection, address);
+                address.setId(addressId);
+                Factory factory = new Factory(factoryName, address, factoryItems, 0L);
+                Database.insertFactory(connection, factory);
+            } catch (SQLException | IOException ex) {
+                System.out.println("Error connecting to database");
+                ex.printStackTrace();
             }
 
             initialize();

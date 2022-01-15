@@ -108,7 +108,7 @@ public class Database {
                 default -> throw new IllegalStateException("Unexpected City value.");
             };
 
-            Address address = new Address(street, houseNumber, city);
+            Address address = new Address(street, houseNumber, city, id);
             addresses.add(address);
         }
 
@@ -231,6 +231,7 @@ public class Database {
         ResultSet addressResultSet = addressStatement.executeQuery();
 
         addressResultSet.next();
+        Long id = addressResultSet.getLong("ID");
         String street = addressResultSet.getString("STREET");
         String houseNumber = addressResultSet.getString("HOUSE_NUMBER");
         String cityString = addressResultSet.getString("CITY");
@@ -243,7 +244,7 @@ public class Database {
             default -> throw new IllegalStateException("Unexpected City value.");
         };
 
-        return new Address(street, houseNumber, city);
+        return new Address(street, houseNumber, city, id);
     }
 
     public static Factory fetchFactoryById(Connection connection, Long factoryId, List<Category> categories) throws SQLException {
@@ -298,5 +299,60 @@ public class Database {
         itemStatement.setBigDecimal(6, item.getProductionCost());
         itemStatement.setBigDecimal(7, item.getSellingPrice());
         itemStatement.executeUpdate();
+    }
+
+    public static Long insertAddress(Connection connection, Address address) throws SQLException {
+        PreparedStatement addressStatement = connection
+                .prepareStatement("INSERT INTO ADDRESS (STREET, HOUSE_NUMBER, CITY, POSTAL_CODE) VALUES (?, ?, ?, ?)", new String[]{"ID"});
+        addressStatement.setString(1, address.getStreet());
+        addressStatement.setString(2, address.getHouseNumber());
+        addressStatement.setString(3, address.getCity().getName());
+        addressStatement.setInt(4, address.getCity().getPostalCode());
+        addressStatement.executeUpdate();
+        ResultSet keys = addressStatement.getGeneratedKeys();
+        if (keys.next())
+            return keys.getLong(1);
+        else return -1L;
+    }
+
+    public static void insertFactory(Connection connection, Factory factory) throws SQLException {
+        PreparedStatement factoryStatement = connection
+                .prepareStatement("INSERT INTO FACTORY (NAME, ADDRESS_ID) VALUES (?, ?)", new String[]{"ID"});
+        factoryStatement.setString(1, factory.getName());
+        factoryStatement.setLong(2, factory.getAddress().getId());
+        factoryStatement.executeUpdate();
+        ResultSet keys = factoryStatement.getGeneratedKeys();
+
+        if (keys.next()) {
+            Long factoryId = keys.getLong(1);
+            for (Item item : factory.getItems()) {
+                PreparedStatement factoryItemStatement = connection
+                        .prepareStatement("INSERT INTO FACTORY_ITEM (FACTORY_ID, ITEM_ID) VALUES (?, ?)");
+                factoryItemStatement.setLong(1, factoryId);
+                factoryItemStatement.setLong(2, item.getId());
+                factoryItemStatement.executeUpdate();
+            }
+        }
+    }
+
+    public static void insertStore(Connection connection, Store store) throws SQLException {
+        PreparedStatement storeStatement = connection
+                .prepareStatement("INSERT INTO STORE (NAME, WEB_ADDRESS) VALUES (?, ?)", new String[]{"ID"});
+        storeStatement.setString(1, store.getName());
+        storeStatement.setString(2, store.getWebAddress());
+        storeStatement.executeUpdate();
+        ResultSet keys = storeStatement.getGeneratedKeys();
+
+        if (keys.next()) {
+            Long storeId = keys.getLong(1);
+            for (Item item : store.getItems()) {
+                PreparedStatement storeItemStatement = connection
+                        .prepareStatement("INSERT INTO STORE_ITEM (STORE_ID, ITEM_ID) VALUES (?, ?)");
+                storeItemStatement.setLong(1, storeId);
+                storeItemStatement.setLong(2, item.getId());
+                storeItemStatement.executeUpdate();
+            }
+        }
+
     }
 }

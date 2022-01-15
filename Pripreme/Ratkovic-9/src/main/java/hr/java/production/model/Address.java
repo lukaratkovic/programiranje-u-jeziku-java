@@ -27,9 +27,14 @@ public class Address implements Serializable {
      * @param houseNumber House number
      * @param city        enum of city
      */
+    public Address(String street, String houseNumber, City city, Long id) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.id = id;
+    }
+
     public Address(String street, String houseNumber, City city) {
-        if (street == "") street = "Vrbik";
-        if (houseNumber == "") houseNumber = "8";
         this.street = street;
         this.houseNumber = houseNumber;
         this.city = city;
@@ -142,10 +147,14 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return street + " " + houseNumber + ", "+city.getName();
+        return street + " " + houseNumber + ", " + city.getName();
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

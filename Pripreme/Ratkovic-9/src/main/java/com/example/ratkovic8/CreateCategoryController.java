@@ -12,9 +12,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import static hr.java.production.main.Main.CATEGORY_FILE;
-import static hr.java.production.main.Main.loadCategories;
-
 public class CreateCategoryController {
 
     @FXML

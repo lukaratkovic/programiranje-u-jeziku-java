@@ -4,13 +4,13 @@ package hr.java.production.enums;
  * Contains information about cities
  */
 public enum City {
-    DUGO_SELO("Dugo Selo", "10370"),
-    KOPRIVNICA("Koprivnica", "48000"),
-    NEW_YORK("New York", "10271"),
-    RIJEKA("Rijeka", "51000"),
-    ZAGREB("Zagreb", "10000");
+    DUGO_SELO("Dugo Selo", 10370),
+    KOPRIVNICA("Koprivnica", 48000),
+    NEW_YORK("New York", 10271),
+    RIJEKA("Rijeka", 51000),
+    ZAGREB("Zagreb", 10000);
 
-    private String postalCode;
+    private Integer postalCode;
     private String name;
 
     /**
@@ -19,12 +19,12 @@ public enum City {
      * @param name       city name
      * @param postalCode city postal code
      */
-    City(String name, String postalCode) {
+    City(String name, Integer postalCode) {
         this.name = name;
         this.postalCode = postalCode;
     }
 
-    public String getPostalCode() {
+    public Integer getPostalCode() {
         return postalCode;
     }
 
