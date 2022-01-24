@@ -13,63 +13,66 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.ratkovic8.OrderController">
-    <fx:include source="menu.fxml"/>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ratkovic8.OrderController">
+    <fx:include source="menu.fxml" />
     <GridPane layoutX="6.0" layoutY="23.0" prefHeight="376.0" prefWidth="593.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
             <Label text="Narudžbe" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                 <font>
-                    <Font name="System Bold" size="24.0"/>
+                    <Font name="System Bold" size="24.0" />
                 </font>
             </Label>
             <Label text="Oznaka" GridPane.rowIndex="1">
                 <GridPane.margin>
-                    <Insets left="50.0"/>
+                    <Insets left="50.0" />
                 </GridPane.margin>
             </Label>
-            <Label text="1-a" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+            <Label text="1-a" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label text="Slanje putem" GridPane.rowIndex="2">
                 <GridPane.margin>
-                    <Insets left="50.0"/>
+                    <Insets left="50.0" />
                 </GridPane.margin>
             </Label>
-            <ComboBox prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <ComboBox fx:id="slanjePutemComboBox" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                 <GridPane.margin>
-                    <Insets left="150.0" right="20.0"/>
+                    <Insets left="150.0" right="20.0" />
                 </GridPane.margin>
             </ComboBox>
             <Label text="Napomena" GridPane.rowIndex="3">
                 <GridPane.margin>
-                    <Insets left="50.0"/>
+                    <Insets left="50.0" />
                 </GridPane.margin>
             </Label>
             <TextField GridPane.rowIndex="3">
                 <GridPane.margin>
-                    <Insets left="150.0" right="20.0"/>
+                    <Insets left="150.0" right="20.0" />
                 </GridPane.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="Kreiraj" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="2" GridPane.valignment="CENTER"/>
-            <Button mnemonicParsing="false" text="Obriši" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
+            <Button mnemonicParsing="false" onAction="#createOrder" text="Kreiraj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <GridPane.margin>
+               <Insets top="-50.0" />
+            </GridPane.margin></Button>
+            <Button mnemonicParsing="false" text="Obriši" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <GridPane.margin>
+               <Insets top="-50.0" />
+            </GridPane.margin></Button>
             <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                 <columns>
-                    <TableColumn fx:id="oznakaTableColumn" prefWidth="75.0" text="Oznaka"/>
-                    <TableColumn fx:id="slanjeTableColumn" prefWidth="160.00006103515625" text="Slanje putem"/>
-                    <TableColumn fx:id="napomenaTableColumn" prefWidth="159.19993591308594" text="Napomena"/>
-                    <TableColumn fx:id="datumTableColumn" prefWidth="194.40008544921875" text="Datum kreiranja"/>
+                    <TableColumn fx:id="oznakaTableColumn" prefWidth="75.0" text="Oznaka" />
+                    <TableColumn fx:id="slanjeTableColumn" prefWidth="160.00006103515625" text="Slanje putem" />
+                    <TableColumn fx:id="napomenaTableColumn" prefWidth="159.19993591308594" text="Napomena" />
+                    <TableColumn fx:id="datumTableColumn" prefWidth="194.40008544921875" text="Datum kreiranja" />
                 </columns>
             </TableView>
         </children>
