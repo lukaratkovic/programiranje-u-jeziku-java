@@ -5,35 +5,39 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="23.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.ratkovic8.MenuController">
+<BorderPane prefHeight="23.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ratkovic8.MenuController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="Category">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showCategorySearchScreen" text="Search"/>
-                        <MenuItem mnemonicParsing="false" onAction="#showCategoryCreateScreen" text="Add New Category"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showCategorySearchScreen" text="Search" />
+                        <MenuItem mnemonicParsing="false" onAction="#showCategoryCreateScreen" text="Add New Category" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Item">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showItemSearchScreen" text="Search"/>
-                        <MenuItem mnemonicParsing="false" onAction="#showItemCreateScreen" text="Add New Item"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showItemSearchScreen" text="Search" />
+                        <MenuItem mnemonicParsing="false" onAction="#showItemCreateScreen" text="Add New Item" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Factory">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showFactorySearchScreen" text="Search"/>
-                        <MenuItem mnemonicParsing="false" onAction="#showFactoryCreateScreen" text="Add New Factory"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showFactorySearchScreen" text="Search" />
+                        <MenuItem mnemonicParsing="false" onAction="#showFactoryCreateScreen" text="Add New Factory" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Store">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showStoreSearchScreen" text="Search"/>
-                        <MenuItem mnemonicParsing="false" onAction="#showStoreCreateScreen" text="Add New Store"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showStoreSearchScreen" text="Search" />
+                        <MenuItem mnemonicParsing="false" onAction="#showStoreCreateScreen" text="Add New Store" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" text="Narudžbe">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showOrderScreen" text="Nardužbe" />
+               </items>
+            </Menu>
             </menus>
         </MenuBar>
     </top>

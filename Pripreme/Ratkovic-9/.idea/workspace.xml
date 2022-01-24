@@ -4,47 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc3d45e2-acf2-4332-9e6b-5950da3ed525" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/addresses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/factories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/food_store.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/items.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/serialized_factories.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/serialized_stores.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/stores.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/technical_store.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/log.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/log.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateCategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateFactoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateFactoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateItemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/CreateStoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchCategoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchCategoriesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchFactoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchFactoriesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchItemsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ratkovic8/SearchStoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/enums/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/enums/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/main/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/production/model/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic8/createFactory.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/ratkovic8/createFactory.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateCategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateCategoryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateFactoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateFactoryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateItemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateItemController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateStoreController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateStoreController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateStoreController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateStoreController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/CreateStoreController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchCategoriesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchCategoriesController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchFactoriesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchFactoriesController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchItemsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchItemsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/SearchStoreController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/createFactory.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ratkovic8/createFactory.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/database/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/database/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hr/java/production/enums/City.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hr/java/production/enums/City.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hr/java/production/main/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hr/java/production/model/Address$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hr/java/production/model/Address$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hr/java/production/model/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hr/java/production/model/Address.class" afterDir="false" />
-    </list>
+    <list default="true" id="fc3d45e2-acf2-4332-9e6b-5950da3ed525" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +41,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="format.on.save" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/example/ratkovic7" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/com/example/ratkovic8" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -94,6 +54,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Luka\Documents\TVZ\programiranje-u-jeziku-java\Pripreme\Ratkovic-9\src\main\resources\com\example\ratkovic8" />
       <recent name="C:\Users\Luka\Documents\TVZ\programiranje-u-jeziku-java\Pripreme\Ratkovic-8\src\main\resources\com\example\ratkovic7" />
       <recent name="C:\Users\Luka\Documents\TVZ\programiranje-u-jeziku-java\Pripreme\Ratkovic-7\src\main\resources\com\example\ratkovic7" />
       <recent name="E:\Documents\TVZ\sem3\programiranje-u-jeziku-java\Pripreme\Ratkovic-7\src\main\resources\com\example\ratkovic7" />
@@ -169,6 +130,8 @@
       <workItem from="1642203054256" duration="179000" />
       <workItem from="1642214455304" duration="4295000" />
       <workItem from="1642218942408" duration="1933000" />
+      <workItem from="1643022803196" duration="1144000" />
+      <workItem from="1643042664660" duration="2342000" />
     </task>
     <servers />
   </component>

@@ -355,4 +355,8 @@ public class Database {
         }
 
     }
+
+    public static void insertOrder(Connection connection, Order order) throws SQLException {
+        PreparedStatement orderStatement = connection.prepareStatement("INSERT INTO ORDER VALUES (?, ?, ?, ?)");
+    }
 }

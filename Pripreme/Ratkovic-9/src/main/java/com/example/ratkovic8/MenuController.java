@@ -1,5 +1,6 @@
 package com.example.ratkovic8;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -106,6 +107,20 @@ public class MenuController {
             e.printStackTrace();
         }
         HelloApplication.getStage().setTitle("Create Factory");
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
+
+    @FXML
+    public void showOrderScreen() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("createOrder.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HelloApplication.getStage().setTitle("Narudžbe");
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
     }
